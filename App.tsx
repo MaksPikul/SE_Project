@@ -6,7 +6,14 @@
  */
 
 import React from 'react';
+import { NavigationContainer } from "@react-navigation/native/"
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import type {PropsWithChildren} from 'react';
+import FitnessScreen from './screens/FitnessScreen';
+import HomeScreen from './screens/HomeScreen';
+import BlogScreen from './screens/BlogScreen';
+import NutritionScreen from './screens/NutritionScreen';
+
 import {
   SafeAreaView,
   ScrollView,
@@ -62,37 +69,20 @@ function App(): React.JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  const stack = createNativeStackNavigator()
+  
+  //for now show header
+  //login page should be first with a conditional to check cookies (saving log in)
+  //first is home for now
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="HeadAche">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+      <NavigationContainer>                                      
+        <stack.Navigator initialRouteName='Home' screenOptions={{headerShown:  true}}>
+          <stack.Screen name="Home" component={HomeScreen} />
+          <stack.Screen name="Fitness" component={FitnessScreen} />
+          <stack.Screen name="Blog" component={BlogScreen} />
+          <stack.Screen name="Nutrition" component={NutritionScreen} />
+        </stack.Navigator>
+      </NavigationContainer>
   );
 }
 
