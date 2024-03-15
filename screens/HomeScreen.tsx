@@ -1,8 +1,24 @@
 import {View, Text, StyleSheet , Button} from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import CustomButton from './CustomButton';
+import CustomButton from './homeButton';
+
+/* 
+
+For this page
+
+    there will be a top section with a user icon saying hello name
+
+*/
 
 
+/*
+
+For all sections,
+    Default header has to go
+    footer might be good
+    allowing for scrolling would be good
+
+*/
 
 export default function HomeScreen({}) {
     const navigation = useNavigation()
