@@ -1,4 +1,4 @@
-import {View, Button, Text, StyleSheet, Pressable, Image} from "react-native";
+import {View, Button, Text, StyleSheet, Pressable, Image, ScrollView} from "react-native";
 import SectionButton from "./sectionButtons";
 
 
@@ -6,11 +6,11 @@ import SectionButton from "./sectionButtons";
 
 export default function FitnessScreen() {
     return(
+        <ScrollView>
         <View style={styles.container}>
-            
             <View style={{...styles.buttonGroup, flexDirection: "row"}}>
                 <Text> Fitness - Create and track activity levels</Text>
-                <Text> This image is a representation of a section which displays programs</Text>
+                {/*<Text> This image is a representation of a section which displays programs</Text>*/}
                 <View style={{width:20}}></View>
                 <SectionButton text="Home" width={70} height={50} color={"purple"} />
             </View>
@@ -37,20 +37,20 @@ export default function FitnessScreen() {
                 color={"purple"}/>
             </View>
         </View>
-        
+        </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex:0.8,
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "space-evenly",
+        justifyContent: "space-between",
         backgroundColor: "darkgrey"
     },
     buttonGroup: {
-        margin: 100,
+        margin: 50,
     },
 
 })

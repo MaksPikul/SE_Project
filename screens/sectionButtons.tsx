@@ -14,6 +14,16 @@ const SectionButton = ({text, width, height, color}) => {
       borderColor: color,
       borderRadius: 7,
     },
+    buttonPressed: {
+      elevation: 10,
+        shadowColor: 'purple',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      backgroundColor: 'purple',
+      transform: [{ scale: 0.95 }]
+    },
     text:{
       fontSize: 16
     }
@@ -23,7 +33,12 @@ const SectionButton = ({text, width, height, color}) => {
 
   return (
     <Pressable 
-      style={style.button}
+      style={({pressed}) => [
+        style.button,
+        pressed ? style.buttonPressed : null
+      ]}
+
+      //onPress={()}
     >
       <Text style={style.text}> {text} </Text>
     </Pressable>
