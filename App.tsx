@@ -9,10 +9,12 @@ import React from 'react';
 import { NavigationContainer } from "@react-navigation/native/"
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import type {PropsWithChildren} from 'react';
+
 import FitnessScreen from './screens/FitnessScreen';
 import HomeScreen from './screens/HomeScreen';
 import BlogScreen from './screens/BlogScreen';
 import NutritionScreen from './screens/NutritionScreen';
+import CustomHeader from './components/CustomHeader';
 
 import {
   SafeAreaView,
@@ -77,7 +79,8 @@ function App(): React.JSX.Element {
   return (
       <NavigationContainer>                                      
         <stack.Navigator initialRouteName='Home' screenOptions={{headerShown:  true}}>
-          <stack.Screen name="Home" component={HomeScreen} />
+          {/* example of how header implementation may work, idk tho */}
+          <stack.Screen name="Home" component={HomeScreen} options={{headerTitle: () => <CustomHeader text="lolerz"/>}}/>
           <stack.Screen name="Fitness" component={FitnessScreen} />
           <stack.Screen name="Blog" component={BlogScreen} />
           <stack.Screen name="Nutrition" component={NutritionScreen} />
@@ -85,6 +88,8 @@ function App(): React.JSX.Element {
       </NavigationContainer>
   );
 }
+
+
 
 const styles = StyleSheet.create({
   sectionContainer: {
