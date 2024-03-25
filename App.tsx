@@ -9,6 +9,8 @@ import React from 'react';
 import { NavigationContainer } from "@react-navigation/native/"
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import type {PropsWithChildren} from 'react';
+import { Button } from 'react-native';
+import { Alert } from 'react-native';
 
 import FitnessScreen from './screens/FitnessScreen';
 import HomeScreen from './screens/HomeScreen';
@@ -78,13 +80,16 @@ function App(): React.JSX.Element {
   //first is home for now
   return (
       <NavigationContainer>                                      
-        <stack.Navigator initialRouteName='Home' screenOptions={{headerShown:  true}}>
+        <stack.Navigator initialRouteName='Home' screenOptions={{headerShown:true}}>
           {/* example of how header implementation may work, idk tho */}
-          <stack.Screen name="Home" component={HomeScreen} options={{headerTitle: () => <CustomHeader text="lolerz"/>}}/>
-          <stack.Screen name="Fitness" component={FitnessScreen} />
-          <stack.Screen name="Blog" component={BlogScreen} />
-          <stack.Screen name="Nutrition" component={NutritionScreen} />
-        </stack.Navigator>
+          <stack.Group>
+            <stack.Screen name="Home" component={HomeScreen} options={{headerTitleAlign:"center"}}/>
+            {/* playing with header settings, seeing whats up */}
+            <stack.Screen name="Fitness" component={FitnessScreen} options={{headerStyle:{ backgroundColor: "darkorange"},headerTitleAlign: "center", headerRight: ()=> <Button title="Settings" onPress={() => Alert.alert("kill yourself")}></Button>}}/>
+            <stack.Screen name="Blog" component={BlogScreen} />
+            <stack.Screen name="Nutrition" component={NutritionScreen} />
+          </stack.Group>
+        </stack.Navigator> 
       </NavigationContainer>
   );
 }

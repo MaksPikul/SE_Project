@@ -23,15 +23,17 @@ export const homeStyle = StyleSheet.create({
 })
 
 export const fitStyles = StyleSheet.create({
-    container: {
-        flex:0.8,
+    scrollContainer: {
+        backgroundColor: "navy",
+    },
+    viewContainer: {
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "space-between",
-        backgroundColor: "darkgrey"
+        //justifyContent: "",
+        marginVertical: 20
     },
-    buttonGroup: {
-        margin: 50,
+    group: {
+        marginTop: 80,
     },
 
 })
@@ -54,5 +56,15 @@ export const CustButStyle = StyleSheet.create({
     },
     text:{
       fontSize: 16
+    }
+  })
+
+  export const headerStyle = StyleSheet.create({
+    container:{
+      alignItems: "center",
+      justifyContent: "center",
+      borderRadius: 5,
+      flex:1,
+      backgroundColor: "red"
     }
   })
