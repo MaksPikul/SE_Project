@@ -1,6 +1,6 @@
-In terminal
+TERMINAL
 
-You need to run a virtual environment so that anybody's individual dependency installations can be automatically used by other people without installation
+You need to run a virtual environment so that anybody's individual dependency installations can be automatically used by other people without installation.
 Therefore, if you pip install anything, please do it in the project directory :)
 
 When opening:
