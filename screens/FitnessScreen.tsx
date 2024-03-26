@@ -19,10 +19,12 @@ export default function FitnessScreen() {
         <ScrollView 
         showsVerticalScrollIndicator={false}
         style={fitStyles.scrollContainer}
-        contentContainerStyle={{justifyContent:"space-evenly"}}>
+        contentContainerStyle={{justifyContent:"space-evenly"}}
+        overScrollMode="never"
+        bounces={true}>
             
             <View 
-            style={fitStyles.viewContainer}>
+            style={{...fitStyles.viewContainer, marginVertical: 30}}>
                     
                     
                     <ProgDisplayer />
@@ -38,7 +40,7 @@ export default function FitnessScreen() {
                     height={45} 
                     color={"purple"}/>
                     
-                    <View style={{height:30}}></View>
+                    <View style={{height:20}}></View>
                     
                     {/* opens up a modal to see a flat list */}
                     <CustomButton 

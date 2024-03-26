@@ -24,7 +24,7 @@ export const homeStyle = StyleSheet.create({
 
 export const fitStyles = StyleSheet.create({
     scrollContainer: {
-        backgroundColor: "navy",
+        backgroundColor: "lightgrey",
     },
     viewContainer: {
         flexDirection: "column",
@@ -33,7 +33,8 @@ export const fitStyles = StyleSheet.create({
         marginVertical: 20
     },
     group: {
-        marginTop: 80,
+        marginTop: 20,
+        marginBottom: 100,
     },
 
 })
