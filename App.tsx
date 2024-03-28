@@ -17,6 +17,8 @@ import HomeScreen from './screens/HomeScreen';
 import BlogScreen from './screens/BlogScreen';
 import NutritionScreen from './screens/NutritionScreen';
 import CustomHeader from './components/CustomHeader';
+import ProgCreate from './screens/modal/ProgCreate';
+import ActivityHist from './screens/modal/ActivityHist';
 
 import {
   SafeAreaView,
@@ -80,7 +82,7 @@ function App(): React.JSX.Element {
   //first is home for now
   return (
       <NavigationContainer>                                      
-        <stack.Navigator initialRouteName='Home' screenOptions={{headerShown:true}}>
+        <stack.Navigator  initialRouteName='Home' screenOptions={{headerShown:true}}>
           {/* example of how header implementation may work, idk tho */}
           <stack.Group>
             <stack.Screen name="Home" component={HomeScreen} options={{headerTitleAlign:"center"}}/>
@@ -89,6 +91,12 @@ function App(): React.JSX.Element {
             <stack.Screen name="Blog" component={BlogScreen} />
             <stack.Screen name="Nutrition" component={NutritionScreen} />
           </stack.Group>
+
+          <stack.Group screenOptions={{ presentation: "modal" }}>
+            <stack.Screen name="ProgCreate" component={ProgCreate}/>
+            <stack.Screen name="ActivityHist" component={ActivityHist}/>
+          </stack.Group>
+
         </stack.Navigator> 
       </NavigationContainer>
   );
