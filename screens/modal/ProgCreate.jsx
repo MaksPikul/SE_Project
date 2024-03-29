@@ -1,10 +1,11 @@
-import { View, Text, Button, TextInput ,SafeAreaView, StyleSheet, Modal, Alert} from "react-native";
+import { View, Text, Button, TextInput ,SafeAreaView, Keyboard, StyleSheet, Modal, Alert} from "react-native";
 import SelectDropdown from 'react-native-select-dropdown'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useState } from "react";
 import React from "react";
+import CustomButton from "../../components/CustomButtons";
 
-export default function ProgCreate({ navigation }) {
+export default function ProgCreate() {
   const [entered, setEntered] = useState(false)
   const [data, setData] = useState({
     name: '',
@@ -17,6 +18,9 @@ export default function ProgCreate({ navigation }) {
     }
     else{
       console.log(data)
+      Keyboard.dismiss()
+      setEntered(true)
+
     }
   }
 
@@ -48,20 +52,13 @@ export default function ProgCreate({ navigation }) {
 
 
 
-  const styles = StyleSheet.create({
-    input: {
-      height: 40,
-      margin: 12,
-      borderWidth: 1,
-      padding: 10,
-    },
-  });
-
   return (
   
-    <View>
-        <Text> Enter Program name</Text>
-          <TextInput style={{...styles.input}}
+    <View style={pCreate.container}>
+
+        <View style={{margin: 20}}>
+        <Text style={pCreate.text}> Enter Program name</Text>
+          <TextInput style={{...pCreate.input}}
           id="name"
           name="name"
           placeholder="My cool Programme"
@@ -70,7 +67,7 @@ export default function ProgCreate({ navigation }) {
           value={data.name}/>
 
 
-        <Text>Enter duration of programme (weeks)</Text>
+        <Text style={pCreate.text}>Enter duration of programme (weeks)</Text>
           <SelectDropdown 
           data={durationDrop}
           onSelect={(selectedItem,index)=>{
@@ -84,30 +81,44 @@ export default function ProgCreate({ navigation }) {
           value={data.duration}
           renderButton={(selectedItem, isOpened) => {
             return (
-              <View style={styles.dropdownButtonStyle}>
-                {selectedItem && (
-                  <Icon name={selectedItem.icon} style={styles.dropdownButtonIconStyle} />
-                )}
-                <Text style={styles.dropdownButtonTxtStyle}>
+              <View style={pCreate.dropButton}>
+                <Text style={pCreate.text}>
                   {(selectedItem && selectedItem.title) || ''}
                 </Text>
-                <Icon name={isOpened ? 'chevron-up' : 'chevron-down'} style={styles.dropdownButtonArrowStyle} />
+                
               </View>
             );
           }}
+
           renderItem={(item, index, isSelected) => {
             return (
-              <View style={{...styles.dropdownItemStyle, ...(isSelected && {backgroundColor: '#D2D9DF'})}}>
-                <Icon name={item.icon} style={styles.dropdownItemIconStyle} />
-                <Text style={styles.dropdownItemTxtStyle}>{item.title}</Text>
+              <View style={{...pCreate.dropdownItemStyle, ...(isSelected && {backgroundColor: '#D2D9DF'})}}>
+                <Icon name={item.icon} style={pCreate.dropdownItemIconStyle} />
+                <Text style={pCreate.dropdownItemTxtStyle}>{item.title}</Text>
               </View>
             );
           }} 
           showsVerticalScrollIndicator={false}
-          dropdownStyle={styles.dropdownMenuStyle}
+          dropdownStyle={pCreate.dropdownMenuStyle}
           />
+        </View>
 
-        <Button onPress={() => handleSubmit()} type="submit" title="Submit"/>
+        <View>
+          {(!entered ? (<View style={{alignSelf: "center"}}>
+                <CustomButton
+                onPress={()=>{handleSubmit()}}
+                text={"Submit"}
+                width={300}
+                height={30}
+                color={"purple"}/>
+            </View>) : 
+            
+            (<Text>we can enter exercises!, add a component to save</Text>)
+
+           )}
+        </View>
+
+
     </View>
 
 
@@ -115,4 +126,32 @@ export default function ProgCreate({ navigation }) {
   }
 
 
-  
+  const pCreate = StyleSheet.create({
+    container: {
+      
+      alignContent:"center",
+    },
+
+    input: {
+      height: 40,
+      margin: 12,
+      padding: 10,
+      borderBlockColor: "purple",
+      borderWidth: 2,
+    },
+    text: {
+      color: 'black',
+      fontSize: 15,
+      fontWeight: 'bold',
+      paddingHorizontal: 30, 
+      paddingTop: 5,
+    },
+    dropButton:{
+      borderBlockColor: "purple",
+      borderWidth: 2,
+      height: 40,
+      margin: 12,
+      alignItems: "center"
+      
+      
+  }});
