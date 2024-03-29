@@ -76,6 +76,13 @@ function App(): React.JSX.Element {
   };
 
   const stack = createNativeStackNavigator()
+
+  const commonFit = 
+  {headerTintColor: "white",
+  headerTitleAlign: "center",
+  headerStyle:{ 
+    backgroundColor: "purple"}
+  }
   
   //for now show header
   //login page should be first with a conditional to check cookies (saving log in)
@@ -93,8 +100,8 @@ function App(): React.JSX.Element {
           </stack.Group>
 
           <stack.Group screenOptions={{ presentation: "modal" }}>
-            <stack.Screen name="ProgCreate" component={ProgCreate}/>
-            <stack.Screen name="ActivityHist" component={ActivityHist}/>
+            <stack.Screen name="ProgCreate" component={ProgCreate} options={{ headerTitle:"Programme Creator", ...commonFit}}/>
+            <stack.Screen name="ActivityHist" component={ActivityHist} options={{headerTitle:"Activity History", ...commonFit}}/>
           </stack.Group>
 
         </stack.Navigator> 
