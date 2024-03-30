@@ -19,6 +19,7 @@ import NutritionScreen from './screens/NutritionScreen';
 import CustomHeader from './components/CustomHeader';
 import ProgCreate from './screens/modal/ProgCreate';
 import ActivityHist from './screens/modal/ActivityHist';
+import LeaderboardScreen from './screens/LeaderboardScreen';
 
 import {
   SafeAreaView,
@@ -94,9 +95,13 @@ function App(): React.JSX.Element {
           <stack.Group>
             <stack.Screen name="Home" component={HomeScreen} options={{headerTitleAlign:"center"}}/>
             {/* playing with header settings, seeing whats up */}
+            
             <stack.Screen name="Fitness" component={FitnessScreen} options={{headerTintColor: "white", headerStyle:{ backgroundColor: "purple"},headerTitleAlign: "center", headerRight: ()=> <Button title="Settings" onPress={() => Alert.alert("kill yourself")}></Button>}}/>
             <stack.Screen name="Blog" component={BlogScreen} />
             <stack.Screen name="Nutrition" component={NutritionScreen} />
+            <stack.Screen name="Leaderboard" component={LeaderboardScreen} />
+            
+            
           </stack.Group>
 
           <stack.Group screenOptions={{ presentation: "modal" }}>

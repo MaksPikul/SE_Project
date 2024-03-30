@@ -42,6 +42,13 @@ export default function HomeScreen({}) {
             textStyle={homeStyle.buttonText}
             />
 
+            <CustomButton
+            onPress={() => navigation.navigate("Leaderboard")}
+            title="Leaderboard"
+            buttonStyle={homeStyle.button}
+            textStyle={homeStyle.buttonText}
+            />
+
         </View>
 
     )
