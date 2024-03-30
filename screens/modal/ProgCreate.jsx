@@ -11,6 +11,17 @@ export default function ProgCreate() {
     name: '',
     duration: ''
   })
+  const [weeks, setWeeks] = useState("o'block")
+  const [visible, setVisible] = useState(false)
+  const [curModal, setCurModal] = useState(null)
+
+  const handleModal = () => {
+    setVisible(!visible)
+  }
+  const handleModalInput = (index) => {
+
+  }
+  
 
   const handleSubmit = () => {
     if (data.name === ''|| data.duration === ''){
@@ -19,6 +30,9 @@ export default function ProgCreate() {
     else{
       console.log(data)
       Keyboard.dismiss()
+      let num = parseInt(data.duration,10)
+      console.log(typeof(num))
+      setWeeks(new Array(num).fill(null))
       setEntered(true)
 
     }
@@ -74,6 +88,7 @@ export default function ProgCreate() {
             console.log(selectedItem.title);
             handleInput('duration', String(selectedItem.title))
           }}
+
           buttonTextAfterSelection={(selectedItem) => {
             return selectedItem;
           }}
@@ -113,12 +128,43 @@ export default function ProgCreate() {
                 color={"purple"}/>
             </View>) : 
             
-            (<Text>we can enter exercises!, add a component to save</Text>)
+            (<View>
+              {weeks.map((week, index)=>{
+                return(
+                <View>
+                  <Text>{"week " + (index+1).toString()}</Text>
 
+                  <View>{week ? 
+                  (<><Text>currently empty</Text>
+                  
+                  </>) 
+                  : 
+                  (<Text>kek</Text>)}</View>
+                  <Button title="edit this week" onPress={() => {
+                  handleModal()
+                  setCurModal(index)}}></Button>
+                </View>
+                )
+            })}
+
+              
+              <Modal visible={visible}> 
+              <>
+              <Button title="go back" onPress={() => {handleModal()}}></Button>
+              <Text> {"you will find content of week" + (curModal+1).toString() } </Text>
+              </>
+              </Modal> 
+
+
+              <CustomButton
+                onPress={()=>{handleSubmit()}}
+                text={"Finalize Programme"}
+                width={300}
+                height={30}
+                color={"purple"}/>
+            </View>)
            )}
         </View>
-
-
     </View>
 
 
@@ -136,7 +182,7 @@ export default function ProgCreate() {
       height: 40,
       margin: 12,
       padding: 10,
-      borderBlockColor: "purple",
+      borderColor: "purple",
       borderWidth: 2,
     },
     text: {
