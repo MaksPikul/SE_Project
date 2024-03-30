@@ -9,14 +9,11 @@ import { ExerciseModal } from "./ExerciseModal";
 
 export function EditProg({name, duration, entered, ll, setLinkedList}) {
   const [weeks, setWeeks] = useState(new Array(parseInt(duration)).fill(5))
-  const [modals, setModals] = useState(null)
+  const [visible, setVisible] = useState(false)
 
   const handleModal = () => {
     setVisible(!visible)
   }
-
-
-
 
   return(
     
@@ -39,11 +36,14 @@ export function EditProg({name, duration, entered, ll, setLinkedList}) {
 
             <Button title="edit this week" onPress={() => {
             handleModal()
-            setCurModal(index)}} />
+            }} />
 
           </View>)}
         )
       }
+          <ExerciseModal 
+          visible={visible}
+          handleModal={handleModal}/>
 
           <CustomButton
             onPress={()=>{handleSubmit()}}
