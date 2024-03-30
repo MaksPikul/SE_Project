@@ -10,7 +10,7 @@ import {
   Animated,
   useWindowDimensions,
 } from 'react-native';
-import CustomButton from './CustomButtons';
+import CustomButton from '../CustomButtons';
 
 
 /* thinking about program layout

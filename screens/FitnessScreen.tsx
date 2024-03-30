@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { fitStyles } from "../styles/allStyles";
 import { useRef } from "react";
 import { Animated } from "react-native";
-import { ProgDisplayer } from "../components/ProgDisplayer";
+import { ProgDisplayer } from "../components/fitnessComps/ProgDisplayer";
 import { useState } from "react";
 
 
