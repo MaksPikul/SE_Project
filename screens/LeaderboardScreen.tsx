@@ -3,32 +3,41 @@ import {
     SafeAreaView,
     ScrollView,
     StyleSheet,
+    FlatList,
     Text,
     View,
+    FLatList
 } from 'react-native';
 import { supabase } from "../lib/supabase";
 
+
+import LeaderboardItem from "../components/LeaderboardItem";
+
 const LeaderboardScreen = () => {
 
-    const getSteps = async () => {
-        let {data:steps_logs, error} = await supabase
-        .from("steps_logs")
-        .select('*')
-
-        return steps_logs
-    }
+    const [steps, setSteps] = useState([]);
 
     useEffect(() => {
-        getSteps()
-        .then((steps_logs) => {
-            console.log("steps", steps_logs)
-        })
-    }, [])
+        getSteps();
+    }, []);
+
+    async function getSteps() {
+        const { data } = await supabase
+        .from('step_log')
+        .select()
+        setSteps(data);
+        console.log(data)
+    }
 
     return (
+
         <SafeAreaView style={styles.pageView}>
             <ScrollView contentContainerStyle={styles.leaderboardView}>
                 <Text style={styles.heading}>Most Steps This Week</Text>
+                {steps.map((step) => (
+                    <Text key={step.count}>{step.count} {step.id}</Text>
+                ))}
+
             </ScrollView>
 
         </SafeAreaView>
