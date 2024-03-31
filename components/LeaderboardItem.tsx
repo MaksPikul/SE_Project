@@ -1,10 +1,19 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+
 const LeaderboardItem = ({index, step} : {index:any, step:any}) =>{
-    
+        
     return(
         <View style={styles.mainView}>
-            <View style={styles.Item}>
+            <View style={{backgroundColor: index === 1 ? "gold" : index === 2 ? "silver" :index === 3 ? "#CD7F32" : "white",
+                height:80,
+                width:'100%',
+                borderWidth:2,
+                borderRadius:15,
+                alignItems:'center',
+                justifyContent:'space-evenly',
+                flexDirection: 'row',
+        }}>
                 <Text style={styles.itemText}>{step.first_name}</Text>
                 <Text style={styles.itemText}>{step.steps} steps</Text>
                 <Text style={styles.itemText}>{index}</Text>
@@ -17,17 +26,10 @@ const LeaderboardItem = ({index, step} : {index:any, step:any}) =>{
 export default LeaderboardItem
 
 const styles = StyleSheet.create({
-    Item:{
-        height:80,
-        width:'100%',
-        borderWidth:2,
-        backgroundColor:'#ffffff',
-        borderRadius:15,
-        alignItems:'center',
-        justifyContent:'space-evenly',
-        flexDirection: 'row',
-        fontWeight: 'bold',
+    first:{
+        backgroundColor:'orange'
     },
+
     mainView:{
         width:'90%',
         alignItems:'center',

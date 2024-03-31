@@ -30,7 +30,7 @@ const LeaderboardScreen = () => {
 
         <SafeAreaView style={styles.pageView}>
             <ScrollView contentContainerStyle={styles.leaderboardView}>
-                <Text style={styles.heading}>Most Steps This Week</Text>
+                <Text style={styles.heading}>Most Steps Over 7 Days</Text>
                 {steps.map((step, index) => (
                     <View style={styles.leaderboard}key={step['first_name']}>
                         <LeaderboardItem step={step} index={index+1}></LeaderboardItem>
