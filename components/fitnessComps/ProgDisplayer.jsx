@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -11,6 +11,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import CustomButton from '../CustomButtons';
+import { supabase } from '../../lib/supabase';
 
 
 /* thinking about program layout
@@ -38,6 +39,20 @@ let day = "monday"
 let exercises = ["legs", "legs", "more legs", "legs"]
 
 export const ProgDisplayer = () => {
+
+  useEffect(() => {
+    getExercise();
+  }, []);
+
+  async function getExercise() {
+    const { data } = await supabase
+    .from('exercises')
+    .select(`
+    name,
+    fitness_day(id, day_date)
+    `)
+    console.log(data)
+  }
 
   const progs = new Array(4).fill(
     "program: 8hr arm work out"
