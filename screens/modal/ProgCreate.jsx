@@ -1,19 +1,21 @@
 import { View, Text, Button, TextInput ,SafeAreaView, Keyboard, StyleSheet, Modal, Alert, ScrollView} from "react-native";
-import {useState } from "react";
+import {useState, useEffect } from "react";
 import React from "react";
 import { LinkedList, Node } from "../../jsFiles/LinkedList";
 import CustomButton from "../../components/CustomButtons";
 import { NameDurationInput } from "../../components/fitnessComps/nameAndDuration";
 import { EditProg } from "../../components/fitnessComps/EditProg";
+import { programme , week, day } from "../../jsFiles/ProgObjs";
 
 
 export default function ProgCreate() {
   const [entered, setEntered] = useState(false)
   const [data, setData] = useState({
     name: '',
-    duration: ''
+    duration: '',
   })
-  const [ll, setLinkedList] = useState(new LinkedList())
+  const [prog, setProg] = useState()
+
 
   const handleSubmit = () => {
     if (data.name === '' || data.duration === ''){
@@ -23,20 +25,28 @@ export default function ProgCreate() {
       console.log(data)
       Keyboard.dismiss()
       let num = parseInt(data.duration,10)
+      console.log(num)
 
-      //creates num amount of weeks, each week is linked list that holds amount of days
-      for (let i=0; i<num; i++){
-        ll.add(new LinkedList())
-      }
-      setLinkedList(ll)
+      let newProg = new programme(data.name, parseInt(data.duration))
+      newProg = addWeeks(newProg)
+      console.log(newProg)
+      setProg(newProg)
       setEntered(true)
     }
   }
 
+    const addWeeks = (prog) =>{
+      for (let i=0; i<data.duration; i++){
+
+          prog.weeks[i] = new week(i, ("week " +(1+i)))
+      }
+    return prog
+    }
+
   const handleInput = (k, v) => {
     setData({...data, [k] : v})
   }
-  
+
 
   return(
     <ScrollView>
@@ -61,11 +71,8 @@ export default function ProgCreate() {
         :
         (
           <EditProg
-            name={data.name}
-            duration={data.duration}
-            entered={entered}
-            ll={ll}
-            setLinkedList={setLinkedList}/>
+            prog={prog}
+            setProg={setProg}/>
         /* 
         handleSubmit={handleSubmit}
         weeks={weeks}*/

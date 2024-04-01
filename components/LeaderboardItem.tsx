@@ -31,7 +31,9 @@ const styles = StyleSheet.create({
     },
 
     mainView:{
-        width:'90%',
+        padding: 5,
+        marginTop: 5,
+        width:'95%',
         alignItems:'center',
         justifyContent:'center',
         //backgroundColor:'red'
