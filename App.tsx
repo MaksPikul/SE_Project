@@ -21,6 +21,9 @@ import FitnessPostScreen from './screens/FitnessPostScreen';
 import RecipePostScreen from './screens/RecipePostScreen';
 import MentalHealthPostScreen from './screens/MentalHealthPostScreen';
 import CustomHeader from './components/CustomHeader';
+import ProgCreate from './screens/modal/ProgCreate';
+import ActivityHist from './screens/modal/ActivityHist';
+import LeaderboardScreen from './screens/LeaderboardScreen';
 import AmbassadorSection from './components/AmbassadorSection';
 import AmbassadorPostsScreen from './screens/AmbassadorPostsScreen';
 import { PostsProvider } from './components/PostsContext';
@@ -86,6 +89,13 @@ function App(): React.JSX.Element {
   };
 
   const stack = createNativeStackNavigator()
+
+  const commonFit = 
+  {headerTintColor: "white",
+  headerTitleAlign: "center",
+  headerStyle:{ 
+    backgroundColor: "purple"}
+  }
   
   //for now show header
   //login page should be first with a conditional to check cookies (saving log in)
@@ -93,14 +103,23 @@ function App(): React.JSX.Element {
   return (
     <PostsProvider>
       <NavigationContainer>                                      
-        <stack.Navigator initialRouteName='Home' screenOptions={{headerShown:true}}>
+        <stack.Navigator  initialRouteName='Home' screenOptions={{headerShown:true}}>
           {/* example of how header implementation may work, idk tho */}
           <stack.Group>
             <stack.Screen name="Home" component={HomeScreen} options={{headerTitleAlign:"center"}}/>
             {/* playing with header settings, seeing whats up */}
+            
             <stack.Screen name="Fitness" component={FitnessScreen} options={{headerTintColor: "white", headerStyle:{ backgroundColor: "purple"},headerTitleAlign: "center", headerRight: ()=> <Button title="Settings" onPress={() => Alert.alert("kill yourself")}></Button>}}/>
             <stack.Screen name="Blog" component={AmbassadorSection} options={{ title: 'Ambassador Section' }} />
             <stack.Screen name="Nutrition" component={NutritionScreen} />
+            <stack.Screen name="Leaderboard" component={LeaderboardScreen} />
+            
+            
+          </stack.Group>
+
+          <stack.Group screenOptions={{ presentation: "modal" }}>
+            <stack.Screen name="ProgCreate" component={ProgCreate} options={{ headerTitle:"Programme Creator", ...commonFit}}/>
+            <stack.Screen name="ActivityHist" component={ActivityHist} options={{headerTitle:"Activity History", ...commonFit}}/>
             <stack.Screen name="Ambassador" component={AmbassadorSection} options={{ title: 'Ambassador Section' }} />
 
             <stack.Screen name="AmbassadorPosts" component={AmbassadorPostsScreen} options={{title: 'Ambassador Posts'}} />
@@ -108,6 +127,7 @@ function App(): React.JSX.Element {
             <stack.Screen name="FitnessPost" component={FitnessPostScreen} options={{ title: 'Post Fitness Program' }} />
             <stack.Screen name="MentalHealthPost" component={MentalHealthPostScreen} options={{ title: 'Post Mental Health Resource' }} />
           </stack.Group>
+
         </stack.Navigator> 
       </NavigationContainer>
       </PostsProvider>

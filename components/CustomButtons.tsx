@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Button, Text, StyleSheet, Pressable} from "react-native";
 import { CustButStyle } from '../styles/allStyles';
 
-const CustomButton = ({onPress, text, width, height, color}) => {
+const CustomButton = ({onPress, text, width, height, color} : {onPress : any, text : any, width : any, height : any, color : any}) => {
 
 
   return (

@@ -23,7 +23,7 @@ export default function HomeScreen({}) {
 
             <CustomButton
             onPress={() => navigation.navigate("Fitness")}
-            title="Fitness, a pull down menu for profile and other things as a bar up top would be good, ill do that next, also need to get all the buttons closer to the top, if adding extra buttons, style must change"
+            title="Fitness"
             buttonStyle={homeStyle.button}
             textStyle={homeStyle.buttonText}
             />
@@ -38,6 +38,13 @@ export default function HomeScreen({}) {
             <CustomButton
             onPress={() => navigation.navigate("Blog")}
             title="Blog"
+            buttonStyle={homeStyle.button}
+            textStyle={homeStyle.buttonText}
+            />
+
+            <CustomButton
+            onPress={() => navigation.navigate("Leaderboard")}
+            title="Leaderboard"
             buttonStyle={homeStyle.button}
             textStyle={homeStyle.buttonText}
             />
