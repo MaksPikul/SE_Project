@@ -29,7 +29,7 @@ const LeaderboardScreen = () => {
     return (
 
         <SafeAreaView style={styles.pageView}>
-            <ScrollView contentContainerStyle={styles.leaderboardView}>
+            <ScrollView style={styles.leaderboardView}>
                 <Text style={styles.heading}>Most Steps Over 7 Days</Text>
                 {steps.map((step, index) => (
                     <View style={styles.leaderboard}key={step['first_name']}>
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     },
     leaderboard:{
         flex:1,
-        //backgroundColor:'grey',
+        //backgroundColor:'pink',
         alignItems: 'center',
         justifyContent: 'center',
         width:'100%'
@@ -60,8 +60,8 @@ const styles = StyleSheet.create({
         flex:1,
         padding:10,
         //backgroundColor:'blue',
-        alignItems: 'center',
-        justifyContent: 'center'
+        //alignItems: 'center',
+        //justifyContent: 'center'
     },
     heading:{
         fontSize:20,
