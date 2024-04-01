@@ -32,7 +32,8 @@ const styles = StyleSheet.create({
 
     mainView:{
         padding: 5,
-        marginTop: 5,
+        marginTop: 2,
+        marginBottom: 2,
         width:'95%',
         alignItems:'center',
         justifyContent:'center',
