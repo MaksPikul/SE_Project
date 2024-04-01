@@ -17,6 +17,9 @@ import HomeScreen from './screens/HomeScreen';
 import BlogScreen from './screens/BlogScreen';
 import NutritionScreen from './screens/NutritionScreen';
 import CustomHeader from './components/CustomHeader';
+import ProgCreate from './screens/modal/ProgCreate';
+import ActivityHist from './screens/modal/ActivityHist';
+import LeaderboardScreen from './screens/LeaderboardScreen';
 
 import {
   SafeAreaView,
@@ -74,21 +77,38 @@ function App(): React.JSX.Element {
   };
 
   const stack = createNativeStackNavigator()
+
+  const commonFit = 
+  {headerTintColor: "white",
+  headerTitleAlign: "center",
+  headerStyle:{ 
+    backgroundColor: "purple"}
+  }
   
   //for now show header
   //login page should be first with a conditional to check cookies (saving log in)
   //first is home for now
   return (
       <NavigationContainer>                                      
-        <stack.Navigator initialRouteName='Home' screenOptions={{headerShown:true}}>
+        <stack.Navigator  initialRouteName='Home' screenOptions={{headerShown:true}}>
           {/* example of how header implementation may work, idk tho */}
           <stack.Group>
             <stack.Screen name="Home" component={HomeScreen} options={{headerTitleAlign:"center"}}/>
             {/* playing with header settings, seeing whats up */}
+            
             <stack.Screen name="Fitness" component={FitnessScreen} options={{headerTintColor: "white", headerStyle:{ backgroundColor: "purple"},headerTitleAlign: "center", headerRight: ()=> <Button title="Settings" onPress={() => Alert.alert("kill yourself")}></Button>}}/>
             <stack.Screen name="Blog" component={BlogScreen} />
             <stack.Screen name="Nutrition" component={NutritionScreen} />
+            <stack.Screen name="Leaderboard" component={LeaderboardScreen} />
+            
+            
           </stack.Group>
+
+          <stack.Group screenOptions={{ presentation: "modal" }}>
+            <stack.Screen name="ProgCreate" component={ProgCreate} options={{ headerTitle:"Programme Creator", ...commonFit}}/>
+            <stack.Screen name="ActivityHist" component={ActivityHist} options={{headerTitle:"Activity History", ...commonFit}}/>
+          </stack.Group>
+
         </stack.Navigator> 
       </NavigationContainer>
   );
