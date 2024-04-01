@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import CustomButton from '../CustomButtons';
 import { supabase } from '../../lib/supabase';
+// import React, {useEffect, useState} from "react";
 
 
 /* thinking about program layout
@@ -36,22 +37,22 @@ let program = {
 let progName = "Maxwell's lifts"
 let week = 2
 let day = "monday"
-let exercises = ["legs", "legs", "more legs", "legs"]
+// let exercises = ["legs", "legs", "more legs", "legs"]
 
 export const ProgDisplayer = () => {
+
+  const [exercises, setExercises] = useState([]);
 
   useEffect(() => {
     getExercise();
   }, []);
 
   async function getExercise() {
-    const { data } = await supabase
-    .from('exercises')
-    .select(`
-    name,
-    fitness_day(id, day_date)
-    `)
+    const { data } = await supabase.rpc('get_exercises')
+    setExercises(data);
     console.log(data)
+    const arrayWeekNum = exercises.map(week => <Text>{week.week_number}</Text>);
+    console.log('week_number', arrayWeekNum)
   }
 
   const progs = new Array(4).fill(
@@ -82,7 +83,7 @@ export const ProgDisplayer = () => {
             },
           ], { useNativeDriver: false })}>
 
-        { progs.map((prog, progIndex) => {
+        { exercises.map((prog, progIndex) => {
           return (
         <View style={{width: windowWidth, height: 390}} key={progIndex}>
 
@@ -106,7 +107,7 @@ export const ProgDisplayer = () => {
               { exercises.map((exercise, exIndex) => {
             return (
               <View>
-                <Text style={{...styles.text,alignSelf:"baseline",borderBottomColor: "black", borderBottomWidth:2}}> {exIndex + " - " +exercise} </Text>
+                <Text style={{...styles.text,alignSelf:"baseline",borderBottomColor: "black", borderBottomWidth:2}}> {exIndex + " - " + exercise['exercise_name']} </Text>
               </View>
             )})}
             </View>
@@ -126,7 +127,7 @@ export const ProgDisplayer = () => {
             
           
 
-          {progs.map((prog, progIndex) => {
+          {exercises.map((prog, progIndex) => {
             const width = scrollX.interpolate({
               inputRange: [
                 windowWidth * (progIndex - 1),
