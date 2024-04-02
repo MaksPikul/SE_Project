@@ -12,6 +12,15 @@ export function DayModal ({visible, handleModal, prog, setProg, indexs, addEx, r
         reps:0
     }])
 
+    const [saved, setSaved] = useState(false)
+    const [dayName, setDayName] = useState("")
+
+
+    const handleDayName = (text) => {
+        setDayName(text)
+      }
+
+
     const saveToObject=()=>{
         const updatedWeeks = [...prog.weeks];
         for (let i=0; i<updatedWeeks[indexs[0]].days[indexs[1]].exercises.length; i++){
@@ -20,7 +29,7 @@ export function DayModal ({visible, handleModal, prog, setProg, indexs, addEx, r
         updatedWeeks[indexs[0]].days[indexs[1]].exercises[i].sets = exercs[i].sets
         updatedWeeks[indexs[0]].days[indexs[1]].exercises[i].reps = exercs[i].reps
         }
-
+        updatedWeeks[indexs[0]].days[indexs[1]].name = dayName
         setProg({ ...prog, weeks: updatedWeeks });
     }
 
@@ -34,9 +43,9 @@ export function DayModal ({visible, handleModal, prog, setProg, indexs, addEx, r
         setExecrs(prevState => [
           ...prevState,
           { 
-            name:'',
-            sets:'',
-            reps:'' 
+            name:'Exercise',
+            sets:0,
+            reps:0 
           }
         ]);
       };
@@ -69,6 +78,13 @@ export function DayModal ({visible, handleModal, prog, setProg, indexs, addEx, r
         onPress={() => {
         handleModal()
         }} />
+        
+        <Text>Change name of day</Text>
+        <TextInput
+        value={dayName}
+        onChangeText={(text)=>setDayName(text)}
+        style={{borderWidth: 1, borderColor: "black"}}/>
+        
 
         { visible ? (prog.weeks[indexs[0]].days[indexs[1]].exercises.map((exerc, exercIndex)=>{  
             let curNum = exerc.id
@@ -77,30 +93,34 @@ export function DayModal ({visible, handleModal, prog, setProg, indexs, addEx, r
                     <Text>{"Current name: " + exerc.name}</Text>
                     
                     <TextInput 
-                    
+                    value={exercs[exercIndex].name}
                     placeholder={exerc.name}
                     onChangeText={(text)=>handleTextChange(text, exercIndex, "name")} 
                     style={{borderWidth: 1, borderColor: "black"}}/>
 
                     <TextInput
+                    value={exercs[exercIndex].sets.toString()}
                     onChangeText={(text)=>handleTextChange(text, exercIndex, "sets")} 
                     style={{borderWidth: 1, borderColor: "black"}}/>
 
                     <TextInput    
+                    value={exercs[exercIndex].reps.toString()}
                     onChangeText={(text)=>handleTextChange(text, exercIndex, "reps")} 
                     style={{borderWidth: 1, borderColor: "black"}}/>
+
+                    <Button 
+                    title="- remove exercise"
+                    onPress={()=>{
+                    remEx(indexs[0], indexs[1], exercIndex)
+                    remState(exercIndex)}}/>
 
                 </View>
             )
         })
-        
-        
     
         
         ):(<View></View>)
         }
-
-        
 
         <Button 
             title="+ add Exercise" 
