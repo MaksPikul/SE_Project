@@ -4,7 +4,7 @@ import {useState, useEffect, useCallback} from "react";
 
 const ShowMoreShowLess = ({text, textStyle, readMoreStyle} :
     {text : String , textStyle : any , readMoreStyle : any}) => {
-    const [showMoreButton, setShowMoreButton] = useState(false);
+    const [readMoreButton, setReadMoreButton] = useState(false);
     const [textShown, setTextShown] = useState(false);
     const [numLines, setNumLines] = useState(4);
   
@@ -19,7 +19,7 @@ const ShowMoreShowLess = ({text, textStyle, readMoreStyle} :
     const onTextLayout = useCallback(
       (e : any) => {
         if (e.nativeEvent.lines.length > 4 && !textShown) {
-          setShowMoreButton(true);
+          setReadMoreButton(true);
           setNumLines(4);
         }
       },
@@ -32,7 +32,7 @@ const ShowMoreShowLess = ({text, textStyle, readMoreStyle} :
           {text}
         </Text>
   
-        {showMoreButton ? (
+        {readMoreButton ? (
           <Text onPress={toggleTextShown} style={readMoreStyle}>
             {textShown ? 'Read Less' : 'Read More'}
           </Text>

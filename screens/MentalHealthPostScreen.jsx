@@ -1,5 +1,5 @@
 import React from 'react';
-import MentalHealthPostForm from '../components/MentalHealthPostForm'; 
+import MentalHealthPostForm from '../components/blogComps/MentalHealthPostForm'; 
 
 const MentalHealthPostScreen = ({ navigation }) => {
   const handleMentalHealthSubmit = (mentalHealthData) => {

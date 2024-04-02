@@ -1,5 +1,5 @@
 import React from 'react';
-import RecipePostForm from '../components/RecipePostForm';
+import RecipePostForm from '../components/blogComps/RecipePostForm';
 
 const RecipePostScreen = ({ navigation }) => {
   const handleRecipeSubmit = (RecipeData) => {

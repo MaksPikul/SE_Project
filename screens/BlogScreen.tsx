@@ -1,27 +1,21 @@
-// BlogScreen.js or BlogScreen.tsx
-import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native/"
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import AmbassadorPostsScreen from "./AmbassadorPostsScreen";
+import BlogPostForm from "../components/blogComps/BlogPostForm";
 
 
-const BlogScreen = ({ navigation }: { navigation: any }) => {
+const Tab = createBottomTabNavigator()
+
+export function BlogScreen(){
     return(
-        <View style={styles.container}>
-            <Text> Blog </Text>
-            <Button
-                title="Go to Ambassador Section"
-                onPress={() => navigation.navigate('Ambassador')} // This navigates to the AmbassadorSection
-            />
-        </View>
-    );
-  };
-  
+        <NavigationContainer independent={true}>
+            <Tab.Navigator>
+                <Tab.Screen name="Blog Posts" component={AmbassadorPostsScreen}></Tab.Screen>
+                <Tab.Screen name="Add New Post" component={BlogPostForm}></Tab.Screen>
+            </Tab.Navigator>
+        </NavigationContainer>
+    )
+}
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-});
-
-export default BlogScreen;

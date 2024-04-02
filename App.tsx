@@ -15,7 +15,7 @@ import { Alert } from 'react-native';
 
 import FitnessScreen from './screens/FitnessScreen';
 import HomeScreen from './screens/HomeScreen';
-import BlogScreen from './screens/BlogScreen';
+import { BlogScreen } from './screens/BlogScreen';
 import NutritionScreen from './screens/NutritionScreen';
 import FitnessPostScreen from './screens/FitnessPostScreen';
 import RecipePostScreen from './screens/RecipePostScreen';
@@ -24,9 +24,9 @@ import CustomHeader from './components/CustomHeader';
 import ProgCreate from './screens/modal/ProgCreate';
 import ActivityHist from './screens/modal/ActivityHist';
 import LeaderboardScreen from './screens/LeaderboardScreen';
-import AmbassadorSection from './components/AmbassadorSection';
+import AmbassadorSection from './components/blogComps/AmbassadorSection';
 import AmbassadorPostsScreen from './screens/AmbassadorPostsScreen';
-import { PostsProvider } from './components/PostsContext';
+import { PostsProvider } from './components/blogComps/PostsContext';
 
 
 
@@ -110,7 +110,7 @@ function App(): React.JSX.Element {
             {/* playing with header settings, seeing whats up */}
             
             <stack.Screen name="Fitness" component={FitnessScreen} options={{headerTintColor: "white", headerStyle:{ backgroundColor: "purple"},headerTitleAlign: "center", headerRight: ()=> <Button title="Settings" onPress={() => Alert.alert("kill yourself")}></Button>}}/>
-            <stack.Screen name="Blog" component={AmbassadorSection} options={{ title: 'Ambassador Section' }} />
+            <stack.Screen name="Blog" component={BlogScreen} options={{ title: 'Ambassador Section' }} />
             <stack.Screen name="Nutrition" component={NutritionScreen} />
             <stack.Screen name="Leaderboard" component={LeaderboardScreen} />
             
@@ -122,10 +122,6 @@ function App(): React.JSX.Element {
             <stack.Screen name="ActivityHist" component={ActivityHist} options={{headerTitle:"Activity History", ...commonFit}}/>
             <stack.Screen name="Ambassador" component={AmbassadorSection} options={{ title: 'Ambassador Section' }} />
 
-            <stack.Screen name="AmbassadorPosts" component={AmbassadorPostsScreen} options={{title: 'Ambassador Posts'}} />
-            <stack.Screen name="RecipePost" component={RecipePostScreen} options={{ title: 'Post Recipe' }} />
-            <stack.Screen name="FitnessPost" component={FitnessPostScreen} options={{ title: 'Post Fitness Program' }} />
-            <stack.Screen name="MentalHealthPost" component={MentalHealthPostScreen} options={{ title: 'Post Mental Health Resource' }} />
           </stack.Group>
 
         </stack.Navigator> 

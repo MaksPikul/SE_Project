@@ -8,7 +8,7 @@ export const RenderPost = ({ blog_post } : { blog_post : any}) => {
             <Text style={styles.postType}>{blog_post.post_owner_name}</Text>
             {blog_post.title && <Text style={styles.postTitle}>{blog_post.title}</Text>}
             <ShowMoreShowLess text={blog_post.article} textStyle={styles.textStyle} readMoreStyle={styles.readMoreStyle}></ShowMoreShowLess>
-            {blog_post.post_time && <Text style={styles.postDate}>Posted at: {blog_post.post_time}</Text>}
+            {blog_post.post_time && <Text style={styles.postDate}>Posted on: {blog_post.post_time.substring(0,10)}</Text>}
             {blog_post.ingredients && <Text>Ingredients: {blog_post.ingredients}</Text>}
             {blog_post.resourceLink && <Text style={styles.postLink}>Resource: {blog_post.resourceLink}</Text>}
         </View>

@@ -13,7 +13,8 @@ const MentalHealthPostForm = ({ onSubmit }) => {
         description,
         resourceLink,
       });
-
+    console.log(description)
+    console.log(resourceLink)
     setDescription('');
     setResourceLink('');
   };

@@ -10,7 +10,7 @@ import {
 import { supabase } from "../lib/supabase";
 
 
-import LeaderboardItem from "../components/LeaderboardItem";
+import LeaderboardItem from "../components/leaderboardComps/LeaderboardItem";
 
 const LeaderboardScreen = () => {
 

@@ -6,9 +6,9 @@ import {
   StyleSheet 
 }  from 'react-native';
 import { supabase } from '../lib/supabase';
-import { RenderPost } from '../components/RenderPost';
+import { RenderPost } from '../components/blogComps/RenderPost';
 
-import { usePosts } from '../components/PostsContext';
+import { usePosts } from '../components/blogComps/PostsContext';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 
