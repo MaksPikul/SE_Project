@@ -9,12 +9,14 @@ import {
   Button,
   Animated,
   useWindowDimensions,
+  Alert
 } from 'react-native';
 import CustomButton from '../CustomButtons';
 import { useState, useEffect } from 'react';
 import { LinkedList } from '../../jsFiles/LinkedList';
 import { programme, week, day, exercise } from '../../jsFiles/ProgObjs';
-import { DayModal } from './DayModal';
+import { EditModal } from './EditModal';
+import { CopyModal } from './CopyModal';
 
 
 
@@ -23,7 +25,8 @@ import { DayModal } from './DayModal';
 //modal for editing, day modal probably
 
 export function EditProg({prog, setProg}) {
-  const [visible, setVisible] = useState(false)
+  const [editVisible, setEditVisible] = useState(false)
+  const [copyVisible, setCopyVisible] = useState(false)
   const [indexs, setIndexs] = useState([0,0])
 
   const scrollX = useRef(new Animated.Value(0)).current;
@@ -58,10 +61,14 @@ export function EditProg({prog, setProg}) {
     setProg({ ...prog, weeks: updatedWeeks });
   };
 
-  const handleModal = (wIndex, dIndex) =>{
+  const handleEditModal = (wIndex, dIndex) =>{
     setIndexs([parseInt(wIndex), parseInt(dIndex)])
     console.log(indexs)
-    setVisible(!visible)
+    setEditVisible(!editVisible)
+  }
+
+  const handleCopyModal = () =>{
+    setCopyVisible(!copyVisible)
   }
 
   return(
@@ -99,7 +106,7 @@ export function EditProg({prog, setProg}) {
                         <View style={{marginVertical: 10, marginHorizontal: 15}}>
                             { week.days.map((day, dayIndex) => {
                               return (
-                                  <View style={{backgroundColor: "red", color:"black"}}>
+                                  <View >
   
                                       <Text>{day.name}</Text>
                                       {day.exercises.map((exer, exerIndex)=>{
@@ -108,7 +115,7 @@ export function EditProg({prog, setProg}) {
 
 
                                       <View style={{flexDirection: "row"}}>
-                                      <Button title={"edit day"} onPress={()=>{handleModal(weekIndex, dayIndex)}}/>
+                                      <Button title={"edit day"} onPress={()=>{handleEditModal(weekIndex, dayIndex)}}/>
                                       <Button title={"remove day"} onPress={()=>{removeDayFromWeek(weekIndex, dayIndex)}}/>
                                       </View>
                                   </View>
@@ -132,22 +139,33 @@ export function EditProg({prog, setProg}) {
             }}/>
 
           <Button
-            title="copy weeks"/>
+            title="copy weeks"
+            onPress={()=>handleCopyModal()}/>
 
           <Button
-          title="finalize"/>
+          title="finalize"
+          onPress={null}
+          />
+
+
       </View>
 
-      <DayModal
-      visible={visible}
-      handleModal={handleModal}
+      <CopyModal
+      visible={copyVisible}
+      handleModal={handleCopyModal}
+      prog={prog}
+      setProg={setProg}
+      />
+
+      <EditModal
+      visible={editVisible}
+      handleModal={handleEditModal}
       prog={prog}
       setProg={setProg}
       indexs={indexs}
       addEx={addExerciseToDay}
       remEx={removeExerciseFromDay}
       />
-
 
     </SafeAreaView>
 
@@ -166,7 +184,7 @@ const styles = StyleSheet.create({
     height: 600,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor:"red"
+    
   },
   progContainer: {
     flex: 1,
@@ -176,7 +194,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    backgroundColor:"#FFFAF0",
+    backgroundColor:"#E5E4E2",
     
 
   },
@@ -209,28 +227,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 })
-
-{/*
-                        
-                        <View style={styles.indicatorContainer}>
-                          {weeks.map((prog, progIndex) => {
-                              width = scrollX.interpolate({
-                              inputRange: [
-                                windowWidth * (progIndex - 1),
-                                windowWidth * progIndex,
-                                windowWidth * (progIndex + 1),
-                              ],
-                              outputRange: [8, 16, 8],
-                              extrapolate: 'clamp',
-                            });
-                            
-                            
-                            
-                          return (
-                              <Animated.View
-                                key={progIndex}
-                                style={[styles.indicator, {width}]}
-                              />
-                            );
-                          })}
-                        </View> */}

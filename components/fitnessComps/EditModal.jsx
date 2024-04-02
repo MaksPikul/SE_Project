@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { LinkedList } from "../../jsFiles/LinkedList";
 import { exercise } from "../../jsFiles/ProgObjs";
 
-export function DayModal ({visible, handleModal, prog, setProg, indexs, addEx, remEx}) {
+export function EditModal ({visible, handleModal, prog, setProg, indexs, addEx, remEx}) {
     const [exercs,setExecrs] = useState([{
         name:'Exercise',
         sets:0,
