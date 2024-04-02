@@ -15,6 +15,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 const AmbassadorPostsScreen = () => {
     
     const [posts, setPosts] = useState([]);
+    const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
       getPosts();
@@ -25,6 +26,12 @@ const AmbassadorPostsScreen = () => {
       const { data } = await supabase.rpc('get_blogposts')
       setPosts(data);
       console.log("blog data", data)
+    }
+
+    const handleRefresh = () => {
+      setPosts(true)
+      getPosts()
+      setRefreshing(false)
     }
   
     return (
@@ -39,6 +46,8 @@ const AmbassadorPostsScreen = () => {
             )}
 
             keyExtractor={item => item.id.toFixed()}
+            refreshing={refreshing}
+            onRefresh={handleRefresh}
           />
         </View>
       </SafeAreaView>
