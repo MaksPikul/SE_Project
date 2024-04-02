@@ -1,12 +1,13 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import ShowMoreShowLess from "./ShowMoreShowLess";
 
 export const RenderPost = ({ blog_post } : { blog_post : any}) => {
     return (
         <View style={styles.postContainer}>
             <Text style={styles.postType}>{blog_post.post_owner_name}</Text>
             {blog_post.title && <Text style={styles.postTitle}>{blog_post.title}</Text>}
-            <Text>{blog_post.article}</Text>
+            <ShowMoreShowLess text={blog_post.article} textStyle={styles.textStyle} readMoreStyle={styles.readMoreStyle}></ShowMoreShowLess>
             {blog_post.post_time && <Text style={styles.postDate}>Posted at: {blog_post.post_time}</Text>}
             {blog_post.ingredients && <Text>Ingredients: {blog_post.ingredients}</Text>}
             {blog_post.resourceLink && <Text style={styles.postLink}>Resource: {blog_post.resourceLink}</Text>}
@@ -51,5 +52,13 @@ const styles = StyleSheet.create({
         color: '#0000ff', 
         marginTop: 8,
     },
+    textStyle: {
+        fontSize: 16,
+    },
+    readMoreStyle:{
+        fontSize: 14,
+        color: '#b366ff',
+        textDecorationLine: 'underline'
+    }
 })
 
