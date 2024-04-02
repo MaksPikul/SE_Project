@@ -6,20 +6,53 @@ import { LinkedList } from "../../jsFiles/LinkedList";
 import { exercise } from "../../jsFiles/ProgObjs";
 
 export function DayModal ({visible, handleModal, prog, setProg, indexs, addEx, remEx}) {
-    const [exerc,setExecrs] = useState({
-        name:'',
-        sets:'',
-        reps:''
-    })
+    const [exercs,setExecrs] = useState([{
+        name:'Exercise',
+        sets:0,
+        reps:0
+    }])
 
-    const handleInputChange = (key, val, index) => {
-        setExecrs({ ...exerc, [key]: val });
-        const updatedExerc = {...prog}
-        updatedExerc.weeks[indexs[0]].days[indexs[1]].exercises[index] = exerc;
-        setProg(updatedExerc)
+    const saveToObject=()=>{
+        const updatedWeeks = [...prog.weeks];
+        for (let i=0; i<updatedWeeks[indexs[0]].days[indexs[1]].exercises.length; i++){
+        console.log(updatedWeeks[indexs[0]].days[indexs[1]].exercises[i])
+        updatedWeeks[indexs[0]].days[indexs[1]].exercises[i].name = exercs[i].name
+        updatedWeeks[indexs[0]].days[indexs[1]].exercises[i].sets = exercs[i].sets
+        updatedWeeks[indexs[0]].days[indexs[1]].exercises[i].reps = exercs[i].reps
+        }
 
+        setProg({ ...prog, weeks: updatedWeeks });
     }
 
+    const handleTextChange = (newText, index, property) => {
+        const newInputValues = [...exercs]; // Copy the current state array
+        newInputValues[index][property] = newText; // Update the specified property of the input at the specified index
+        setExecrs(newInputValues); // Set the new state array
+      };
+
+      const addState = () => {
+        setExecrs(prevState => [
+          ...prevState,
+          { 
+            name:'',
+            sets:'',
+            reps:'' 
+          }
+        ]);
+      };
+
+      const remState = (exerciseIndex) => {
+        setExecrs(prevState => {
+            const updatedExerc = [...prevState];
+            updatedExerc.splice(exerciseIndex, 1);
+            return updatedExerc;
+        });
+};
+
+
+    /*const updatedExerc = {...prog}
+        updatedExerc.weeks[indexs[0]].days[indexs[1]].exercises[index] = exerc;
+        setProg(updatedExerc) */
     // i need a save button which save
     //i need alert when going back saying, itll save what you have so far
   
@@ -38,26 +71,24 @@ export function DayModal ({visible, handleModal, prog, setProg, indexs, addEx, r
         }} />
 
         { visible ? (prog.weeks[indexs[0]].days[indexs[1]].exercises.map((exerc, exercIndex)=>{  
+            let curNum = exerc.id
             return(
                 <View style={{flexDirection: "row"}}>
                     <Text>{"Current name: " + exerc.name}</Text>
                     
                     <TextInput 
-                    onChangeText={(a)=> handleInputChange("name", a, exercIndex)} 
+                    
+                    placeholder={exerc.name}
+                    onChangeText={(text)=>handleTextChange(text, exercIndex, "name")} 
                     style={{borderWidth: 1, borderColor: "black"}}/>
 
                     <TextInput
-                    onChangeText={(b)=> handleInputChange("sets", b, exercIndex)} 
+                    onChangeText={(text)=>handleTextChange(text, exercIndex, "sets")} 
                     style={{borderWidth: 1, borderColor: "black"}}/>
 
                     <TextInput    
-                    onChangeText={(c)=> handleInputChange("reps", c, exercIndex)} 
+                    onChangeText={(text)=>handleTextChange(text, exercIndex, "reps")} 
                     style={{borderWidth: 1, borderColor: "black"}}/>
-
-                    <Button 
-                    title="remove Exercise"
-                    onPress={()=> {
-                        remEx(indexs[0], indexs[1], exercIndex)}}/>
 
                 </View>
             )
@@ -78,17 +109,18 @@ export function DayModal ({visible, handleModal, prog, setProg, indexs, addEx, r
                 if(num < 7){
                     console.log(num)
                     addEx(indexs[0], indexs[1], new exercise(num, "Exercise", 0, 0))
+                    addState()
                 }
         }}/>
 
         
 
         
-
         <Button
         title="save current"
         onPress={()=>{
-            
+            console.log("pressed")
+            saveToObject()
         }}
         />
     </Modal>
