@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, View, Text, TextInput, Button, StyleSheet , TouchableOpacity } from 'react-native';
+import { Text, StyleSheet , TouchableOpacity, Alert } from 'react-native';
 import { supabase } from "../../lib/supabase";
 
 const SaveButton = ({post_ID, user_ID}) => {
@@ -10,9 +10,8 @@ const SaveButton = ({post_ID, user_ID}) => {
     })
 
     async function getSaved() {
-        const { data, error } = await supabase.rpc('check_if_saved', {postid: post_ID, userid: '54d2b68a-4eb6-45f9-9c17-98711ffd3324'})
+        const {data} = await supabase.rpc('check_if_saved', {postid: post_ID, userid: '54d2b68a-4eb6-45f9-9c17-98711ffd3324'})
         setIsSaved(data);
-        console.log("post", post_ID, "is saved", data)
 
     }
 
@@ -23,7 +22,14 @@ const SaveButton = ({post_ID, user_ID}) => {
             { post_id: post_ID , user_id: '54d2b68a-4eb6-45f9-9c17-98711ffd3324'}
         ])
         console.log("saving error",error)
-        getSaved()
+        if(error === null){
+            getSaved()
+        }
+        else {
+            Alert.alert('Whoops!','This post no longer exists', [
+                {text: 'Understood', onPress: () => console.log('Alert Closed')}
+            ])
+        }
     }
 
     const unsavePost = async() => {

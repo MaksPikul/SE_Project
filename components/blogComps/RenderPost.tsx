@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import ShowMoreShowLess from "./ShowMoreShowLess";
 import SaveButton from "./SaveButton";
+import DeleteButton from "./DeleteButton";
 
 export const RenderPost = ({ blog_post } : { blog_post : any}) => {
     return (
@@ -11,6 +12,7 @@ export const RenderPost = ({ blog_post } : { blog_post : any}) => {
             <ShowMoreShowLess text={blog_post.article} textStyle={styles.textStyle} readMoreStyle={styles.readMoreStyle}></ShowMoreShowLess>
             {blog_post.post_time && <Text style={styles.postDate}>Posted on: {blog_post.post_time.substring(0,10)}</Text>}
             <SaveButton post_ID={blog_post.id} user_ID={'54d2b68a-4eb6-45f9-9c17-98711ffd3324'}></SaveButton>
+            <DeleteButton post_ID={blog_post.id} user_ID={'54d2b68a-4eb6-45f9-9c17-98711ffd3324'}></DeleteButton>
         </View>
     )
 }
