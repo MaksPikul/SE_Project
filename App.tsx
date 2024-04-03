@@ -5,29 +5,14 @@
  * @format
  */
 
-import React from 'react';
+
 import { NavigationContainer } from "@react-navigation/native/"
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import type {PropsWithChildren} from 'react';
-import { Button } from 'react-native';
+import {useEffect, type PropsWithChildren, useState} from 'react';
+import { Button, Modal } from 'react-native';
 import { Alert } from 'react-native';
 
-
-import FitnessScreen from './screens/FitnessScreen';
-import HomeScreen from './screens/HomeScreen';
-import { BlogScreen } from './screens/BlogScreen';
-import NutritionScreen from './screens/NutritionScreen';
-import FitnessPostScreen from './screens/FitnessPostScreen';
-import RecipePostScreen from './screens/RecipePostScreen';
-import MentalHealthPostScreen from './screens/MentalHealthPostScreen';
-import CustomHeader from './components/CustomHeader';
-import ProgCreate from './screens/modal/ProgCreate';
-import ActivityHist from './screens/modal/ActivityHist';
-import LeaderboardScreen from './screens/LeaderboardScreen';
-import AmbassadorSection from './components/blogComps/AmbassadorSection';
-import AmbassadorPostsScreen from './screens/AmbassadorPostsScreen';
-import { PostsProvider } from './components/blogComps/PostsContext';
-
+import RootLayout from "./_RootLayout";
 
 
 
@@ -49,6 +34,11 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { supabase } from './lib/supabase';
+import LoginProvider from "./context/loginProvider";
+import MainLayout from "./_MainLayout";
+
 
 
 type SectionProps = PropsWithChildren<{
@@ -81,6 +71,8 @@ function Section({children, title}: SectionProps): React.JSX.Element {
   );
 }
 
+
+
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -96,38 +88,31 @@ function App(): React.JSX.Element {
   headerStyle:{ 
     backgroundColor: "purple"}
   }
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
   
   //for now show header
   //login page should be first with a conditional to check cookies (saving log in)
   //first is home for now
   return (
-    <PostsProvider>
-      <NavigationContainer>                                      
-        <stack.Navigator  initialRouteName='Home' screenOptions={{headerShown:true}}>
-          {/* example of how header implementation may work, idk tho */}
-          <stack.Group>
-            <stack.Screen name="Home" component={HomeScreen} options={{headerTitleAlign:"center"}}/>
-            {/* playing with header settings, seeing whats up */}
-            
-            <stack.Screen name="Fitness" component={FitnessScreen} options={{headerTintColor: "white", headerStyle:{ backgroundColor: "purple"},headerTitleAlign: "center", headerRight: ()=> <Button title="Settings" onPress={() => Alert.alert("kill yourself")}></Button>}}/>
-            <stack.Screen name="Blog" component={BlogScreen} options={{ title: 'Ambassador Section' }} />
-            <stack.Screen name="Nutrition" component={NutritionScreen} />
-            <stack.Screen name="Leaderboard" component={LeaderboardScreen} />
-            
-            
-          </stack.Group>
+    <LoginProvider>
 
-          <stack.Group screenOptions={{ presentation: "modal" }}>
-            <stack.Screen name="ProgCreate" component={ProgCreate} options={{ headerTitle:"Programme Creator", ...commonFit}}/>
-            <stack.Screen name="ActivityHist" component={ActivityHist} options={{headerTitle:"Activity History", ...commonFit}}/>
-            <stack.Screen name="Ambassador" component={AmbassadorSection} options={{ title: 'Ambassador Section' }} />
+        <MainLayout></MainLayout>
 
-          </stack.Group>
-
-        </stack.Navigator> 
-      </NavigationContainer>
-      </PostsProvider>
- 
+    </LoginProvider>
   );
 }
 
