@@ -16,8 +16,6 @@ const BlogPostForm = () => {
       {title: title, article: article, post_owner: currentUserId}
     ])
     console.log("posting error", error)
-    console.log(title)
-    console.log(article)
     setTitle('');
     setArticle('');
   }
@@ -40,9 +38,17 @@ const BlogPostForm = () => {
         onChangeText={setArticle}
       />
 
-      <TouchableOpacity style={styles.button} onPress={addPost}>
-      <Text style={styles.buttonText}>Post Blog Entry</Text>
-      </TouchableOpacity>
+      <>
+      {(title === '' || article === '') ? (
+        <TouchableOpacity style={styles.WaitButton}>
+          <Text style={styles.buttonText}>Fill Out Blog Entry</Text>
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity style={styles.SubmitButton} onPress={addPost}>
+          <Text style={styles.buttonText}>Post Blog Entry</Text>
+        </TouchableOpacity>
+      )}
+      </>
 
     </ScrollView>
   );
@@ -82,8 +88,16 @@ const styles = StyleSheet.create({
     color: 'black', 
     marginBottom: 10,
   },
-  button: {
+  SubmitButton: {
     backgroundColor: 'purple', 
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 20, 
+    width: '100%', 
+    justifyContent: 'center',
+  },
+  WaitButton: {
+    backgroundColor: '#c2c2d6', 
     borderRadius: 5,
     padding: 10,
     marginBottom: 20, 
