@@ -3,7 +3,7 @@ import { Text, StyleSheet , TouchableOpacity, Alert } from 'react-native';
 import { supabase } from "../../lib/supabase";
 
 const SaveButton = ({post_ID, user_ID}) => {
-    const [isSaved, setIsSaved] = useState();
+    const [isSaved, setIsSaved] = useState(null);
 
     useEffect(() =>{
         getSaved();
@@ -44,7 +44,7 @@ const SaveButton = ({post_ID, user_ID}) => {
 
     return(
         <>
-        {isSaved ? (
+        {isSaved? (
             <TouchableOpacity style={styles.button} onPress={unsavePost}>
                 <Text style={styles.buttonText}>Unsave</Text>
             </TouchableOpacity>
@@ -54,6 +54,8 @@ const SaveButton = ({post_ID, user_ID}) => {
             </TouchableOpacity>
         )}
         </>
+
+        
     )
 }
 
