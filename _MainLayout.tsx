@@ -5,15 +5,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { useLogin } from "./context/loginProvider";
 
 
-
-
-
-
-
-
-
-
-
 const MainLayout = () => {
     const {isLoggedIn} = useLogin();
     console.log(isLoggedIn)
