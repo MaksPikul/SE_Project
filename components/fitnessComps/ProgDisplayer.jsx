@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    backgroundColor:"#FFFAF0",
+    backgroundColor:"#D8BFD8",
 
   },
   textContainer: {

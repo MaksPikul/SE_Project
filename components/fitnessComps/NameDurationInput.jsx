@@ -46,7 +46,6 @@ export function NameDurationInput({handleInput , name, duration}) {
             value={duration}
             renderButton={(selectedItem, isOpened) => {
                 return (
-              
                 <View style={pCreate.dropButton}>
                     <Text style={pCreate.text}>
                     {(selectedItem && selectedItem.title) || ''}
@@ -60,6 +59,7 @@ export function NameDurationInput({handleInput , name, duration}) {
                 <View style={{...pCreate.dropdownItemStyle, ...(isSelected && {backgroundColor: '#D2D9DF'})}}>
                     <Icon name={item.icon} style={pCreate.dropdownItemIconStyle} />
                     <Text style={pCreate.dropdownItemTxtStyle}>{item.title}</Text>
+                    <Icon name={item.icon} style={pCreate.dropdownItemIconStyle} />
                 </View>
                 );
             }} 
@@ -74,13 +74,13 @@ const pCreate = StyleSheet.create({
     container: {
       alignContent:"center",
     },
-
     input: {
       height: 50,
       margin: 12,
       padding: 10,
       borderColor: "purple",
       borderWidth: 2,
+      borderRadius:10,
     },
     text: {
       color: 'black',
@@ -92,9 +92,12 @@ const pCreate = StyleSheet.create({
     dropButton:{
       borderBlockColor: "purple",
       borderWidth: 2,
+      borderRadius:10,
       height: 50,
       margin: 12,
       alignItems: "center"
-      
-      
-  }});
+    },
+    dropdownItemStyle:{
+      paddingHorizontal:50
+    }
+});
