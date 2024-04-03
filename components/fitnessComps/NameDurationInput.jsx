@@ -34,28 +34,25 @@ export function NameDurationInput({handleInput , name, duration}) {
 
             <Text style={pCreate.text}>Enter duration of programme (weeks)</Text>
             <SelectDropdown
-            
             data={durationDrop}
             onSelect={(selectedItem,index)=>{
-                console.log(selectedItem.title);
-
-                handleInput('duration', String(selectedItem.title));
-                
+                handleInput('duration', String(selectedItem.title))
             }}
 
             buttonTextAfterSelection={(selectedItem) => {
                 return selectedItem;
             }}
+
             value={duration}
             renderButton={(selectedItem, isOpened) => {
                 return (
+              
                 <View style={pCreate.dropButton}>
                     <Text style={pCreate.text}>
                     {(selectedItem && selectedItem.title) || ''}
                     </Text>
-                    
                 </View>
-                );
+                )
             }}
 
             renderItem={(item, index, isSelected) => {
@@ -79,7 +76,7 @@ const pCreate = StyleSheet.create({
     },
 
     input: {
-      height: 40,
+      height: 50,
       margin: 12,
       padding: 10,
       borderColor: "purple",
@@ -95,7 +92,7 @@ const pCreate = StyleSheet.create({
     dropButton:{
       borderBlockColor: "purple",
       borderWidth: 2,
-      height: 40,
+      height: 50,
       margin: 12,
       alignItems: "center"
       

@@ -3,7 +3,7 @@ import {useState, useEffect } from "react";
 import React from "react";
 import { LinkedList, Node } from "../../jsFiles/LinkedList";
 import CustomButton from "../../components/CustomButtons";
-import { NameDurationInput } from "../../components/fitnessComps/nameAndDuration";
+import { NameDurationInput } from "../../components/fitnessComps/NameDurationInput";
 import { EditProg } from "../../components/fitnessComps/EditProg";
 import { programme , week, day } from "../../jsFiles/ProgObjs";
 
@@ -54,28 +54,27 @@ export default function ProgCreate() {
 
       {!entered ? 
         (
-          <>
+          <View style={{alignContent:"center", }}>
             <NameDurationInput 
               handleInput={handleInput} 
               name={data.name}
               dur={data.duration}/>
 
+            <View style={{alignSelf:"center"}}>
             <CustomButton
               onPress={()=>{handleSubmit()}}
               text={"Submit"}
               width={300}
-              height={30}
+              height={50}
               color={"purple"}/>
-          </>
+              </View>
+          </View>
         ) 
         :
         (
           <EditProg
             prog={prog}
             setProg={setProg}/>
-        /* 
-        handleSubmit={handleSubmit}
-        weeks={weeks}*/
         )
       }
       

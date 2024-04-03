@@ -1,23 +1,18 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
   Text,
   StyleSheet,
   View,
-  ImageBackground,
   Button,
-  Animated,
-  useWindowDimensions,
   Modal,
   TouchableOpacity
 } from 'react-native';
 import CustomButton from '../CustomButtons';
-import { useState, useEffect } from 'react';
-import { LinkedList } from '../../jsFiles/LinkedList';
-import { programme, week, day, exercise } from '../../jsFiles/ProgObjs';
+import { useState } from 'react';
 
-export function CopyModal ({visible, handleModal, prog, setProg }) {
+import { exercise } from '../../jsFiles/ProgObjs';
+
+export function CopyModal ({visible, handleModal, prog, setProg, addDay, addEx }) {
     const [copyFrom, setCopyFrom] = useState(0)
     const [copyTo, setCopyTo] = useState(new Array(prog.weeks.length).fill(false)) //
     //im gonna need states for remembering which is chosen
@@ -35,14 +30,29 @@ export function CopyModal ({visible, handleModal, prog, setProg }) {
       }
 
     const handleCopying = () => {
-      let weekToCopy = JSON.parse(JSON.stringify(prog.weeks[copyFrom].days));
+      let daysToCopy = JSON.parse(JSON.stringify(prog.weeks[copyFrom].days));
 
       prog.weeks.map((week, weekIndex)=>{
         if (weekIndex != copyFrom && copyTo[weekIndex]){
 
-          prog.weeks[weekIndex].days = weekToCopy
+          daysToCopy.map((day, dayIndex)=>{
+            addDay(weekIndex)
+
+              daysToCopy[dayIndex].exercises.map((exerc, exercIndex)=>{
+                addEx(weekIndex, dayIndex,
+                  new exercise(
+                    dayIndex, 
+                    exerc.name,
+                    exerc.sets,
+                    exerc.reps
+                    ))
+              })
+          })
+          prog.weeks[weekIndex].days  
         }
       })
+
+      
       setProg(prog)
     }
 

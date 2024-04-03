@@ -2,7 +2,7 @@ import { View, Text, Button, TextInput ,SafeAreaView, Keyboard, StyleSheet, Moda
 import React from "react";
 import CustomButton from "../CustomButtons";
 import { useState, useEffect } from "react";
-import { LinkedList } from "../../jsFiles/LinkedList";
+
 import { exercise } from "../../jsFiles/ProgObjs";
 
 export function EditModal ({visible, handleModal, prog, setProg, indexs, addEx, remEx}) {
@@ -13,7 +13,7 @@ export function EditModal ({visible, handleModal, prog, setProg, indexs, addEx, 
     }])
 
     const [saved, setSaved] = useState(false)
-    const [dayName, setDayName] = useState("")
+    const [dayName, setDayName] = useState("Day Name")
 
 
     const handleDayName = (text) => {
@@ -76,7 +76,13 @@ export function EditModal ({visible, handleModal, prog, setProg, indexs, addEx, 
         <Button 
         title="go back" 
         onPress={() => {
-        handleModal()
+            if (!saved){
+                Alert.alert("Exercises have not been saved, save before continuing")
+            }
+            else{
+                handleModal()
+            }
+        setSaved(false)
         }} />
         
         <Text>Change name of day</Text>
@@ -93,17 +99,20 @@ export function EditModal ({visible, handleModal, prog, setProg, indexs, addEx, 
                     <Text>{"Current name: " + exerc.name}</Text>
                     
                     <TextInput 
+                    maxLength={15}
                     value={exercs[exercIndex].name}
                     placeholder={exerc.name}
                     onChangeText={(text)=>handleTextChange(text, exercIndex, "name")} 
                     style={{borderWidth: 1, borderColor: "black"}}/>
 
                     <TextInput
+                    maxLength={15}
                     value={exercs[exercIndex].sets.toString()}
                     onChangeText={(text)=>handleTextChange(text, exercIndex, "sets")} 
                     style={{borderWidth: 1, borderColor: "black"}}/>
 
                     <TextInput    
+                    maxLength={15}
                     value={exercs[exercIndex].reps.toString()}
                     onChangeText={(text)=>handleTextChange(text, exercIndex, "reps")} 
                     style={{borderWidth: 1, borderColor: "black"}}/>
@@ -133,14 +142,12 @@ export function EditModal ({visible, handleModal, prog, setProg, indexs, addEx, 
                 }
         }}/>
 
-        
-
-        
         <Button
         title="save current"
         onPress={()=>{
             console.log("pressed")
             saveToObject()
+            setSaved(true)
         }}
         />
     </Modal>

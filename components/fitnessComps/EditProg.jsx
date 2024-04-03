@@ -5,16 +5,14 @@ import {
   Text,
   StyleSheet,
   View,
-  ImageBackground,
   Button,
   Animated,
   useWindowDimensions,
-  Alert
+  FlatList
 } from 'react-native';
 import CustomButton from '../CustomButtons';
 import { useState, useEffect } from 'react';
-import { LinkedList } from '../../jsFiles/LinkedList';
-import { programme, week, day, exercise } from '../../jsFiles/ProgObjs';
+import { day } from '../../jsFiles/ProgObjs';
 import { EditModal } from './EditModal';
 import { CopyModal } from './CopyModal';
 
@@ -73,7 +71,8 @@ export function EditProg({prog, setProg}) {
 
   return(
     <SafeAreaView style={{...styles.container, marginVertical: 50}}>
-    
+      
+      
       <View style={styles.scrollContainer}> 
           <ScrollView
             horizontal={true}
@@ -93,7 +92,7 @@ export function EditProg({prog, setProg}) {
             {prog.weeks.map((week, weekIndex) => {
               return(
 
-                <View style={{width: windowWidth, height: 590}} key={weekIndex}>
+                <View style={{width: windowWidth, height: 690}} key={weekIndex}>
                     <View style={styles.progContainer}>
                      
                         <View style={{...styles.textContainer}}>
@@ -103,58 +102,96 @@ export function EditProg({prog, setProg}) {
                         </View>
                   
                         
-                        <View style={{marginVertical: 10, marginHorizontal: 15}}>
+                        <View style={epStyles.days}>
                             { week.days.map((day, dayIndex) => {
                               return (
-                                  <View >
+
+                                  <View style={epStyles.day}>
   
                                       <Text>{day.name}</Text>
                                       {day.exercises.map((exer, exerIndex)=>{
-                                      return(<View><Text>{exer.name + exer.sets + exer.reps}</Text></View>)})
+                                      return(
+                                      <View style={epStyles.dayInfo}>
+                                        <Text>{"Exercise: " +exer.name}</Text>
+                                        <Text>{"sets:" + exer.sets}</Text>
+                                        <Text>{"Reps:" + exer.reps}</Text>
+                                      </View>
+                                      )})
                                       }
 
 
-                                      <View style={{flexDirection: "row"}}>
-                                      <Button title={"edit day"} onPress={()=>{handleEditModal(weekIndex, dayIndex)}}/>
-                                      <Button title={"remove day"} onPress={()=>{removeDayFromWeek(weekIndex, dayIndex)}}/>
+                                      <View style={epStyles.buttonGroup}>
+                                        
+                                        <CustomButton
+                                          onPress={()=>{handleEditModal(weekIndex, dayIndex)}}
+                                          text={"Edit day"}
+                                          width={70}
+                                          height={40}
+                                          color={"purple"}/>
+                                        
+                                          <View style={{marginHorizontal:10}}/>
+
+                                          <CustomButton
+                                          onPress={()=>{removeDayFromWeek(weekIndex, dayIndex)}}
+                                          text={"-remove"}
+                                          width={70}
+                                          height={40}
+                                          color={"purple"}/>
+                                        
                                       </View>
                                   </View>
                             )})}
                         </View>
-
-                        
 
                     </View>
                 </View>
               )
             })}
           </ScrollView>
-          <Button 
-                title="+ add day" 
-                onPress={()=>{
+          </View>
+
+
+
+          <View style={epStyles.buttonGroup}>
+            
+            <CustomButton
+              onPress={()=>{
                 curWeek= Math.round(Animated.divide(scrollX, windowWidth).__getValue()) 
                 if (prog.weeks[curWeek].days.length < 7){
                   addDayToWeek(curWeek)
-                }
-            }}/>
+                }}}
+              text={"+ add day"}
+              width={100}
+              height={50}
+              color={"purple"}/>
 
-          <Button
-            title="copy weeks"
-            onPress={()=>handleCopyModal()}/>
+            <View style={{marginHorizontal:10}}/>
 
-          <Button
-          title="finalize"
-          onPress={null}
-          />
+            <CustomButton
+              onPress={()=>handleCopyModal()}
+              text={"copy weeks"}
+              width={100}
+              height={50}
+              color={"purple"}/>
+            <View style={{marginHorizontal:10}}/>
+            <CustomButton
+              onPress={null}
+              text={"finalize"}
+              width={100}
+              height={50}
+              color={"purple"}/>
+          </View>
 
 
-      </View>
+      
 
       <CopyModal
       visible={copyVisible}
       handleModal={handleCopyModal}
       prog={prog}
       setProg={setProg}
+      addDay={addDayToWeek}
+      addEx={addExerciseToDay}
       />
 
       <EditModal
@@ -166,11 +203,43 @@ export function EditProg({prog, setProg}) {
       addEx={addExerciseToDay}
       remEx={removeExerciseFromDay}
       />
-
+  
     </SafeAreaView>
 
   )
 }
+
+
+const epStyles = StyleSheet.create({
+  buttonGroup:{
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+  },
+  button : {  
+    margin: 20,
+    backgroundColor: "purple"
+
+  },
+  days:{
+    marginVertical: 10, 
+    marginHorizontal: 15,
+  },
+  day:{
+    marginVertical: 10,
+    borderWidth: 2,
+    borderRadius: 5,
+    padding:5,
+    borderColor: "purple",
+    backgroundColor: "white",
+    width:350
+  },
+  dayInfo: {
+    flexDirection:"row",
+    justifyContent: 'space-evenly'
+  }
+})
+
+
 
 
 
@@ -181,7 +250,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   scrollContainer: {
-    height: 600,
+    height: 700,
     alignItems: 'center',
     justifyContent: 'center',
     
@@ -191,11 +260,10 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     marginHorizontal: 16,
     borderRadius: 10,
-    overflow: 'hidden',
+    overflow: 'scroll',
     alignItems: 'center',
     justifyContent: 'flex-start',
     backgroundColor:"#E5E4E2",
-    
 
   },
   textContainer: {
