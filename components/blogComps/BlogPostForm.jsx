@@ -39,7 +39,7 @@ const BlogPostForm = () => {
       />
 
       <>
-      {(title.length>0 && title.replace(/\s/g, '').length==0 || article.length>0 && article.replace(/\s/g, '').length==0) ? (
+      {(title === '' || article === '' ||title.length>0 && title.replace(/\s/g, '').length==0 || article.length>0 && article.replace(/\s/g, '').length==0) ? (
         <TouchableOpacity style={styles.WaitButton}>
           <Text style={styles.buttonText}>Fill Out Blog Entry</Text>
         </TouchableOpacity>
