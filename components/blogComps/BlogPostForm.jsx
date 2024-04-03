@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
 import { ScrollView, View, Text, TextInput, Button, StyleSheet , TouchableOpacity } from 'react-native';
 import { usePosts } from './PostsContext';
+import { supabase } from '../../lib/supabase';
 
 const BlogPostForm = () => {
   const [title, setTitle] = useState('');
   const [article, setArticle] = useState('');
-  const { addPost } = usePosts();
-
-    const handleSubmit = () => {
-      addPost({
-        title,
-        article,
-      });
+  
+  var currentUserId = '54d2b68a-4eb6-45f9-9c17-98711ffd3324'
+    
+  const addPost = async() => {
+    const {error} = await supabase
+    .from('blog_post')
+    .insert([
+      {title: title, article: article, post_owner: currentUserId}
+    ])
+    console.log("posting error", error)
     console.log(title)
     console.log(article)
     setTitle('');
     setArticle('');
-  };
+  }
 
   return (
     <ScrollView style={styles.container}>
@@ -36,7 +40,7 @@ const BlogPostForm = () => {
         onChangeText={setArticle}
       />
 
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+      <TouchableOpacity style={styles.button} onPress={addPost}>
       <Text style={styles.buttonText}>Post Blog Entry</Text>
       </TouchableOpacity>
 
