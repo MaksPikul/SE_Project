@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { Text, StyleSheet , TouchableOpacity } from 'react-native';
+import { Text, StyleSheet , TouchableOpacity, Alert } from 'react-native';
 import { supabase } from "../../lib/supabase";
 
  const DeleteButton = ({post_ID, user_ID}) => {
@@ -23,10 +23,16 @@ import { supabase } from "../../lib/supabase";
         getOwned()
     }
 
+    function deleteConfirmation() {
+        Alert.alert('Wait','Are you sure you want to delete this post?', [
+            {text: "No"},{text: 'Yes', onPress: () => deletePost()},
+        ])    
+    }
+
     return(
         <>
         {isOwned ?(
-            <TouchableOpacity style={styles.button} onPress={deletePost}>
+            <TouchableOpacity style={styles.button} onPress={deleteConfirmation}>
                 <Text style={styles.buttonText}>Delete</Text>
             </TouchableOpacity>
         ) : (

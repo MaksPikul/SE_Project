@@ -28,7 +28,6 @@ const BlogPostForm = () => {
         placeholder="Type blog post title"
         value={title}
         onChangeText={setTitle}
-        multiline
       />
       <Text style={styles.label}>Blog Article</Text>
       <TextInput
@@ -36,16 +35,17 @@ const BlogPostForm = () => {
         placeholder="Type blog post content"
         value={article}
         onChangeText={setArticle}
+        multiline
       />
 
       <>
-      {(title === '' || article === '') ? (
+      {(title === '' || article === '' ||title.length>0 && title.replace(/\s/g, '').length==0 || article.length>0 && article.replace(/\s/g, '').length==0) ? (
         <TouchableOpacity style={styles.WaitButton}>
           <Text style={styles.buttonText}>Fill Out Blog Entry</Text>
         </TouchableOpacity>
       ) : (
         <TouchableOpacity style={styles.SubmitButton} onPress={addPost}>
-          <Text style={styles.buttonText}>Post Blog Entry</Text>
+          <Text style={styles.buttonText} >Post Blog Entry</Text>
         </TouchableOpacity>
       )}
       </>
@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 16, 
     textAlignVertical: 'top'
+    
   },
   inputArticle: {
     height: 200,
