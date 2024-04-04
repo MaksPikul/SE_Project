@@ -1,9 +1,10 @@
 import {View, Text, StyleSheet , Button} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import HomeButton from '../components/homeButton';
-import { homeStyle } from "../styles/allStyles";
+import { homeStyle, logoutButton } from "../styles/allStyles";
 import { logout } from "../components/Logout";
 import { useLogin } from "../context/loginProvider";
+import CustomButton from "../components/CustomButtons";
 
 /* 
 For this page
@@ -23,16 +24,29 @@ For all sections,
 */
 
 export default function HomeScreen({}) {
+
+
     const {setIsLoggedIn} = useLogin();
     const navigation = useNavigation()
-    console.log("Logout pressed")
+    
     const handleLogout = async () => {
+        console.log("Logout pressed")
+        setIsLoggedIn(false)
         await logout(); // Call the logout function
       };
     return(
         <View style={homeStyle.container}>
 
-            <HomeButton
+            
+        <HomeButton
+          onPress={handleLogout}
+          title="Logout"
+          buttonStyle={logoutButton.button}
+          textStyle={logoutButton.text}
+        />
+        <View style={homeStyle.column}>
+
+          <HomeButton
             onPress={() => navigation.navigate("Fitness")}
             title="Fitness"
             buttonStyle={homeStyle.button}
@@ -58,16 +72,10 @@ export default function HomeScreen({}) {
             title="Leaderboard"
             buttonStyle={homeStyle.button}
             textStyle={homeStyle.buttonText}
-            />
-
-            <CustomButton
-            onPress={() => { handleLogout(), setIsLoggedIn(false)}}
-            title="Logout"
-            buttonStyle={homeStyle.button}
-            textStyle={homeStyle.buttonText}
-            />
-
+          />
         </View>
+        
+      </View>
 
     )
 }

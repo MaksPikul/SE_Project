@@ -10,8 +10,10 @@ import ProgCreate from "./screens/modal/ProgCreate";
 import ActivityHist from "./screens/modal/ActivityHist";
 import AmbassadorSection from "./components/blogComps/AmbassadorSection";
 import LoginLayout from "./_LoginLayout";
-import { useContext } from "react";
+import { PropsWithChildren, useContext } from "react";
 import { useLogin } from "./context/loginProvider";
+import { StyleSheet, Text, View, useColorScheme } from "react-native";
+import { Colors } from "react-native-elements";
 import React from "react";
 
 
@@ -19,22 +21,28 @@ import React from "react";
 
 const mainscreens = {
     Home: {
-        screen: HomeScreen
+        screen: HomeScreen,
+        options: {headerShown: false},
     },
     Login: {
-        screen: LoginLayout
+        screen: LoginLayout,
+        options: {undefined},
     },
     Fitness: {
-        screen: FitnessScreen
+        screen: FitnessScreen,
+        options: {undefined},
     },
     Blog: {
-        screen: BlogScreen
+        screen: BlogScreen,
+        options: {undefined},
     },
     Nutrition: {
-        screen: NutritionScreen
+        screen: NutritionScreen,
+        options: {undefined},
     },
     Leaderboard: {
-        screen: LeaderboardScreen
+        screen: LeaderboardScreen,
+        options: {undefined},
     },
 }
 
@@ -59,8 +67,8 @@ const RootLayout = () => {
         <NavigationContainer>
         <stack.Navigator>
             <stack.Group>
-            {Object.entries(mainscreens).map(([name, { screen }]) => (
-                <stack.Screen key={name} name={name} component={screen} />
+            {Object.entries(mainscreens).map(([name, { screen, options } ]) => (
+                <stack.Screen key={name} name={name} component={screen} options={options}/>
             ))}</stack.Group>
             <stack.Group>
             {Object.entries(subscreens).map(([name, { screen }]) => (
@@ -71,6 +79,9 @@ const RootLayout = () => {
       </PostsProvider>
     )
 }
+
+
+
 
 export default RootLayout;
 
