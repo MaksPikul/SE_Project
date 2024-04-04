@@ -9,7 +9,6 @@ export default function RecipeScreen() {
 
     return (
         <View>
-            <Text style = {{textAlign:'center', fontSize:20}}>Create Recipe</Text>
             <Search 
                 placeholder="Enter recipe name" 
                 showButton={false}

@@ -7,7 +7,8 @@ export default function Search ({
     showButton, 
     buttonName, 
     height,
-    multi
+    multi,
+    buttonColor
 }) {
 
     return (
@@ -22,7 +23,7 @@ export default function Search ({
             {showButton && <Button
                 title={buttonName}
                 onPress={fetchData}
-                color={'#58a61c'}
+                color={buttonColor}
             />}
         </View>
     )
