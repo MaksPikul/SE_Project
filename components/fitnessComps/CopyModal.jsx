@@ -5,10 +5,14 @@ import {
   View,
   Button,
   Modal,
-  TouchableOpacity
+  TouchableOpacity,
+  ScrollView,
+  Animated,
+  useWindowDimensions,
 } from 'react-native';
 import CustomButton from '../CustomButtons';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import LinearGradient from 'react-native-linear-gradient';
 
 import { exercise } from '../../jsFiles/ProgObjs';
 
@@ -17,6 +21,9 @@ export function CopyModal ({visible, handleModal, prog, setProg, addDay, addEx }
     const [copyTo, setCopyTo] = useState(new Array(prog.weeks.length).fill(false)) //
     //im gonna need states for remembering which is chosen
     //only one and many to choose, without the one thats already chosen
+
+    const scrollX = useRef(new Animated.Value(0)).current;
+    const {width: windowWidth} = useWindowDimensions();
 
     const updateCopyTo = (index) => {
         setCopyTo(prevState => {
@@ -66,7 +73,7 @@ export function CopyModal ({visible, handleModal, prog, setProg, addDay, addEx }
                 <View style={copyStyle.modalContent}>
                     
                     <Text style={copyStyle.text}>Copy from week:</Text>
-                    <View style={{flexDirection: "row", justifyContent:"center"}}>
+                    <View style={{flexWrap: "wrap", flexDirection: "row", justifyContent:"flex-start"}}>
                     {prog.weeks.map((week, weekIndex)=>{
                         if (week.days[0]){
                             return(
@@ -87,10 +94,10 @@ export function CopyModal ({visible, handleModal, prog, setProg, addDay, addEx }
                     </View>
 
                     <Text style={copyStyle.text}>Copy to:</Text>
-                    <View style={{flexDirection: "row", justifyContent:"center"}}>
+                    <View style={{flexWrap: "wrap", flexDirection: "row", justifyContent:"flex-start"}}>
                     {prog.weeks.map((week, weekIndex)=>{
                         return(
-                            
+                          
                               <TouchableOpacity
                               style={
                                 {opacity: copyTo[weekIndex] ? 1 : 0.4,
@@ -98,15 +105,18 @@ export function CopyModal ({visible, handleModal, prog, setProg, addDay, addEx }
                               onPress={()=>{
                                   updateCopyTo(weekIndex)
                               }}>
+                                
                                   
                               <Text style={{color: "white", alignSelf:"center"}}>{"w"+(weekIndex+1)}</Text>
+                              
                               </TouchableOpacity>   
-                            
+                          
                         )
                     })}
                     </View>
 
-                    <View style={copyStyle.group}>
+                    <View
+                    style={copyStyle.group}>
                       <CustomButton
                       onPress={()=>{
                         handleCopying()
@@ -117,7 +127,7 @@ export function CopyModal ({visible, handleModal, prog, setProg, addDay, addEx }
                       text={"Copy"}
                       width={140}
                       height={40}
-                      color={"purple"}/>
+                      color={"navy"}/>
                       <View style={{margin: 20}}/>
                       <CustomButton
                       onPress={()=>{
@@ -128,7 +138,7 @@ export function CopyModal ({visible, handleModal, prog, setProg, addDay, addEx }
                       text={"Go back"}
                       width={140}
                       height={40}
-                      color={"purple"}/>
+                      color={"navy"}/>
                     </View>
 
                 </View>
@@ -150,7 +160,8 @@ const copyStyle = StyleSheet.create({
     group:{
       flexDirection: "row",
       justifyContent:"center",
-      marginTop:15
+      marginTop:15,
+      
     },
     modalContainer: {
       flex: 1,
@@ -159,13 +170,14 @@ const copyStyle = StyleSheet.create({
       backgroundColor: 'rgba(0, 0, 0, 0.5)', 
     },
     button:{
-      backgroundColor: "purple",
-      margin:5,
+      backgroundColor: "navy",
+      margin:7,
       height: 40,
       width: 50,
       borderWidth:2,
-      borderColor: "purple",
-      borderRadius: 5
+      borderColor: "navy",
+      borderRadius: 15,
+     
     },
     text:{
       fontSize:16,

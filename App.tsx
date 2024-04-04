@@ -94,7 +94,7 @@ function App(): React.JSX.Element {
   {headerTintColor: "white",
   headerTitleAlign: "center",
   headerStyle:{ 
-    backgroundColor: "purple"}
+    backgroundColor: "navy"}
   }
   
   //for now show header
@@ -109,7 +109,7 @@ function App(): React.JSX.Element {
             <stack.Screen name="Home" component={HomeScreen} options={{headerTitleAlign:"center"}}/>
             {/* playing with header settings, seeing whats up */}
             
-            <stack.Screen name="Fitness" component={FitnessScreen} options={{headerTintColor: "white", headerStyle:{ backgroundColor: "purple"},headerTitleAlign: "center", headerRight: ()=> <Button title="Settings" onPress={() => Alert.alert("kill yourself")}></Button>}}/>
+            <stack.Screen name="Fitness" component={FitnessScreen} options={{headerTintColor: "white", headerStyle:{ backgroundColor: "navy"},headerTitleAlign: "center", headerRight: ()=> <Button title="Settings" onPress={() => Alert.alert("kill yourself")}></Button>}}/>
             <stack.Screen name="Blog" component={BlogScreen} options={{ title: 'Ambassador Section' }} />
             <stack.Screen name="Nutrition" component={NutritionScreen} />
             <stack.Screen name="Leaderboard" component={LeaderboardScreen} />

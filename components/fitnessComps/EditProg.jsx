@@ -15,6 +15,7 @@ import { useState, useEffect } from 'react';
 import { day } from '../../jsFiles/ProgObjs';
 import { EditModal } from './EditModal';
 import { CopyModal } from './CopyModal';
+import LinearGradient from 'react-native-linear-gradient';
 
 
 
@@ -92,19 +93,26 @@ export function EditProg({prog, setProg}) {
             {prog.weeks.map((week, weekIndex) => {
               return(
 
-                <View style={{width: windowWidth, height: 610}} key={weekIndex}>
+                <View style={{width: windowWidth, height: 620,}} key={weekIndex}>
                     <View style={styles.progContainer}>
                      
+                    
                         <View style={{...styles.textContainer}}>
-                            <Text style={styles.text}> Programme name: {prog.name}</Text>
-                            <Text style={styles.text}> Duration: {prog.duration} weeks</Text>
+                        <LinearGradient
+                          colors={['blue', 'navy']}>
+                            <Text style={{...styles.text, color:"white"}}> Programme name: {prog.name}</Text>
+                            <Text style={{...styles.text, color:"white"}}> Duration: {prog.duration} weeks</Text>
                             
-                            <Text style={{...styles.text, alignSelf:"center", margin: 20}}> Week {(weekIndex+1)}</Text>
-                            
+                            <Text style={{...styles.text,color:"white",  alignSelf:"center", margin: 10}}> Week {(weekIndex+1)}</Text>
+                            </LinearGradient>
                         </View>
+                    
                   
                         
-                        <View style={epStyles.days}>
+                        <ScrollView
+                        showsVerticalScrollIndicator={false}
+                        bounces={false} 
+                        style={epStyles.days}>
                             { week.days.map((day, dayIndex) => {
                               return (
 
@@ -114,8 +122,8 @@ export function EditProg({prog, setProg}) {
                                       {day.exercises.map((exer, exerIndex)=>{
                                       return(
                                       <View style={epStyles.dayInfo}>
-                                        <Text>{"Exercise: " +exer.name}</Text>
-                                        <Text>{"sets:" + exer.sets}</Text>
+                                        <Text>{"Name: " +exer.name}</Text>
+                                        <Text>{"Sets:" + exer.sets}</Text>
                                         <Text>{"Reps:" + exer.reps}</Text>
                                       </View>
                                       )})
@@ -129,7 +137,7 @@ export function EditProg({prog, setProg}) {
                                           text={"Edit day"}
                                           width={70}
                                           height={40}
-                                          color={"purple"}/>
+                                          color={"navy"}/>
                                         
                                           <View style={{marginHorizontal:10}}/>
 
@@ -138,12 +146,12 @@ export function EditProg({prog, setProg}) {
                                           text={"-remove"}
                                           width={70}
                                           height={40}
-                                          color={"purple"}/>
+                                          color={"navy"}/>
                                         
                                       </View>
                                   </View>
                             )})}
-                        </View>
+                        </ScrollView>
 
                     </View>
                 </View>
@@ -165,7 +173,7 @@ export function EditProg({prog, setProg}) {
               text={"+ add day"}
               width={100}
               height={50}
-              color={"purple"}/>
+              color={"navy"}/>
 
             <View style={{marginHorizontal:10}}/>
 
@@ -174,14 +182,14 @@ export function EditProg({prog, setProg}) {
               text={"copy weeks"}
               width={100}
               height={50}
-              color={"purple"}/>
+              color={"navy"}/>
             <View style={{marginHorizontal:10}}/>
             <CustomButton
               onPress={null}
-              text={"finalize"}
+              text={"✔ finalize"}
               width={100}
               height={50}
-              color={"purple"}/>
+              color={"navy"}/>
           </View>
 
 
@@ -219,7 +227,7 @@ const epStyles = StyleSheet.create({
   },
   button : {  
     margin: 20,
-    backgroundColor: "purple"
+    backgroundColor: "navy"
 
   },
   days:{
@@ -231,9 +239,14 @@ const epStyles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 5,
     padding:5,
-    borderColor: "purple",
+    borderColor: "navy",
     backgroundColor: "white",
-    width:350
+    width:320,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    elevation: 10,
   },
   dayInfo: {
     flexDirection:"row",
@@ -256,6 +269,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     
+    marginBottom:15
+    
   },
   progContainer: {
     flex: 1,
@@ -265,15 +280,17 @@ const styles = StyleSheet.create({
     overflow: 'scroll',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    backgroundColor:"#D8BFD8",
+    backgroundColor:"white",
+    
+    
+    
 
   },
   textContainer: {
     height: 100,
-    width: 300,
-    backgroundColor:"white",
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius:20
+    width: 400,
+    backgroundColor:"navy",
+    
   },
   text: {
     color: 'black',

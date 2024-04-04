@@ -43,7 +43,7 @@ export default function FitnessScreen() {
                     text="+ Create Programe" 
                     width={360} 
                     height={45} 
-                    color={"purple"}/>
+                    color={"navy"}/>
                     
                     <View style={{height:20}}></View>
                     
@@ -53,7 +53,7 @@ export default function FitnessScreen() {
                     text="Activity History" 
                     width={360} 
                     height={45} 
-                    color={"purple"}/>
+                    color={"navy"}/>
                 </View>
            
         </View>

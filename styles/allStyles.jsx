@@ -24,7 +24,7 @@ export const homeStyle = StyleSheet.create({
 
 export const fitStyles = StyleSheet.create({
     scrollContainer: {
-        backgroundColor: "lightgrey",
+        backgroundColor: "#f5f5f5",
     },
     viewContainer: {
         flexDirection: "column",
@@ -46,6 +46,13 @@ export const CustButStyle = StyleSheet.create({
       justifyContent: "center",
       borderWidth: 2,
       borderRadius: 7,
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      elevation: 10,
+      
+
     },
     buttonPressed: {
       elevation: 10,

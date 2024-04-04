@@ -19,9 +19,4 @@ const CustomButton = ({onPress, text, width, height, color} : {onPress : any, te
 
 };
 
-
-
-
-
-
 export default CustomButton;
