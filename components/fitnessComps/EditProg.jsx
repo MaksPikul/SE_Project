@@ -92,13 +92,15 @@ export function EditProg({prog, setProg}) {
             {prog.weeks.map((week, weekIndex) => {
               return(
 
-                <View style={{width: windowWidth, height: 690}} key={weekIndex}>
+                <View style={{width: windowWidth, height: 610}} key={weekIndex}>
                     <View style={styles.progContainer}>
                      
                         <View style={{...styles.textContainer}}>
-                            <Text style={styles.text}> Programme name: {prog.name} - Duration: {prog.duration} weeks</Text>
-                            <Text style={styles.text}> Week {(weekIndex+1)}</Text>
-                            <Text > {curWeek}</Text>
+                            <Text style={styles.text}> Programme name: {prog.name}</Text>
+                            <Text style={styles.text}> Duration: {prog.duration} weeks</Text>
+                            
+                            <Text style={{...styles.text, alignSelf:"center", margin: 20}}> Week {(weekIndex+1)}</Text>
+                            
                         </View>
                   
                         
@@ -250,7 +252,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   scrollContainer: {
-    height: 700,
+    height: 620,
     alignItems: 'center',
     justifyContent: 'center',
     
@@ -263,15 +265,15 @@ const styles = StyleSheet.create({
     overflow: 'scroll',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    backgroundColor:"#E5E4E2",
+    backgroundColor:"#D8BFD8",
 
   },
   textContainer: {
     height: 100,
     width: 300,
     backgroundColor:"white",
-    borderBottomWidth: 2,
-    borderBlockColor: "black"
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius:20
   },
   text: {
     color: 'black',

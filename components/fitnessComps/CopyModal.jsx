@@ -65,53 +65,71 @@ export function CopyModal ({visible, handleModal, prog, setProg, addDay, addEx }
             <View style={copyStyle.modalContainer}>
                 <View style={copyStyle.modalContent}>
                     
-                    <Text>Copy from week:</Text>
+                    <Text style={copyStyle.text}>Copy from week:</Text>
+                    <View style={{flexDirection: "row", justifyContent:"center"}}>
                     {prog.weeks.map((week, weekIndex)=>{
                         if (week.days[0]){
                             return(
                                <TouchableOpacity
-                                style={{backgroundColor: (week.id == copyFrom) ? "red" : "blue"}}
+                                style={{opacity: (week.id == copyFrom) ?  1 : 0.4,
+                                  ...copyStyle.button}}
                                 onPress={()=>{
                                     if (copyTo[week.id] === false) {
                                     setCopyFrom(week.id)
                                     }
                                 }}>
                                 
-                                <Text>{"w"+(weekIndex+1)}</Text>
+                                <Text style={{color: "white", alignSelf:"center"}}>{"w"+(weekIndex+1)}</Text>
                                </TouchableOpacity>
                             )
                         }
                     })}
+                    </View>
 
-                    <Text>Copy to:</Text>
+                    <Text style={copyStyle.text}>Copy to:</Text>
+                    <View style={{flexDirection: "row", justifyContent:"center"}}>
                     {prog.weeks.map((week, weekIndex)=>{
                         return(
-                            <TouchableOpacity
-                            style={{backgroundColor: copyTo[weekIndex] ? "red" : "blue"}} 
-                            onPress={()=>{
-                                updateCopyTo(weekIndex)
-                            }}>
-                                
-                            <Text>{"w"+(weekIndex+1)}</Text>
-                            </TouchableOpacity>   
+                            
+                              <TouchableOpacity
+                              style={
+                                {opacity: copyTo[weekIndex] ? 1 : 0.4,
+                                ...copyStyle.button}} 
+                              onPress={()=>{
+                                  updateCopyTo(weekIndex)
+                              }}>
+                                  
+                              <Text style={{color: "white", alignSelf:"center"}}>{"w"+(weekIndex+1)}</Text>
+                              </TouchableOpacity>   
+                            
                         )
                     })}
-                    
+                    </View>
 
-                    <Text>.</Text>
-                    <Button title="Copy" 
-                    onPress={()=>{
-                      handleCopying()
-                      setCopyTo(new Array(prog.weeks.length).fill(false))
-                      setCopyFrom(0)
-                      handleModal()
-                    }}/>
-
-                    <Button title="Go back" onPress={()=>{
+                    <View style={copyStyle.group}>
+                      <CustomButton
+                      onPress={()=>{
+                        handleCopying()
                         setCopyTo(new Array(prog.weeks.length).fill(false))
                         setCopyFrom(0)
                         handleModal()
-                        }}/>
+                      }}
+                      text={"Copy"}
+                      width={140}
+                      height={40}
+                      color={"purple"}/>
+                      <View style={{margin: 20}}/>
+                      <CustomButton
+                      onPress={()=>{
+                        setCopyTo(new Array(prog.weeks.length).fill(false))
+                        setCopyFrom(0)
+                        handleModal()
+                        }}
+                      text={"Go back"}
+                      width={140}
+                      height={40}
+                      color={"purple"}/>
+                    </View>
 
                 </View>
             </View>
@@ -129,11 +147,29 @@ const copyStyle = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
     },
+    group:{
+      flexDirection: "row",
+      justifyContent:"center",
+      marginTop:15
+    },
     modalContainer: {
       flex: 1,
       justifyContent: 'flex-end',
       alignItems: 'center',
       backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+    },
+    button:{
+      backgroundColor: "purple",
+      margin:5,
+      height: 40,
+      width: 50,
+      borderWidth:2,
+      borderColor: "purple",
+      borderRadius: 5
+    },
+    text:{
+      fontSize:16,
+      color: "black"
     },
     modalContent: {
       backgroundColor: 'white',
