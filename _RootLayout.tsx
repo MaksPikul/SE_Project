@@ -14,6 +14,7 @@ import { PropsWithChildren, useContext } from "react";
 import { useLogin } from "./context/loginProvider";
 import { StyleSheet, Text, View, useColorScheme } from "react-native";
 import { Colors } from "react-native-elements";
+import React from "react";
 
 
 
@@ -49,7 +50,7 @@ const subscreens = {
     ProgCreate: {
         screen: ProgCreate
     },
-    ActivityHistory: {
+    ActivityHist: {
         screen: ActivityHist
     },
     Ambassador: {

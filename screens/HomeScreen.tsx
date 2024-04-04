@@ -4,6 +4,7 @@ import CustomButton from '../components/homeButton';
 import { homeStyle, logoutButton } from "../styles/allStyles";
 import { logout } from "../components/Logout";
 import { useLogin } from "../context/loginProvider";
+import React from "react";
 
 /* 
 For this page
@@ -21,7 +22,7 @@ For all sections,
 export default function HomeScreen({}) {
 
 
-    const {setIsLoggedIn} = useLogin();
+    const {setIsLoggedIn, name} = useLogin();
     const navigation = useNavigation()
     
     const handleLogout = async () => {
@@ -31,6 +32,7 @@ export default function HomeScreen({}) {
       };
     return(
         <View style={homeStyle.container}>
+        <Text>Hello {name}</Text>
         <CustomButton
           onPress={handleLogout}
           title="Logout"

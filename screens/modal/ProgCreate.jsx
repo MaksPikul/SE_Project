@@ -48,39 +48,35 @@ export default function ProgCreate() {
   }
 
 
-  return(
+  return (
     <ScrollView>
-
-
-      {!entered ? 
-        (
-          <View style={{alignContent:"center", }}>
-            <NameDurationInput 
-              handleInput={handleInput} 
-              name={data.name}
-              dur={data.duration}/>
-
-            <View style={{alignSelf:"center"}}>
+      {!entered ? (
+        <View key="input-view" style={{alignContent:"center"}}>
+          <NameDurationInput 
+            handleInput={handleInput} 
+            name={data.name}
+            dur={data.duration}
+          />
+          <View style={{alignSelf:"center"}}>
             <CustomButton
-              onPress={()=>{handleSubmit()}}
-              text={"Submit"}
+              onPress={handleSubmit}
+              text="Submit"
               width={300}
               height={50}
-              color={"purple"}/>
-              </View>
+              color="purple"
+            />
           </View>
-        ) 
-        :
-        (
-          <EditProg
-            prog={prog}
-            setProg={setProg}/>
-        )
-      }
-      
-        
+        </View>
+      ) : (
+        <EditProg
+          key="edit-prog"
+          prog={prog}
+          setProg={setProg}
+        />
+      )}
     </ScrollView>
-  )
+  );
+  
 
 
 }
