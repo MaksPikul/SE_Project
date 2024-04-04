@@ -7,9 +7,12 @@ interface LoginContextType {
     setToken: React.Dispatch<React.SetStateAction<string>>;
     uid: string; 
     setUID: React.Dispatch<React.SetStateAction<string>>;
+    name: string;
+    setName: React.Dispatch<React.SetStateAction<string>>;
+    phone: string;
+    setPhone: React.Dispatch<React.SetStateAction<string>>;
     //metaData: {};
-    //setMetaData: React.Dispatch<React.SetStateAction<{}>>;
-
+    //setMetaData: React.Dispatch<React.SetStateAction<{}>>
 }
 
 
@@ -19,11 +22,14 @@ const LoginProvider: React.FC = ({children}) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [token, setToken] = useState('')
     const [uid, setUID] = useState('defaultID')
+    const [name, setName] = useState('defaultID')
+    const [phone, setPhone] = useState('defaultID')
+
     //const [metaData, setMetaData] = useState({})
 
 
     return (
-    <LoginContext.Provider value={{isLoggedIn, setIsLoggedIn, token, setToken, uid, setUID}}>
+    <LoginContext.Provider value={{isLoggedIn, setIsLoggedIn, token, setToken, uid, setUID, phone, setPhone, name, setName}}>
         {children}
     </LoginContext.Provider>
     );

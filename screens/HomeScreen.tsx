@@ -27,7 +27,7 @@ For all sections,
 export default function HomeScreen({}) {
 
 
-    const {setIsLoggedIn} = useLogin();
+    const {setIsLoggedIn, name} = useLogin();
     const navigation = useNavigation()
     
     const handleLogout = async () => {
@@ -37,6 +37,7 @@ export default function HomeScreen({}) {
       };
     return(
         <View style={homeStyle.container}>
+        <Text>Hello {name}</Text>
 
             
         <HomeButton
