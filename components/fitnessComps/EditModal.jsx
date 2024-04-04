@@ -92,7 +92,7 @@ export function EditModal ({visible, handleModal, prog, setProg, indexs, addEx, 
             text={"go back"}
             width={140}
             height={40}
-            color={"purple"}/>
+            color={"navy"}/>
         </View>
         
         <View style={editStyle.inputs}>
@@ -137,7 +137,7 @@ export function EditModal ({visible, handleModal, prog, setProg, indexs, addEx, 
                     text={"- remove"}
                     width={70}
                     height={40}
-                    color={"purple"}/>
+                    color={"navy"}/>
                     
                 </View>
             )
@@ -160,7 +160,7 @@ export function EditModal ({visible, handleModal, prog, setProg, indexs, addEx, 
                 text={"+ add Exercise" }
                 width={140}
                 height={40}
-                color={"purple"}/>
+                color={"navy"}/>
             
                 <View style={{margin: 20}}/>
             
@@ -173,7 +173,7 @@ export function EditModal ({visible, handleModal, prog, setProg, indexs, addEx, 
                 text={"save current"}
                 width={140}
                 height={40}
-                color={"purple"}/>
+                color={"navy"}/>
             
         </View>
                 
@@ -199,7 +199,7 @@ const editStyle = StyleSheet.create({
         alignSelf: "center"
     },
     inputs:{
-        borderColor: "purple",
+        borderColor: "navy",
         //borderWidth: 2,
         marginTop: 10
     },

@@ -119,7 +119,7 @@ export const ProgDisplayer = () => {
                     text="Start Tracking!" 
                     width={260} 
                     height={45} 
-                    color={"purple"}/>
+                    color={"navy"}/>
             </View>
           
 
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    backgroundColor:"#D8BFD8",
+    backgroundColor:"#f5f5f5",
 
   },
   textContainer: {

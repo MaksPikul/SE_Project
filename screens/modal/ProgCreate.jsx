@@ -6,6 +6,7 @@ import CustomButton from "../../components/CustomButtons";
 import { NameDurationInput } from "../../components/fitnessComps/NameDurationInput";
 import { EditProg } from "../../components/fitnessComps/EditProg";
 import { programme , week, day } from "../../jsFiles/ProgObjs";
+import LinearGradient from "react-native-linear-gradient";
 
 
 export default function ProgCreate() {
@@ -49,7 +50,7 @@ export default function ProgCreate() {
 
 
   return(
-    <ScrollView>
+    <View>
 
 
       {!entered ? 
@@ -60,56 +61,29 @@ export default function ProgCreate() {
               name={data.name}
               dur={data.duration}/>
 
-            <View style={{alignSelf:"center"}}>
+            <View style={{alignSelf:"center", marginBottom:30}}>
             <CustomButton
               onPress={()=>{handleSubmit()}}
               text={"Submit"}
               width={300}
               height={50}
-              color={"purple"}/>
+              color={"navy"}/>
               </View>
           </View>
         ) 
         :
         (
+          <View style={{marginTop:270}}>
           <EditProg
             prog={prog}
             setProg={setProg}/>
+          </View>
         )
       }
       
         
-    </ScrollView>
+    </View>
   )
 
 
 }
-
-const pCreate = StyleSheet.create({
-  container: {
-    alignContent:"center",
-  },
-
-  input: {
-    height: 40,
-    margin: 12,
-    padding: 10,
-    borderColor: "purple",
-    borderWidth: 2,
-  },
-  text: {
-    color: 'black',
-    fontSize: 15,
-    fontWeight: 'bold',
-    paddingHorizontal: 30, 
-    paddingTop: 5,
-  },
-  dropButton:{
-    borderBlockColor: "purple",
-    borderWidth: 2,
-    height: 40,
-    margin: 12,
-    alignItems: "center"
-    
-    
-}});

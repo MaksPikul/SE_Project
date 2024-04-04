@@ -78,7 +78,7 @@ const pCreate = StyleSheet.create({
       height: 50,
       margin: 12,
       padding: 10,
-      borderColor: "purple",
+      borderColor: "navy",
       borderWidth: 2,
       borderRadius:10,
     },
@@ -90,7 +90,7 @@ const pCreate = StyleSheet.create({
       paddingTop: 5,
     },
     dropButton:{
-      borderBlockColor: "purple",
+      borderBlockColor: "navy",
       borderWidth: 2,
       borderRadius:10,
       height: 50,
