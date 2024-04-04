@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import CustomButton from '../CustomButtons';
 import { supabase } from '../../lib/supabase';
+import { useLogin } from '../../context/loginProvider';
 // import React, {useEffect, useState} from "react";
 
 
@@ -42,18 +43,47 @@ let day = "monday"
 export const ProgDisplayer = () => {
 
   const [exercises, setExercises] = useState([]);
+  
+
+  
 
   useEffect(() => {
     getExercise();
   }, []);
 
-  async function getExercise() {
-    const { data } = await supabase.rpc('get_exercises')
-    setExercises(data);
-    console.log(data)
-    const arrayWeekNum = exercises.map(week => <Text>{week.week_number}</Text>);
-    console.log('week_number', arrayWeekNum)
+  async function getExercise({uid}) {
+
+
+      try {
+           // Assuming useLogin provides uid
+  
+          if (!uid) {
+              throw new Error('UID is not available.');
+          }
+  
+          const { data, error } = await supabase.rpc('get_fitness_data', {
+              uid
+          });
+  
+          if (error) {
+              console.error('Error fetching exercise data:', error.message);
+          } else {
+              console.log('Exercise data:', data);
+              Copy
+  
+            setExercises(data);
+            console.log(data)
+            const arrayWeekNum = exercises.map(week => <Text>{week.week_number}</Text>);
+            console.log('week_number', arrayWeekNum)
+                      // Do something with the retrieved data
+          }
+      } catch (error) {
+          console.error('Error:', error.message);
+      }
   }
+  
+  
+  
 
   const progs = new Array(4).fill(
     "program: 8hr arm work out"
