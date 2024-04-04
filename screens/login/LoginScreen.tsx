@@ -1,24 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, Button } from 'react-native';
 import { supabase } from '../../lib/supabase';
-import { NavigationContainer, NavigationProp, useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useLogin } from '../../context/loginProvider';
 
 
 
 
-export const LoginTab = () => {
+
+
+
+export const LoginTab = ({}) => {
 
   const { setIsLoggedIn } = useLogin();
-  const { setProfile } = useLogin();
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [error, setError] = React.useState('');
-  const navigation = useNavigation()
+  const { setToken } = useLogin();
+  const { setUID } = useLogin();
 
+  
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-  const handleLogin = async () => {
+  async function handleLogin() {
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
         email: email,
@@ -27,16 +30,20 @@ export const LoginTab = () => {
 
       if (error) {
         setError(error.message);
+
       } else {
         console.log('User logged in:', data);
         await AsyncStorage.setItem('sessionData', JSON.stringify(data));
-        const { data: { user } } = await supabase.auth.getUser()
-        setProfile(user)
+        setToken(data.session.access_token)
+
+        setUID(data.user.id)
+        
+        console.log("access token: ", data.session.access_token)
+        console.log("user id: ", data.user.id)
+        console.log("user metadata: ", data.user.user_metadata)
+
+
         setIsLoggedIn(true)
-
-
-
- 
 
       }
     } catch (error) {
@@ -65,18 +72,26 @@ export const LoginTab = () => {
 };
 
 export const SignupTab = () => {
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [error, setError] = React.useState('');
-  const [first_name, setFname] = React.useState('');
-  const [last_name, setLname] = React.useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [mobile, setMobile] = useState('')
   const { setIsLoggedIn } = useLogin();
+  const [name, setName] = useState('')
+  const [age, setAge] = useState('')
 
   const handleSignup = async () => {
     try {
       const { data, error } = await supabase.auth.signUp({
         email: email,
-        password: password
+        password: password,
+        options: {
+          data: {
+            first_name: name,
+            phone: mobile,
+            age: age,
+          }
+        }
       });
 
       if (error) {
@@ -97,16 +112,6 @@ export const SignupTab = () => {
   return (
     <View>
       <TextInput
-        placeholder="First Name"
-        value={first_name}
-        onChangeText={setFname}
-      />
-      <TextInput
-        placeholder="Last Name"
-        value={last_name}
-        onChangeText={setLname}
-      />
-      <TextInput
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
@@ -114,10 +119,28 @@ export const SignupTab = () => {
         keyboardType="email-address"
       />
       <TextInput
+        placeholder="Phone"
+        value={mobile}
+        onChangeText={setMobile}
+        keyboardType='phone-pad'
+      />
+      <TextInput
         placeholder="Password"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
+      />
+      <TextInput
+        placeholder="Name"
+        value={name}
+        onChangeText={setName}
+
+      />
+      <TextInput
+        placeholder="Age"
+        value={age}
+        onChangeText={setAge}
+        keyboardType='numeric'
       />
       {error ? <Text>{error}</Text> : null}
       <Button title="Signup" onPress={handleSignup} />
