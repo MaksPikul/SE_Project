@@ -4,6 +4,7 @@ import HomeButton from '../components/homeButton';
 import { homeStyle, logoutButton } from "../styles/allStyles";
 import { logout } from "../components/Logout";
 import { useLogin } from "../context/loginProvider";
+import React from "react";
 import CustomButton from "../components/CustomButtons";
 
 /* 

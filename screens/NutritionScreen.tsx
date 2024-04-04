@@ -2,6 +2,7 @@ import { NavigationContainer } from "@react-navigation/native/"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import CalorieTracker from './CalorieTracker';
 import Recipe from './RecipeScreen';
+import React from "react";
 import Water from './WaterScreen';
 
 const Tab = createBottomTabNavigator()

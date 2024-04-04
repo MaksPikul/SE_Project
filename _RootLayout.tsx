@@ -50,7 +50,7 @@ const subscreens = {
     ProgCreate: {
         screen: ProgCreate
     },
-    ActivityHistory: {
+    ActivityHist: {
         screen: ActivityHist
     },
     Ambassador: {
