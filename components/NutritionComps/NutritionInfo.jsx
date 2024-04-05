@@ -1,6 +1,6 @@
 import {View, Button, StyleSheet, Text} from 'react-native';
 
-export default function NutritionInfo ({nutrition_info}) {
+export default function NutritionInfo ({nutrition_info, addMacros, addTotalItem, onHide}) {
 
     function capitalizeFirstLetter(str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
@@ -22,6 +22,18 @@ export default function NutritionInfo ({nutrition_info}) {
             <Button
                 title="Add Item"
                 color={'#58a61c'}
+                onPress={() => {
+                    addMacros(
+                      nutrition_info[0].calories,
+                      nutrition_info[0].protein_g,
+                      nutrition_info[0].carbohydrates_total_g,
+                      nutrition_info[0].fat_total_g
+                    );
+                    addTotalItem(
+                        (nutrition_info[0].serving_size_g + "g " + capitalizeFirstLetter(nutrition_info[0].name))
+                    );
+
+                }}
             />
         </View>
     )

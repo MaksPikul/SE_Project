@@ -9,6 +9,25 @@ export default function CalorieTracker() {
 
     const [input, setInput] = useState('');
     const [nutritionData, setNutritionData] = useState(null);
+    
+    const [totalCalories, addTotalCalories] = useState(0);
+    const [totalProtein, addTotalProtein] = useState(0);
+    const [totalCarbohydrates, addTotalCarbohydrates] = useState(0);
+    const [totalFat, addTotalFat] = useState(0);
+
+    const [item, addItem] = useState([]);
+
+    const addMacros = (cal, pro, carb, fat) => {
+      addTotalCalories(totalCalories + cal)
+      addTotalProtein(totalProtein + pro)
+      addTotalCarbohydrates(totalCarbohydrates + carb)
+      addTotalFat(totalFat + fat)
+
+    }
+
+    const addTotalItem = (item_serving) => {
+      addItem([...item, item_serving])
+    }
 
     const fetchData = async () => {
         try {
@@ -40,23 +59,29 @@ export default function CalorieTracker() {
               buttonColor={'#58a61c'}
             />
             
-            {nutritionData && (<NutritionInfo nutrition_info={nutritionData} />)}
+            {nutritionData &&  (
+              <NutritionInfo 
+                nutrition_info={nutritionData}
+                addMacros = {addMacros}
+                addTotalItem = {addTotalItem}
+              />
+            )}
 
             <Text style= {{textAlign:'center', color:'black', fontWeight:'bold'}}>Daily Caloric Intake</Text>
 
             <View style={styles.calories}>
               <AnimatedCircularProgress
-                size={200}
+                size={170}
                 width={10}
-                fill={60}
+                fill={(totalCalories/2000)*100}
                 tintColor="#58a61c"
-                backgroundColor="white"
+                backgroundColor="#d0f0c0"
                 style={{padding:10}}>
                 {
                   () => (
                     <View style={styles.tracker}>
                       <Text style={styles.trackerTopText}>
-                        {'800 cals'}
+                        {2000 - Math.round(totalCalories) + ' cals'}
                       </Text>
                       <Text style={styles.trackerBottomText}>
                         {'Remaining'}
@@ -67,29 +92,26 @@ export default function CalorieTracker() {
                 
               </AnimatedCircularProgress>
               <View style={styles.macros}>
-                <Text>Total Calories: </Text>
-                <Text>Total Protein: </Text>
-                <Text>Total Carbohydrates: </Text>
-                <Text>Total Fat: </Text>
+                <Text>Total Calories: {totalCalories} cal</Text>
+                <Text>Total Protein: {totalProtein} g</Text>
+                <Text>Total Carbohydrates: {totalCarbohydrates} g</Text>
+                <Text>Total Fat: {totalFat} g</Text>
               </View>
             </View>
             <Button
                 title="Remove Item"
                 color={'#58a61c'}
             />
+            <Text 
+              style= {{textAlign:'center', 
+                      color:'black', 
+                      fontWeight:'bold'}}>
+              Daily Diet
+            </Text>
             <View style={styles.food}>
-                <Text>Food1</Text>
-                <Text>Food2</Text>
-                <Text>Food3</Text>
-                <Text>Food4</Text>
-                <Text>Food5</Text>
-                <Text>Food6</Text>
-                <Text>Food7</Text>
-                <Text>Food8</Text>
-                <Text>Food9</Text>
-                <Text>Food10</Text>
-                <Text>Food11</Text>
-                <Text>Food12</Text>
+              {item.map((foodItem, index) => (
+                <Text key={index}>{foodItem}</Text>
+              ))}
             </View>
             
         </ScrollView>
@@ -106,7 +128,7 @@ const styles = StyleSheet.create({
 
     trackerTopText:{
       textAlign:'center',
-      fontSize:28,
+      fontSize:26,
     },
 
     trackerBottomText:{
@@ -121,6 +143,6 @@ const styles = StyleSheet.create({
 
     macros: {
         marginRight:40,
-        marginLeft:10,
+        marginLeft:5,
     },
 });
