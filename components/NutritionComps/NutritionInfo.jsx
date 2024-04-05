@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 export default function NutritionInfo ({nutrition_info}) {
 
-    const [nutrition, setNutrition] = useState(nutrition_info)
+    
 
     function capitalizeFirstLetter(str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
@@ -20,13 +20,12 @@ export default function NutritionInfo ({nutrition_info}) {
             carbs: nutrition_info[0].carbohydrates_total_g, fats: nutrition_info[0].fat_total_g, food_name: nutrition_info[0].name}
         ])
         console.log("adding error", error)
-        setNutrition(null)
         console.log("data after post",nutrition)
 
     }
 
     return (
-        nutrition && <View style={styles.nutrition_box}>
+        nutrition_info && <View style={styles.nutrition_box}>
 
              <View style={styles.nutrition_info}>
                 <Text style={styles.nutrition_text}>Item Name: {capitalizeFirstLetter(nutrition_info[0].name)}</Text>
