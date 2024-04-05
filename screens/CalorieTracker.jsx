@@ -24,6 +24,7 @@ export default function CalorieTracker() {
           );
           const data = await response.json();
           setNutritionData(data);
+          console.log('nutrition data', nutritionData)
         } catch (error) {
           console.error('Error fetching data:', error);
         }
@@ -90,6 +91,9 @@ export default function CalorieTracker() {
                 <Text>Food10</Text>
                 <Text>Food11</Text>
                 <Text>Food12</Text>
+                <Text>Food13</Text>
+                <Text>Food14</Text>
+                <Text>Food15</Text>
             </View>
             
         </ScrollView>
