@@ -1,9 +1,9 @@
 import { StyleSheet } from "react-native"
 
-export const b = StyleSheet.create({
+export const homeStyle = StyleSheet.create({
     container: {
-        flex: 2,
-        flexDirection: "row",
+        flex: 1,
+        flexDirection: "column",
         justifyContent: "space-between",
         alignItems: "center",
         padding: 75,
@@ -12,6 +12,7 @@ export const b = StyleSheet.create({
         width: 400,
         height: 150,
         backgroundColor: "black",
+        
         alignItems: "center"
     },
     buttonText: {
@@ -19,48 +20,6 @@ export const b = StyleSheet.create({
         fontSize: 16
 
     }
-})
-
-export const homeStyle = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    paddingHorizontal: 11,
-  },
-  column: {
-    flexDirection: 'row',
-    marginBottom: 11,
-  },
-  button: {
-    width: 150, // Adjust as needed
-    height: 150, // Adjust as needed
-    padding: 11,
-    borderRadius: 13,
-    marginRight: 10, // Adjust as needed
-    backgroundColor: 'black', // Adjust as needed
-  },
-  buttonText: {
-    fontSize: 16,
-    color: 'white',
-  },
-});
-
-export const logoutButton = StyleSheet.create({
-  text: {
-    fontSize: 16,
-    color: 'black'
-  },
-  button: {
-    width: 150, // Adjust as needed
-    height: 70, // Adjust as needed
-    padding: 11,
-    margin: 10,
-    borderRadius: 13,
-    marginRight: 10, // Adjust as needed
-    backgroundColor: 'blue', // Adjust as needed
-  },
-
 })
 
 export const fitStyles = StyleSheet.create({

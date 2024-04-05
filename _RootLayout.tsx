@@ -15,6 +15,7 @@ import { useLogin } from "./context/loginProvider";
 import { StyleSheet, Text, View, useColorScheme } from "react-native";
 import { Colors } from "react-native-elements";
 import React from "react";
+import WaterScreen from "./screens/WaterScreen";
 
 
 
@@ -42,6 +43,10 @@ const mainscreens = {
     },
     Leaderboard: {
         screen: LeaderboardScreen,
+        options: {undefined},
+    },
+    Water: {
+        screen: WaterScreen,
         options: {undefined},
     },
 }

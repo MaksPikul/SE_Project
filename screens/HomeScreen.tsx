@@ -40,13 +40,8 @@ export default function HomeScreen({}) {
         <Text>Hello {name}</Text>
 
             
-        <HomeButton
-          onPress={handleLogout}
-          title="Logout"
-          buttonStyle={logoutButton.button}
-          textStyle={logoutButton.text}
-        />
-        <View style={homeStyle.column}>
+       
+        <View style={homeStyle.container}>
 
           <HomeButton
             onPress={() => navigation.navigate("Fitness")}
@@ -76,6 +71,12 @@ export default function HomeScreen({}) {
             textStyle={homeStyle.buttonText}
           />
         </View>
+            <HomeButton
+            onPress={handleLogout}
+            title="Logout"
+            buttonStyle={homeStyle.button}
+            textStyle={homeStyle.buttonText}
+            />
         
       </View>
 
