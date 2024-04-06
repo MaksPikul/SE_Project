@@ -16,10 +16,10 @@ export default function CalorieTracker() {
     
     const [caloriesMacros, setCaloriesMacros] = useState([]);
 
-    const [showNutrion, setShowNutrion] = useState(true);
+    const [showNutrition, setShowNutrition] = useState(true);
 
     const hideNutrition = () => {
-      setNutritionData(false)
+      setShowNutrition(false)
     }
 
 
@@ -112,7 +112,7 @@ export default function CalorieTracker() {
               buttonColor={'#58a61c'}
             />
             
-            {nutritionData && showNutrion && (
+            {nutritionData && showNutrition && (
               <NutritionInfo 
                 nutrition_info={nutritionData}
                 getCaloriesMacros={getCaloriesMacros}
