@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { ScrollView, View, Text, TextInput, Button, StyleSheet , TouchableOpacity } from 'react-native';
 import { usePosts } from './PostsContext';
 import { supabase } from '../../lib/supabase';
+import { useNavigation } from "@react-navigation/native";
 
 const BlogPostForm = () => {
   const [title, setTitle] = useState('');
   const [article, setArticle] = useState('');
+  const navigation = useNavigation()
   
   var currentUserId = '54d2b68a-4eb6-45f9-9c17-98711ffd3324'
     
@@ -44,7 +46,15 @@ const BlogPostForm = () => {
           <Text style={styles.buttonText}>Fill Out Blog Entry</Text>
         </TouchableOpacity>
       ) : (
-        <TouchableOpacity style={styles.SubmitButton} onPress={addPost}>
+        <TouchableOpacity 
+        style={styles.SubmitButton}
+      //onPress={addPost} <- was this previously, in case change is neccessary
+      //Below on press basically redirects to Blog posts page
+        onPress={()=> {
+          addPost()
+          navigation.navigate("Blog Posts")
+          }}>
+
           <Text style={styles.buttonText} >Post Blog Entry</Text>
         </TouchableOpacity>
       )}

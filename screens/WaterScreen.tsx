@@ -11,12 +11,11 @@ export default function WaterScreen() {
     return(
         <View>
             <Search
-                setInput={setWater}  
+                setInput={setWater}
                 placeholder={"Enter water drank (Litres)"}
                 showButton={true}
                 buttonName={"Submit"}
-                buttonColor={'#248bd6'}
-            />
+                buttonColor={'#248bd6'} fetchData={undefined} height={undefined} multi={undefined}            />
             <View style= {styles.trackerBox}>
                 <AnimatedCircularProgress
                     size={300}

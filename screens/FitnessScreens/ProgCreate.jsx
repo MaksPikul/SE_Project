@@ -30,7 +30,6 @@ export default function ProgCreate() {
 
       let newProg = new programme(data.name, parseInt(data.duration))
       newProg = addWeeks(newProg)
-      console.log(newProg)
       setProg(newProg)
       setEntered(true)
     }
@@ -49,22 +48,19 @@ export default function ProgCreate() {
   }
 
 
-  return(
+  return (
     <View>
-
-
-      {!entered ? 
-        (
-          <View style={{alignContent:"center", }}>
-            <NameDurationInput 
-              handleInput={handleInput} 
-              name={data.name}
-              dur={data.duration}/>
-
-            <View style={{alignSelf:"center", marginBottom:30}}>
+      {!entered ? (
+        <View key="input-view" style={{alignContent:"center"}}>
+          <NameDurationInput 
+            handleInput={handleInput} 
+            name={data.name}
+            dur={data.duration}
+          />
+          <View style={{alignSelf:"center"}}>
             <CustomButton
-              onPress={()=>{handleSubmit()}}
-              text={"Submit"}
+              onPress={handleSubmit}
+              text="Submit"
               width={300}
               height={50}
               color={"navy"}/>
@@ -73,11 +69,9 @@ export default function ProgCreate() {
         ) 
         :
         (
-          <View style={{marginTop:270}}>
           <EditProg
             prog={prog}
             setProg={setProg}/>
-          </View>
         )
       }
       

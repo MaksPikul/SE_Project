@@ -19,12 +19,15 @@ import { View, Text, ScrollView,StyleSheet } from 'react-native';
 import { useNavigation} from '@react-navigation/native';
 import CustomButton from '../components/homeButton';
 
-export default function HomeScreen() {
-    const navigate = useNavigation();
 
-    const getUserName = () => {
-        return "user"; // actual user's name
-    };
+
+const HomeButton = ({ onPress, title, buttonStyle, textStyle }) => {
+  return (
+    <TouchableOpacity onPress={onPress} style={buttonStyle}>
+      <Text style={textStyle}>{title}</Text>
+    </TouchableOpacity>
+  );
+};
 
     return (
         <View style={{ flex: 1 }}>
@@ -37,73 +40,4 @@ export default function HomeScreen() {
                     textStyle={homeStyle.buttonText}
                 />
 
-                <CustomButton
-                    onPress={() => navigate.navigate('NutritionScreen')}
-                    title="Nutrition"
-                    buttonStyle={homeStyle.button}
-                    textStyle={homeStyle.buttonText}
-                />
-
-                <CustomButton
-                    onPress={() => navigate.navigate('BlogScreen')}
-                    title="Blog"
-                    buttonStyle={homeStyle.button}
-                    textStyle={homeStyle.buttonText}
-                />
-
-                <CustomButton
-                    onPress={() => navigate.navigate('AmbassadorPostScreen')}
-                    title="Ambassador"
-                    buttonStyle={homeStyle.button}
-                    textStyle={homeStyle.buttonText}
-                />
-                <CustomButton
-                    onPress={() => navigate.navigate('FitnessPostScreen')}
-                    title="Fitness"
-                    buttonStyle={homeStyle.button}
-                    textStyle={homeStyle.buttonText}
-                />
-                <CustomButton
-                    onPress={() => navigation.navigate('SavedPostSCreen')}
-                    title="Saved post"
-                    buttonStyle={homeStyle.button}
-                    textStyle={homeStyle.buttonText}
-                />
-                <CustomButton
-                    onPress={() => navigation.navigate('RecipiepostScreen')}
-                    title="Recipe"
-                    buttonStyle={homeStyle.button}
-                    textStyle={homeStyle.buttonText}
-                />
-            </ScrollView>
-
-            {/* Footer */}
-            <View style={homeStyle.footer}>
-                <Text style={homeStyle.footerText}>Footer Content Here</Text>
-            </View>
-        </View>
-    );
-}
-
-const homeStyle = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: "column",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: 75,
-    },
-    button: {
-        width: 400,
-        height: 150,
-        backgroundColor: "black",
-        
-        alignItems: "center"
-    },
-    buttonText: {
-        color: "white",
-        fontSize: 16
-
-    }
-    
-})
+export default HomeButton;

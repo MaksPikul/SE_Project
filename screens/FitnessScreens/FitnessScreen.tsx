@@ -1,17 +1,19 @@
 import {View, Button, Text, StyleSheet, Pressable, Image, ScrollView, Modal} from "react-native";
-import CustomButton from "../components/CustomButtons";
+import CustomButton from "../../components/CustomButtons";
 import { useNavigation } from "@react-navigation/native";
-import { fitStyles } from "../styles/allStyles";
+import { fitStyles } from "../../styles/allStyles";
 import { useRef } from "react";
 import { Animated } from "react-native";
-import { ProgDisplayer } from "../components/fitnessComps/ProgDisplayer";
+import { ProgDisplayer } from "../../components/fitnessComps/ProgDisplayer";
 import { useState } from "react";
+import React from "react";
+
 
 
 export default function FitnessScreen() {
     //might not need this, will be in the App file with customHeader
     const navigation = useNavigation()
-    const goToHome = () => navigation.navigate("Home")
+    
     const [visibleModal, setVisibleModal] = useState(false);
     
     

@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -11,7 +11,9 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import CustomButton from '../CustomButtons';
+import ProgrammeDays from './ProgrammeDays';
 import { supabase } from '../../lib/supabase';
+import { useLogin } from '../../context/loginProvider';
 // import React, {useEffect, useState} from "react";
 
 
@@ -42,32 +44,58 @@ let day = "monday"
 export const ProgDisplayer = () => {
 
   const [exercises, setExercises] = useState([]);
+  const [programmes, setProgrammes] = useState([]);
+  // const [days, setDays] = useState([]);
+  const [week, setWeek] = useState([]);
 
   useEffect(() => {
     getExercise();
+    getProgrammes();
   }, []);
+
+  // const { uid } = useLogin();
 
   async function getExercise() {
     const { data } = await supabase.rpc('get_exercises')
     setExercises(data);
-    console.log(data)
-    const arrayWeekNum = exercises.map(week => <Text>{week.week_number}</Text>);
-    console.log('week_number', arrayWeekNum)
+    // console.log(data);
   }
 
-  const progs = new Array(4).fill(
-    "program: 8hr arm work out"
-  );
+  // async function getDays() {
+  //   const { data } = await supabase.rpc('get_days', {weekID: 1})
+  //   setDays(data);
+  //   console.log(days);
+  // }
+
+  async function getProgrammes() {
+    const { data } = await supabase.rpc('get_programmes')
+    setProgrammes(data);
+    console.log(data);
+    // console.log(data);
+  }
+
+  // async function getWeek(week) {
+  //   const { data, error } = await supabase
+  //   .from('fitness_week')
+  //   .select('id, programme_id', 'week_number', 'completed')
+  //   .eq('name', week.number)
+
+  //   setWeek(data);
+  // }
+
+  // const progs = new Array(4).fill(
+  //   "program: 8hr arm work out"
+  // );
 
   const scrollX = useRef(new Animated.Value(0)).current;
-  const {width: windowWidth} = useWindowDimensions();
+  const { width: windowWidth } = useWindowDimensions();
 
 
   return (
-  <SafeAreaView style={{...styles.container, marginVertical: 50}}>
-    {/*<Text style={{alignSelf:"flex-start"}}>Continue?</Text>*/}
-    
-    <View style={styles.scrollContainer}> 
+    <SafeAreaView style={{ ...styles.container, marginVertical: 50 }}>
+      {/*<Text style={{alignSelf:"flex-start"}}>Continue?</Text>*/}
+
+      <View style={styles.scrollContainer}>
         <ScrollView
           horizontal={true}
           pagingEnabled
@@ -83,85 +111,84 @@ export const ProgDisplayer = () => {
             },
           ], { useNativeDriver: false })}>
 
-        { exercises.map((prog, progIndex) => {
-          return (
-        <View style={{width: windowWidth, height: 390}} key={progIndex}>
-
-          <View style={styles.progContainer}>
-
-            <View style={{...styles.textContainer}}>
-                <Text style={styles.text}>
-                  {/*'Image - ' + imageIndex*/}
-                  {progName}
-                </Text>
-                <Text style={styles.text}>
-                  {"week " + week + " - " + day} 
-                </Text>
-                <Text style={styles.text}>
-                  {"Exercise"}
-                </Text>
-            </View>
-
-
-            <View style={{marginVertical: 10, marginHorizontal: 15, alignSelf: "flex-start"}}>
-              { exercises.map((exercise, exIndex) => {
+          {programmes.map((prog, progIndex) => {
+            console.log(progIndex)
             return (
-              <View>
-                <Text style={{...styles.text,alignSelf:"baseline",borderBottomColor: "black", borderBottomWidth:2}}> {exIndex + " - " + exercise['exercise_name']} </Text>
+              <View style={{ width: windowWidth, height: 390 }} key={progIndex}>
+
+                <View style={styles.progContainer}>
+
+                  <View style={{ ...styles.textContainer }}>
+                    <Text style={styles.text}>
+                      {/* 'Image - ' + imageIndex */}
+                      {prog['name']}
+                    </Text>
+                    <Text style={styles.text}>
+
+                      {/* {"week " + week + " - " + day}  */}
+                      {"Week " + prog['current_week']}
+                      {/* + " - "} */}
+                      {/* + moment(prog['day_date']).format('dddd')}  */}
+                    </Text>
+                    <Text style={styles.text}>
+                      {"Exercise"}
+                    </Text>
+                  </View>
+
+                  <ProgrammeDays weekID={prog.week_id}></ProgrammeDays>
+
+                  <View style={{ marginTop: 90 }}>
+
+                    <CustomButton
+                      onPress={null}
+                      text="Start Tracking!"
+                      width={260}
+                      height={45}
+                      color={"navy"} />
+                  </View>
+
+
+                  <View style={styles.indicatorContainer}>
+
+
+
+                    {programmes.map((prog, progIndex) => {
+                      const width = scrollX.interpolate({
+                        inputRange: [
+                          windowWidth * (progIndex - 1),
+                          windowWidth * progIndex,
+                          windowWidth * (progIndex + 1),
+                        ],
+                        outputRange: [8, 16, 8],
+                        extrapolate: 'clamp',
+                      });
+
+
+                      return (
+                        <Animated.View
+                          key={progIndex}
+                          style={[styles.indicator, { width }]}
+                        />
+                      );
+                    })}
+                  </View>
+
+
+
+
+                </View>
               </View>
-            )})}
-            </View>
-
-            <View style={{marginTop: 90}}>
-
-            <CustomButton 
-                    onPress={null}
-                    text="Start Tracking!" 
-                    width={260} 
-                    height={45} 
-                    color={"navy"}/>
-            </View>
-          
-
-            <View style={styles.indicatorContainer}>
-            
-          
-
-          {exercises.map((prog, progIndex) => {
-            const width = scrollX.interpolate({
-              inputRange: [
-                windowWidth * (progIndex - 1),
-                windowWidth * progIndex,
-                windowWidth * (progIndex + 1),
-              ],
-              outputRange: [8, 16, 8],
-              extrapolate: 'clamp',
-            });
-
-
-            return (
-              <Animated.View
-                key={progIndex}
-                style={[styles.indicator, {width}]}
-              />
-            );
+            )
           })}
-        </View>
-            
 
-
-            
-          </View>
-        </View>
-        )})}
-            
-          </ScrollView>
-    </View>
+        </ScrollView>
+      </View>
 
 
 
-  </SafeAreaView>
-)}
+    </SafeAreaView>
+  )
+}
 
 
 // i will put this into file when done
@@ -185,13 +212,13 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    backgroundColor:"#f5f5f5",
+    backgroundColor: "#f5f5f5",
 
   },
   textContainer: {
     height: 100,
     width: 400,
-    backgroundColor:"white",
+    backgroundColor: "white",
     borderBottomWidth: 2,
     borderBlockColor: "black"
   },
@@ -199,7 +226,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 15,
     fontWeight: 'bold',
-    paddingHorizontal: 30, 
+    paddingHorizontal: 30,
     paddingTop: 5,
   },
   indicator: {
@@ -209,7 +236,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'purple',
     marginHorizontal: 4,
     margin: 4
-    
+
   },
   indicatorContainer: {
     flexDirection: 'row',
