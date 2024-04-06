@@ -11,7 +11,7 @@ const MainLayout = () => {
 
 
     // SHOULD BE return  isLoggedIn ? <RootLayout/> : <LoginLayout/>;
-    return  isLoggedIn ? <RootLayout/> : <LoginLayout/>;
+    return  !isLoggedIn ? <RootLayout/> : <LoginLayout/>;
         
         
     

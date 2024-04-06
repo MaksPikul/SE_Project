@@ -10,6 +10,7 @@ import ProgCreate from "./screens/FitnessScreens/ProgCreate";
 import ActivityHist from "./screens/FitnessScreens/ActivityHist";
 import AmbassadorSection from "./components/blogComps/AmbassadorSection";
 import LoginLayout from "./_LoginLayout";
+import TrackScreen from "./screens/FitnessScreens/TrackScreen";
 import { PropsWithChildren, useContext } from "react";
 import { useLogin } from "./context/loginProvider";
 import { StyleSheet, Text, View, useColorScheme , Button, Alert } from "react-native";
@@ -70,6 +71,16 @@ const subscreens = {
     },
     ActivityHist: {
         screen: ActivityHist,
+        options: {
+            headerTintColor: "white",
+            headerStyle:{ backgroundColor: "navy"},
+            headerTitleAlign: "center",
+            headerRight: ()=> <Button 
+            title="Settings" 
+            onPress={() => Alert.alert("kill yourself")}/>}
+    },
+    TrackScreen: {
+        screen: TrackScreen,
         options: {
             headerTintColor: "white",
             headerStyle:{ backgroundColor: "navy"},

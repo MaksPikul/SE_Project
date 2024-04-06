@@ -61,21 +61,6 @@ function App(): React.JSX.Element {
     backgroundColor: "navy"}
   }
   
-
-
-  
-  
-
-
-
-
-
-
-
-
-
-
-  
   
   //for now show header
   //login page should be first with a conditional to check cookies (saving log in)

@@ -2,8 +2,9 @@ import { View, Text, Button, TextInput ,SafeAreaView, Keyboard, StyleSheet, Moda
 import React from "react";
 import CustomButton from "../CustomButtons";
 import { useState, useEffect } from "react";
-
+import SelectDropdown from "react-native-select-dropdown";
 import { exercise } from "../../jsFiles/ProgObjs";
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export function EditModal ({visible, handleModal, prog, setProg, indexs, addEx, remEx}) {
     const [exercs,setExecrs] = useState([{
@@ -11,14 +12,18 @@ export function EditModal ({visible, handleModal, prog, setProg, indexs, addEx, 
         sets:0,
         reps:0
     }])
-
+    const [date, setDate] = useState("Monday")
     const [saved, setSaved] = useState(false)
-    const [dayName, setDayName] = useState("Day Name")
 
-
-    const handleDayName = (text) => {
-        setDayName(text)
-      }
+      const daysOweek = [
+        {title:"Monday"},
+        {title:"Tuesday"},
+        {title:"Wednesday"},
+        {title:"Thursday"},
+        {title:"Friday"},
+        {title:"Saturday"},
+        {title:"Sunday"},
+      ]
 
 
     const saveToObject=()=>{
@@ -29,7 +34,11 @@ export function EditModal ({visible, handleModal, prog, setProg, indexs, addEx, 
         updatedWeeks[indexs[0]].days[indexs[1]].exercises[i].sets = exercs[i].sets
         updatedWeeks[indexs[0]].days[indexs[1]].exercises[i].reps = exercs[i].reps
         }
-        updatedWeeks[indexs[0]].days[indexs[1]].name = dayName
+        updatedWeeks[indexs[0]].days[indexs[1]].name = date
+        let currentIndex = daysOweek.findIndex((day) => day.title === date);
+        let nextIndex = (currentIndex + 1) % daysOweek.length;
+        setDate(daysOweek[nextIndex].title);
+
         setProg({ ...prog, weeks: updatedWeeks });
     }
 
@@ -56,7 +65,11 @@ export function EditModal ({visible, handleModal, prog, setProg, indexs, addEx, 
             updatedExerc.splice(exerciseIndex, 1);
             return updatedExerc;
         });
-};
+        };
+        
+        const handleInput = (v) => {
+            setDate(v)
+          }
 
 
     /*const updatedExerc = {...prog}
@@ -94,7 +107,7 @@ export function EditModal ({visible, handleModal, prog, setProg, indexs, addEx, 
             height={40}
             color={"navy"}/>
         </View>
-        
+        {/*
         <View style={editStyle.inputs}>
             <Text>Change name of day</Text>
             <TextInput
@@ -102,6 +115,42 @@ export function EditModal ({visible, handleModal, prog, setProg, indexs, addEx, 
             onChangeText={(text)=>setDayName(text)}
             style={{borderWidth: 1, borderColor: "black"}}/>
         </View>
+        */}
+        
+        <Text>Change name of day</Text>
+        <SelectDropdown
+                    data={daysOweek}
+                    onSelect={(selectedItem,index)=>{
+                        handleInput(String(selectedItem.title))
+                    }}
+
+                    buttonTextAfterSelection={(selectedItem) => {
+                        return selectedItem;
+                    }}
+
+                    value={date}
+                    renderButton={(selectedItem, isOpened) => {
+                        return (
+                        <View style={pCreate.dropButton}>
+                            <Text style={pCreate.text}>
+                            {(selectedItem && selectedItem.title) || ''}
+                            </Text>
+                        </View>
+                        )
+                    }}
+
+                    renderItem={(item, index, isSelected) => {
+                        return (
+                        <View style={{...pCreate.dropdownItemStyle, ...(isSelected && {backgroundColor: '#D2D9DF'})}}>
+                            <Icon name={item.icon} style={pCreate.dropdownItemIconStyle} />
+                            <Text style={pCreate.dropdownItemTxtStyle}>{item.title}</Text>
+                            <Icon name={item.icon} style={pCreate.dropdownItemIconStyle} />
+                        </View>
+                        );
+                    }} 
+                    showsVerticalScrollIndicator={false}
+                    dropdownStyle={pCreate.dropdownMenuStyle}
+                    />
 
         { visible ? (prog.weeks[indexs[0]].days[indexs[1]].exercises.map((exerc, exercIndex)=>{  
             
@@ -109,12 +158,14 @@ export function EditModal ({visible, handleModal, prog, setProg, indexs, addEx, 
                 <View style={{...editStyle.inputs, flexDirection: "row", justifyContent: "space-evenly"}}>
                      
                     <Text>{"Name: "}</Text>
+                    
                     <TextInput
                     maxLength={15}
                     value={exercs[exercIndex].name}
                     placeholder={exerc.name}
                     onChangeText={(text)=>handleTextChange(text, exercIndex, "name")} 
                     style={{borderWidth: 1, borderColor: "black", width:95, marginHorizontal: 5}}/>
+
                     <Text>{"Sets: "}</Text>
                     <TextInput 
                     keyboardType="numeric"
@@ -183,6 +234,37 @@ export function EditModal ({visible, handleModal, prog, setProg, indexs, addEx, 
     )
 }
 
+const pCreate = StyleSheet.create({
+    container: {
+      alignContent:"center",
+    },
+    input: {
+      height: 50,
+      margin: 12,
+      padding: 10,
+      borderColor: "navy",
+      borderWidth: 2,
+      borderRadius:10,
+    },
+    text: {
+      color: 'black',
+      fontSize: 15,
+      fontWeight: 'bold',
+      paddingHorizontal: 30, 
+      paddingTop: 5,
+    },
+    dropButton:{
+      borderBlockColor: "navy",
+      borderWidth: 2,
+      borderRadius:10,
+      height: 50,
+      margin: 12,
+      alignItems: "center"
+    },
+    dropdownItemStyle:{
+      paddingHorizontal:50
+    }
+});
 
 const editStyle = StyleSheet.create({
     container: {
