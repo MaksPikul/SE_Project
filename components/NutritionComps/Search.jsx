@@ -1,6 +1,8 @@
-import {View, TextInput, Button, StyleSheet} from 'react-native';
+import { useState } from 'react';
+import {View, TextInput, Button, StyleSheet, Alert} from 'react-native';
 
 export default function Search ({
+    input,
     setInput, 
     fetchData, 
     placeholder, 
@@ -10,6 +12,15 @@ export default function Search ({
     multi,
     buttonColor
 }) {
+
+
+    const handleSearch = () => {
+        if (!input.trim()) {
+            Alert.alert("Please enter a food or drink. Cannot be empty.")
+        } else {
+            fetchData()
+        }
+    }
 
     return (
         <View>
@@ -22,7 +33,7 @@ export default function Search ({
             />
             {showButton && <Button
                 title={buttonName}
-                onPress={fetchData}
+                onPress={handleSearch}
                 color={buttonColor}
             />}
         </View>

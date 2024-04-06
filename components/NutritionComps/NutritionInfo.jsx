@@ -1,7 +1,7 @@
 import {View, Button, StyleSheet, Text} from 'react-native';
 import { supabase } from '../../lib/supabase';
 
-export default function NutritionInfo ({nutrition_info, addMacros, addTotalItem, onHide}) {
+export default function NutritionInfo ({nutrition_info, getCaloriesMacros, hideNutrition}) {
 
     
 
@@ -15,11 +15,17 @@ export default function NutritionInfo ({nutrition_info, addMacros, addTotalItem,
         const {error} = await supabase
         .from('calorie_log')
         .insert([
-            {client_id: currentUserId, calories: nutrition_info[0].calories, protien: nutrition_info[0].protein_g,
-            carbs: nutrition_info[0].carbohydrates_total_g, fats: nutrition_info[0].fat_total_g, food_name: nutrition_info[0].name}
+            {client_id: currentUserId, calories: nutrition_info[0].calories, protein: nutrition_info[0].protein_g,
+            carbs: nutrition_info[0].carbohydrates_total_g, fats: nutrition_info[0].fat_total_g, food_name: nutrition_info[0].name, 
+            serving: nutrition_info[0].serving_size_g}
         ])
+
+        await getCaloriesMacros();
+
         console.log("adding error", error)
-        console.log("data after post",nutrition)
+        console.log("data after post",nutrition_info)
+
+        hideNutrition();
 
     }
 

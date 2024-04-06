@@ -14,7 +14,7 @@ const tabs = {
     },
     Signup: {
         tab: SignupTab
-    }
+    },
 
 }
 

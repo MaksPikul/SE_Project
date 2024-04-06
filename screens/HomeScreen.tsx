@@ -7,24 +7,22 @@ import { useLogin } from "../context/loginProvider";
 import React from "react";
 import CustomButton from "../components/CustomButtons";
 
-export default function HomeScreen() {
-    const navigate = useNavigation();
+/* 
+For this page
+    there will be a top section with a user icon saying hello name
+*/
 
 //Whoever is doing Home Screen, change the "HomeButton" component to fit ur needs,
 //Ask about styling, idealy it will be 4 buttons split into 4 corners
 //like a hot cross bun type beat, ya heard?
 //Ask for help if neccessary
 
-    return (
-        <View style={{ flex: 1 }}>
-            {/* Main content with buttons */}
-            <ScrollView contentContainerStyle={homeStyle.container}>
-                <CustomButton
-                    onPress={() => navigate.navigate('FitnessScreen')} // Corrected
-                    title="Fitness"
-                    buttonStyle={homeStyle.button}
-                    textStyle={homeStyle.buttonText}
-                />
+/*
+For all sections,
+    Default header has to go
+    footer might be good
+    allowing for scrolling would be good
+*/
 
 export default function HomeScreen({}) {
 
@@ -84,26 +82,3 @@ export default function HomeScreen({}) {
 
     )
 }
-
-const homeStyle = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: "column",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: 75,
-    },
-    button: {
-        width: 400,
-        height: 150,
-        backgroundColor: "black",
-        
-        alignItems: "center"
-    },
-    buttonText: {
-        color: "white",
-        fontSize: 16
-
-    }
-    
-})

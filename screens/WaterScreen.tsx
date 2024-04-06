@@ -11,6 +11,7 @@ export default function WaterScreen() {
     return(
         <View>
             <Search
+                input={water}
                 setInput={setWater}
                 placeholder={"Enter water drank (Litres)"}
                 showButton={true}

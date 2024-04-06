@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import {View, Text, StyleSheet, TextInput, Button, ScrollView} from "react-native";
+import {View, Text, StyleSheet, Button, ScrollView} from "react-native";
 import Search from '../components/NutritionComps/Search'
 import NutritionInfo from "../components/NutritionComps/NutritionInfo";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
@@ -15,6 +15,13 @@ export default function CalorieTracker() {
     const [nutritionData, setNutritionData] = useState(null);
     
     const [caloriesMacros, setCaloriesMacros] = useState([]);
+
+    const [showNutrion, setShowNutrion] = useState(true);
+
+    const hideNutrition = () => {
+      setNutritionData(false)
+    }
+
 
     const fetchData = async () => {
         try {
@@ -37,19 +44,66 @@ export default function CalorieTracker() {
       };
 
     async function getCaloriesMacros() {
-      const { data, error } = await supabase.rpc('get_calories_macros', {userid: currentUserId})
-      setCaloriesMacros(data);
-      console.log('calorie and macro data', data)
-      console.log('getCaloriesMacros error',error)
+        const { data, error } = await supabase.rpc('get_calories_macros', {userid: currentUserId})
+        setCaloriesMacros(data);
+        console.log('calorie and macro data', data)
+        console.log('getCaloriesMacros error',error)
     }
 
     useEffect(() => {
       getCaloriesMacros();
     }, []);
 
+    function capitalizeFirstLetter(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    const calculateTotalMacros = () => {
+      let totalCalories = 0;
+      let totalProtein = 0;
+      let totalCarbs = 0;
+      let totalFat = 0;
+
+      if (caloriesMacros !== null) {
+        caloriesMacros.forEach(foodItem => {
+            totalCalories += foodItem.calories;
+            totalProtein += foodItem.protein;
+            totalCarbs += foodItem.carbs;
+            totalFat += foodItem.fats;
+        });
+      }
+    
+      return {
+          totalCalories,
+          totalProtein,
+          totalCarbs,
+          totalFat,
+      };
+    };
+
+    const totalMacros = calculateTotalMacros();
+
+    const removeItem = async () => {
+      try {
+
+          const recentId = caloriesMacros[caloriesMacros.length -1].itemid;
+
+          await supabase
+              .from('calorie_log')
+              .delete()
+              .eq('id', recentId)
+          
+          await getCaloriesMacros();
+          
+      } catch (error) {
+          console.error('Error: ', error)
+      }
+    }
+
     return(
         <ScrollView style={styles.container}>
             <Search 
+              input={input}
               setInput={setInput} 
               fetchData={fetchData} 
               placeholder={"Enter Food or Drink"}
@@ -58,9 +112,11 @@ export default function CalorieTracker() {
               buttonColor={'#58a61c'}
             />
             
-            {nutritionData &&  (
+            {nutritionData && showNutrion && (
               <NutritionInfo 
                 nutrition_info={nutritionData}
+                getCaloriesMacros={getCaloriesMacros}
+                hideNutrition = {hideNutrition}
               />
             )}
 
@@ -70,7 +126,7 @@ export default function CalorieTracker() {
               <AnimatedCircularProgress
                 size={170}
                 width={10}
-                fill={(1600/2000)*100}
+                fill={(Math.round(totalMacros.totalCalories)/2000)*100}
                 tintColor="#58a61c"
                 backgroundColor="#d0f0c0"
                 style={{padding:10}}>
@@ -78,7 +134,7 @@ export default function CalorieTracker() {
                   () => (
                     <View style={styles.tracker}>
                       <Text style={styles.trackerTopText}>
-                        {2000 - 1600 + ' cals'}
+                        {2000 - Math.round(totalMacros.totalCalories) + ' cals'}
                       </Text>
                       <Text style={styles.trackerBottomText}>
                         {'Remaining'}
@@ -88,16 +144,20 @@ export default function CalorieTracker() {
                 }
                 
               </AnimatedCircularProgress>
+
               <View style={styles.macros}>
-                <Text>Total Calories: cal</Text>
-                <Text>Total Protein:  g</Text>
-                <Text>Total Carbohydrates:  g</Text>
-                <Text>Total Fat:  g</Text>
+                  <Text>Target Calories: 2000 cal</Text>
+                  <Text>Total Calories: {(totalMacros.totalCalories).toFixed(1)} cal</Text>
+                  <Text>Total Protein: {totalMacros.totalProtein.toFixed(1)} g</Text>
+                  <Text>Total Carbohydrates: {totalMacros.totalCarbs.toFixed(1)} g</Text>
+                  <Text>Total Fat: {totalMacros.totalFat.toFixed(1)} g</Text>
               </View>
+
             </View>
             <Button
                 title="Remove Item"
                 color={'#58a61c'}
+                onPress={() => removeItem()}
             />
             <Text 
               style= {{textAlign:'center', 
@@ -106,8 +166,17 @@ export default function CalorieTracker() {
               Daily Diet
             </Text>
             <View style={styles.food}>
-              <Text>{caloriesMacros}</Text>
-              <Text>{caloriesMacros}</Text>
+                {caloriesMacros.map((foodItem, index) => (
+                    <View key={index} style={styles.foodItem}>
+                        <Text
+                          style = {styles.foodText}>
+                          {foodItem.serving}g  {capitalizeFirstLetter(foodItem.food_name)}
+                        </Text>
+                        <Text style = {styles.foodText}>
+                          {Math.round(foodItem.calories)} cal
+                        </Text>
+                    </View>
+                ))}
             </View>
             
         </ScrollView>
@@ -122,6 +191,11 @@ const styles = StyleSheet.create({
       alignItems:'center',
     },
 
+    tracker :{
+      left:9,
+      top:9,
+    },
+
     trackerTopText:{
       textAlign:'center',
       fontSize:26,
@@ -134,7 +208,17 @@ const styles = StyleSheet.create({
 
     food:{
         marginLeft:10,
+        marginRight:10,
         marginTop:10,
+    },
+
+    foodItem:{
+      flexDirection:'row',
+      justifyContent:'space-between'
+    },
+
+    foodText:{
+      fontSize:20,
     },
 
     macros: {

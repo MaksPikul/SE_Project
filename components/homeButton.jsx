@@ -15,9 +15,7 @@
 //trial but check if it runs and it doesnt want to work for me 
 
 import React from 'react';
-import { View, Text, ScrollView,StyleSheet } from 'react-native';
-import { useNavigation} from '@react-navigation/native';
-import CustomButton from '../components/homeButton';
+import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
 
 
@@ -29,15 +27,5 @@ const HomeButton = ({ onPress, title, buttonStyle, textStyle }) => {
   );
 };
 
-    return (
-        <View style={{ flex: 1 }}>
-            {/* Main content with buttons */}
-            <ScrollView contentContainerStyle={homeStyle.container}>
-                <CustomButton
-                    onPress={() => navigate.navigate('FitnessScreen')} // Corrected
-                    title="Fitness"
-                    buttonStyle={homeStyle.button}
-                    textStyle={homeStyle.buttonText}
-                />
 
 export default HomeButton;
