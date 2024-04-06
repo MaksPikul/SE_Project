@@ -11,6 +11,7 @@ export default function WaterScreen() {
     return(
         <View>
             <Search
+                input={water}
                 setInput={setWater}
                 placeholder={"Enter water drank (Litres)"}
                 showButton={true}
@@ -22,7 +23,7 @@ export default function WaterScreen() {
                     width={10}
                     fill={30}
                     tintColor="#248bd6"
-                    backgroundColor="white"
+                    backgroundColor="#b9f2ff"
                     style={{padding:10}}>
                     {
                     () => (
