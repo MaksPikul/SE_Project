@@ -36,7 +36,8 @@ const ProgrammeDays = ({ weekID }) => {
       {days.map((day, dayIndex) => {
         return (
         <View>
-          <Text style={{ ...styles.text, alignSelf: "baseline", borderBottomColor: "black", borderBottomWidth: 2 }}> {moment(day['day_date']).format('dddd') + " - " + day['day_name']} </Text>
+          <Text style={{ ...styles.text, alignSelf: "baseline", borderBottomColor: "black", borderBottomWidth: 2 }}> {day['day_name']} </Text>
+          {/* moment(day['day_date']).format('dddd') + " - " + */}
           {/* <Text style={{ ...styles.text, alignSelf: "baseline", borderBottomColor: "black", borderBottomWidth: 2 }}> {"1" + " - " + "TEST "} </Text> */}
         </View>
         ) 

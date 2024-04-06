@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, { useRef } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -11,6 +11,7 @@ import {
   FlatList
 } from 'react-native';
 import CustomButton from '../CustomButtons';
+import { useNavigation } from "@react-navigation/native";
 import { useState, useEffect } from 'react';
 import { day } from '../../jsFiles/ProgObjs';
 import { EditModal } from './EditModal';
@@ -24,19 +25,20 @@ import { supabase } from '../../lib/supabase';
 //finalise will check if weeks are empty and alert if is empty
 //modal for editing, day modal probably
 
-export function EditProg({prog, setProg}) {
+export function EditProg({ prog, setProg }) {
   const [editVisible, setEditVisible] = useState(false)
   const [copyVisible, setCopyVisible] = useState(false)
-  const [indexs, setIndexs] = useState([0,0])
+  const [indexs, setIndexs] = useState([0, 0])
   const [postedProgramme, setPostedProgramme] = useState([]);
   const [postedWeeks, setPostedWeeks] = useState([]);
+  const navigation = useNavigation()
 
-  // useEffect(() =>{
-  //   addProgramme();
-  // })
+  useEffect(() => {
+    addWeeks();
+  }, [])
 
   const scrollX = useRef(new Animated.Value(0)).current;
-  const {width: windowWidth} = useWindowDimensions();
+  const { width: windowWidth } = useWindowDimensions();
 
   //slide index for week
   let curWeek;
@@ -51,7 +53,7 @@ export function EditProg({prog, setProg}) {
   const addDayToWeek = (weekIndex) => {
     const updatedWeeks = [...prog.weeks];
     let num = updatedWeeks[weekIndex].days.length
-    updatedWeeks[weekIndex].days[num] = new day(num, "day "+(num+1));
+    updatedWeeks[weekIndex].days[num] = new day(num, "day " + (num + 1));
     setProg({ ...prog, weeks: updatedWeeks });
     // console.log(prog);
   }
@@ -69,191 +71,246 @@ export function EditProg({prog, setProg}) {
     setProg({ ...prog, weeks: updatedWeeks });
   };
 
-  const handleEditModal = (wIndex, dIndex) =>{
+  const handleEditModal = (wIndex, dIndex) => {
     setIndexs([parseInt(wIndex), parseInt(dIndex)])
     console.log(indexs)
     setEditVisible(!editVisible)
   }
 
-  const handleCopyModal = () =>{
+  const handleCopyModal = () => {
     setCopyVisible(!copyVisible)
   }
 
-  const addProgramme = async () => {
-    const {data, error} = await supabase
-    .from('fitness_programmes')
-    .insert([
-      {name: prog.name, made_by: currentUserId, weeks: prog.weeks.length}
-    ])
-    .select()
-    setPostedProgramme(data);
-    // console.log("Posting error", data);
-    // console.log(postedProgramme);
-    // console.log(data);
-    console.log("Here is this", prog.weeks[0]['name']);
+  // async function getLatestProgramme() {
+  //   const {data, error} = await supabase.rpc('get_latest_fitness_programme', {userid: '2810f3cd-4e04-44b7-9a19-2405fcec8684'})
+  //   console.log(error);
+  //   setPostedProgramme(data);
+  //   // console.log("Last programme made", data);
+  // }
+
+  // const addProgramme = async () => {
+
+  async function addWeeks({ programme_id, weeks }) {
     var week_num = prog.weeks.length;
-    console.log('ran', week_num);
-    setTimeout(() => { console.log('1 second passed'); }, 1000);
+
     for (let i = 0; i < week_num; i++) {
-      console.log(postedProgramme);
-      const {data1, error1} = await supabase
-      .from('fitness_week')
-      .insert([
-        {programme_id: postedProgramme[0].id, week_number: prog.weeks[i].id + 1}
-      ])
-      .select()
-      setPostedWeeks(data1);
-      console.log("data1", data1);
+
+      const { data, error } = await supabase
+        .from('fitness_week')
+        .insert([
+          { programme_id: programme_id, week_number: prog.weeks[0].id + 1 }
+        ])
+        .select()
+
+      console.log("week data", data);
+      addDays({week_id: data[0].id, week: weeks[i]});
     }
+
   }
 
-  console.log(prog);
+  async function addDays({week_id, week}) {
+    var day_num = week.days.length;
 
-  return(
-    <SafeAreaView style={{...styles.container, marginVertical: 50}}>
+    for (let j = 0; j < day_num; j++) {
+
+      var num_of_exercises = week.days[j].exercises.length;
+      var day_name = week.days[j].name;
+      const { data, error } = await supabase
+      .from('fitness_day')
+      .insert([
+        { week_id: week_id, num_of_exercises: num_of_exercises, day_name: day_name}
+      ])
+      .select()
       
-      
-      <View style={styles.scrollContainer}> 
-          <ScrollView
-            horizontal={true}
-            pagingEnabled
-            showsHorizontalScrollIndicator={false}
-            scrollEventThrottle={1}
-            onScroll={Animated.event([
-              {
-                nativeEvent: {
-                  contentOffset: {
-                    x: scrollX,
-                  },
+      console.log("Day data", data);
+    }
+
+
+  }
+
+  async function addProgramme() {
+    const { data, error } = await supabase
+      .from('fitness_programmes')
+      .insert([
+        { name: prog.name, made_by: currentUserId, weeks: prog.weeks.length }
+      ])
+      .select()
+
+    // getLatestProgramme();
+    var week_num = prog.weeks.length;
+
+    setTimeout(() => { console.log('1 second passed'); }, 1000);
+    // for (let i = 0; i < week_num; i++) {
+
+    // const {week_data, error1} = await supabase
+    // .from('fitness_week')
+    // .insert([
+    //   {programme_id: data[0].id, week_number: prog.weeks[0].id + 1}
+    // ])
+    // .select()
+
+    // console.log("week data", week_data);
+    // setPostedWeeks(week_data);
+    // console.log("week", postedWeeks);
+    addWeeks({ programme_id: data[0].id, weeks: prog.weeks });
+
+    // }
+
+  }
+
+  console.log("prog", prog);
+
+  return (
+    <SafeAreaView style={{ ...styles.container, marginVertical: 50 }}>
+
+
+      <View style={styles.scrollContainer}>
+        <ScrollView
+          horizontal={true}
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          scrollEventThrottle={1}
+          onScroll={Animated.event([
+            {
+              nativeEvent: {
+                contentOffset: {
+                  x: scrollX,
                 },
               },
-            ], { useNativeDriver: false })}>
+            },
+          ], { useNativeDriver: false })}>
 
-            {prog.weeks.map((week, weekIndex) => {
-              return(
+          {prog.weeks.map((week, weekIndex) => {
+            return (
 
-                <View style={{width: windowWidth, height: 620,}} key={weekIndex}>
-                    <View style={styles.progContainer}>
-                     
-                    
-                        <View style={{...styles.textContainer}}>
-                        <LinearGradient
-                          colors={['blue', 'navy']}>
-                            <Text style={{...styles.text, color:"white"}}> Programme name: {prog.name}</Text>
-                            <Text style={{...styles.text, color:"white"}}> Duration: {prog.duration} weeks</Text>
-                            
-                            <Text style={{...styles.text,color:"white",  alignSelf:"center", margin: 10}}> Week {(weekIndex+1)}</Text>
-                            </LinearGradient>
+              <View style={{ width: windowWidth, height: 620, }} key={weekIndex}>
+                <View style={styles.progContainer}>
+
+
+                  <View style={{ ...styles.textContainer }}>
+                    <LinearGradient
+                      colors={['blue', 'navy']}>
+                      <Text style={{ ...styles.text, color: "white" }}> Programme name: {prog.name}</Text>
+                      <Text style={{ ...styles.text, color: "white" }}> Duration: {prog.duration} weeks</Text>
+
+                      <Text style={{ ...styles.text, color: "white", alignSelf: "center", margin: 10 }}> Week {(weekIndex + 1)}</Text>
+                    </LinearGradient>
+                  </View>
+
+
+
+                  <ScrollView
+                    showsVerticalScrollIndicator={false}
+                    bounces={false}
+                    style={epStyles.days}>
+                    {week.days.map((day, dayIndex) => {
+                      return (
+
+                        <View style={epStyles.day}>
+
+                          <Text>{day.name}</Text>
+                          {day.exercises.map((exer, exerIndex) => {
+                            return (
+                              <View style={epStyles.dayInfo}>
+                                <Text>{"Name: " + exer.name}</Text>
+                                <Text>{"Sets:" + exer.sets}</Text>
+                                <Text>{"Reps:" + exer.reps}</Text>
+                              </View>
+                            )
+                          })
+                          }
+
+
+                          <View style={epStyles.buttonGroup}>
+
+                            <CustomButton
+                              onPress={() => { handleEditModal(weekIndex, dayIndex) }}
+                              text={"Edit day"}
+                              width={70}
+                              height={40}
+                              color={"navy"} />
+
+                            <View style={{ marginHorizontal: 10 }} />
+
+                            <CustomButton
+                              onPress={() => { removeDayFromWeek(weekIndex, dayIndex) }}
+                              text={"-remove"}
+                              width={70}
+                              height={40}
+                              color={"navy"} />
+
+                          </View>
                         </View>
-                    
-                  
-                        
-                        <ScrollView
-                        showsVerticalScrollIndicator={false}
-                        bounces={false} 
-              style={epStyles.days}>
-                            { week.days.map((day, dayIndex) => {
-                              return (
+                      )
+                    })}
+                  </ScrollView>
 
-                                  <View style={epStyles.day}>
-  
-                                      <Text>{day.name}</Text>
-                                      {day.exercises.map((exer, exerIndex)=>{
-                                      return(
-                                      <View style={epStyles.dayInfo}>
-                                        <Text>{"Name: " +exer.name}</Text>
-                                        <Text>{"Sets:" + exer.sets}</Text>
-                                        <Text>{"Reps:" + exer.reps}</Text>
-                                      </View>
-                                      )})
-                                      }
-
-
-                                      <View style={epStyles.buttonGroup}>
-                                        
-                                        <CustomButton
-                                          onPress={()=>{handleEditModal(weekIndex, dayIndex)}}
-                                          text={"Edit day"}
-                                          width={70}
-                                          height={40}
-                                          color={"navy"}/>
-                                        
-                                          <View style={{marginHorizontal:10}}/>
-
-                                          <CustomButton
-                                          onPress={()=>{removeDayFromWeek(weekIndex, dayIndex)}}
-                                          text={"-remove"}
-                                          width={70}
-                                          height={40}
-                                          color={"navy"}/>
-                                        
-                                      </View>
-                                  </View>
-                            )})}
-                        </ScrollView>
-
-                    </View>
                 </View>
-              )
-            })}
-          </ScrollView>
-          </View>
+              </View>
+            )
+          })}
+        </ScrollView>
+      </View>
 
 
 
-          <View style={epStyles.buttonGroup}>
-            
-            <CustomButton
-              onPress={()=>{
-                curWeek= Math.round(Animated.divide(scrollX, windowWidth).__getValue()) 
-                if (prog.weeks[curWeek].days.length < 7){
-                  addDayToWeek(curWeek)
-                }}}
-              text={"+ add day"}
-              width={100}
-              height={50}
-              color={"navy"}/>
+      <View style={epStyles.buttonGroup}>
 
-            <View style={{marginHorizontal:10}}/>
+        <CustomButton
+          onPress={() => {
+            curWeek = Math.round(Animated.divide(scrollX, windowWidth).__getValue())
+            if (prog.weeks[curWeek].days.length < 7) {
+              addDayToWeek(curWeek)
+            }
+          }}
+          text={"+ add day"}
+          width={100}
+          height={50}
+          color={"navy"} />
 
-            <CustomButton
-              onPress={()=>handleCopyModal()}
-              text={"copy weeks"}
-              width={100}
-              height={50}
-              color={"navy"}/>
-            <View style={{marginHorizontal:10}}/>
-            {/* console.log(...prog); */}
-            <CustomButton
-              onPress={addProgramme}
-              text={"✔ finalize"}
-              width={100}
-              height={50}
-              color={"navy"}/>
-          </View>
+        <View style={{ marginHorizontal: 10 }} />
+
+        <CustomButton
+          onPress={() => handleCopyModal()}
+          text={"copy weeks"}
+          width={100}
+          height={50}
+          color={"navy"} />
+        <View style={{ marginHorizontal: 10 }} />
+        {/* console.log(...prog); */}
+        <CustomButton
+          onPress={() =>
+            addProgramme()
+            // navigation.navigate("FitnessScreen")
+          }
+          text={"✔ finalize"}
+          width={100}
+          height={50}
+          color={"navy"} />
+      </View>
 
 
-      
+
 
       <CopyModal
-      visible={copyVisible}
-      handleModal={handleCopyModal}
-      prog={prog}
-      setProg={setProg}
-      addDay={addDayToWeek}
-      addEx={addExerciseToDay}
+        visible={copyVisible}
+        handleModal={handleCopyModal}
+        prog={prog}
+        setProg={setProg}
+        addDay={addDayToWeek}
+        addEx={addExerciseToDay}
       />
 
       <EditModal
-      visible={editVisible}
-      handleModal={handleEditModal}
-      prog={prog}
-      setProg={setProg}
-      indexs={indexs}
-      addEx={addExerciseToDay}
-      remEx={removeExerciseFromDay}
+        visible={editVisible}
+        handleModal={handleEditModal}
+        prog={prog}
+        setProg={setProg}
+        indexs={indexs}
+        addEx={addExerciseToDay}
+        remEx={removeExerciseFromDay}
       />
-  
+
     </SafeAreaView>
 
   )
@@ -261,26 +318,26 @@ export function EditProg({prog, setProg}) {
 
 
 const epStyles = StyleSheet.create({
-  buttonGroup:{
+  buttonGroup: {
     flexDirection: 'row',
     justifyContent: 'space-around'
   },
-  button : {  
+  button: {
     margin: 20,
     backgroundColor: "navy"
   },
-  days:{
-    marginVertical: 10, 
+  days: {
+    marginVertical: 10,
     marginHorizontal: 15,
   },
-  day:{
+  day: {
     marginVertical: 10,
     borderWidth: 2,
     borderRadius: 5,
-    padding:5,
+    padding: 5,
     borderColor: "navy",
     backgroundColor: "white",
-    width:320,
+    width: 320,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -288,7 +345,7 @@ const epStyles = StyleSheet.create({
     elevation: 10,
   },
   dayInfo: {
-    flexDirection:"row",
+    flexDirection: "row",
     justifyContent: 'space-evenly'
   }
 })
@@ -308,8 +365,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 550,
-    marginBottom:15
-    
+    marginBottom: 15
+
   },
   progContainer: {
     flex: 1,
@@ -319,20 +376,20 @@ const styles = StyleSheet.create({
     overflow: 'scroll',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    backgroundColor:"white",
+    backgroundColor: "white",
 
   },
   textContainer: {
     height: 100,
     width: 400,
-    backgroundColor:"navy",
-    
+    backgroundColor: "navy",
+
   },
   text: {
     color: 'black',
     fontSize: 15,
     fontWeight: 'bold',
-    paddingHorizontal: 30, 
+    paddingHorizontal: 30,
     paddingTop: 5,
   },
   indicator: {
@@ -342,7 +399,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'purple',
     marginHorizontal: 4,
     margin: 4
-    
+
   },
   indicatorContainer: {
     flexDirection: 'row',
