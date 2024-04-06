@@ -9,6 +9,8 @@ const MainLayout = () => {
     const {isLoggedIn} = useLogin();
     console.log(isLoggedIn)
 
+
+    // SHOULD BE return  isLoggedIn ? <RootLayout/> : <LoginLayout/>;
     return  isLoggedIn ? <RootLayout/> : <LoginLayout/>;
         
         

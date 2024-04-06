@@ -30,7 +30,6 @@ export default function ProgCreate() {
 
       let newProg = new programme(data.name, parseInt(data.duration))
       newProg = addWeeks(newProg)
-      console.log(newProg)
       setProg(newProg)
       setEntered(true)
     }
@@ -50,7 +49,7 @@ export default function ProgCreate() {
 
 
   return (
-    <ScrollView>
+    <View>
       {!entered ? (
         <View key="input-view" style={{alignContent:"center"}}>
           <NameDurationInput 
@@ -77,7 +76,7 @@ export default function ProgCreate() {
       }
       
         
-    </ScrollView>
+    </View>
   )
 
 

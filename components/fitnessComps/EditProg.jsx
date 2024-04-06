@@ -151,7 +151,7 @@ export function EditProg({prog, setProg}) {
                         <ScrollView
                         showsVerticalScrollIndicator={false}
                         bounces={false} 
-                        style={epStyles.days}>
+              style={epStyles.days}>
                             { week.days.map((day, dayIndex) => {
                               return (
 
@@ -268,7 +268,6 @@ const epStyles = StyleSheet.create({
   button : {  
     margin: 20,
     backgroundColor: "navy"
-
   },
   days:{
     marginVertical: 10, 
@@ -308,7 +307,7 @@ const styles = StyleSheet.create({
     height: 620,
     alignItems: 'center',
     justifyContent: 'center',
-    
+    marginTop: 550,
     marginBottom:15
     
   },
@@ -321,9 +320,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     backgroundColor:"white",
-    
-    
-    
 
   },
   textContainer: {
