@@ -13,6 +13,7 @@ import {
 import CustomButton from '../CustomButtons';
 import ProgrammeDays from './ProgrammeDays';
 import { supabase } from '../../lib/supabase';
+import { useLogin } from '../../context/loginProvider';
 // import React, {useEffect, useState} from "react";
 
 

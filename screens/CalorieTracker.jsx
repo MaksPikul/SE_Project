@@ -1,14 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {View, Text, StyleSheet, TextInput, Button, ScrollView} from "react-native";
 import Search from '../components/NutritionComps/Search'
 import NutritionInfo from "../components/NutritionComps/NutritionInfo";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
+import { supabase } from "../lib/supabase";
 
 
 export default function CalorieTracker() {
 
+
+    var currentUserId = '54d2b68a-4eb6-45f9-9c17-98711ffd3324'
+
     const [input, setInput] = useState('');
     const [nutritionData, setNutritionData] = useState(null);
+    const [caloriesMacros, setCaloriesMacros] = useState([]);
 
     const fetchData = async () => {
         try {
@@ -24,10 +29,22 @@ export default function CalorieTracker() {
           );
           const data = await response.json();
           setNutritionData(data);
+          console.log('nutrition data', nutritionData)
         } catch (error) {
           console.error('Error fetching data:', error);
         }
       };
+
+    async function getCaloriesMacros() {
+      const { data, error } = await supabase.rpc('get_calories_macros', {userid: currentUserId})
+      setCaloriesMacros(data);
+      console.log('calorie and macro data', data)
+      console.log('getCaloriesMacros error',error)
+    }
+
+    useEffect(() => {
+      getCaloriesMacros();
+    }, []);
 
     return(
         <ScrollView style={styles.container}>
@@ -90,6 +107,9 @@ export default function CalorieTracker() {
                 <Text>Food10</Text>
                 <Text>Food11</Text>
                 <Text>Food12</Text>
+                <Text>Food13</Text>
+                <Text>Food14</Text>
+                <Text>Food15</Text>
             </View>
             
         </ScrollView>

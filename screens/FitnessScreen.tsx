@@ -6,6 +6,8 @@ import { useRef } from "react";
 import { Animated } from "react-native";
 import { ProgDisplayer } from "../components/fitnessComps/ProgDisplayer";
 import { useState } from "react";
+import React from "react";
+
 
 
 export default function FitnessScreen() {
