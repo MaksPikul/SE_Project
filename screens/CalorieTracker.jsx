@@ -1,33 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {View, Text, StyleSheet, TextInput, Button, ScrollView} from "react-native";
 import Search from '../components/NutritionComps/Search'
 import NutritionInfo from "../components/NutritionComps/NutritionInfo";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
+import { supabase } from "../lib/supabase";
 
 
 export default function CalorieTracker() {
 
+
+    var currentUserId = '54d2b68a-4eb6-45f9-9c17-98711ffd3324'
+
     const [input, setInput] = useState('');
     const [nutritionData, setNutritionData] = useState(null);
     
-    const [totalCalories, addTotalCalories] = useState(0);
-    const [totalProtein, addTotalProtein] = useState(0);
-    const [totalCarbohydrates, addTotalCarbohydrates] = useState(0);
-    const [totalFat, addTotalFat] = useState(0);
-
-    const [item, addItem] = useState([]);
-
-    const addMacros = (cal, pro, carb, fat) => {
-      addTotalCalories(totalCalories + cal)
-      addTotalProtein(totalProtein + pro)
-      addTotalCarbohydrates(totalCarbohydrates + carb)
-      addTotalFat(totalFat + fat)
-
-    }
-
-    const addTotalItem = (item_serving) => {
-      addItem([...item, item_serving])
-    }
+    const [caloriesMacros, setCaloriesMacros] = useState([]);
 
     const fetchData = async () => {
         try {
@@ -43,10 +30,22 @@ export default function CalorieTracker() {
           );
           const data = await response.json();
           setNutritionData(data);
+          console.log('nutrition data', nutritionData)
         } catch (error) {
           console.error('Error fetching data:', error);
         }
       };
+
+    async function getCaloriesMacros() {
+      const { data, error } = await supabase.rpc('get_calories_macros', {userid: currentUserId})
+      setCaloriesMacros(data);
+      console.log('calorie and macro data', data)
+      console.log('getCaloriesMacros error',error)
+    }
+
+    useEffect(() => {
+      getCaloriesMacros();
+    }, []);
 
     return(
         <ScrollView style={styles.container}>
@@ -62,8 +61,6 @@ export default function CalorieTracker() {
             {nutritionData &&  (
               <NutritionInfo 
                 nutrition_info={nutritionData}
-                addMacros = {addMacros}
-                addTotalItem = {addTotalItem}
               />
             )}
 
@@ -73,7 +70,7 @@ export default function CalorieTracker() {
               <AnimatedCircularProgress
                 size={170}
                 width={10}
-                fill={(totalCalories/2000)*100}
+                fill={(1600/2000)*100}
                 tintColor="#58a61c"
                 backgroundColor="#d0f0c0"
                 style={{padding:10}}>
@@ -81,7 +78,7 @@ export default function CalorieTracker() {
                   () => (
                     <View style={styles.tracker}>
                       <Text style={styles.trackerTopText}>
-                        {2000 - Math.round(totalCalories) + ' cals'}
+                        {2000 - 1600 + ' cals'}
                       </Text>
                       <Text style={styles.trackerBottomText}>
                         {'Remaining'}
@@ -92,10 +89,10 @@ export default function CalorieTracker() {
                 
               </AnimatedCircularProgress>
               <View style={styles.macros}>
-                <Text>Total Calories: {totalCalories} cal</Text>
-                <Text>Total Protein: {totalProtein} g</Text>
-                <Text>Total Carbohydrates: {totalCarbohydrates} g</Text>
-                <Text>Total Fat: {totalFat} g</Text>
+                <Text>Total Calories: cal</Text>
+                <Text>Total Protein:  g</Text>
+                <Text>Total Carbohydrates:  g</Text>
+                <Text>Total Fat:  g</Text>
               </View>
             </View>
             <Button
@@ -109,9 +106,8 @@ export default function CalorieTracker() {
               Daily Diet
             </Text>
             <View style={styles.food}>
-              {item.map((foodItem, index) => (
-                <Text key={index}>{foodItem}</Text>
-              ))}
+              <Text>{caloriesMacros}</Text>
+              <Text>{caloriesMacros}</Text>
             </View>
             
         </ScrollView>

@@ -1,13 +1,30 @@
 import {View, Button, StyleSheet, Text} from 'react-native';
+import { supabase } from '../../lib/supabase';
 
 export default function NutritionInfo ({nutrition_info, addMacros, addTotalItem, onHide}) {
+
+    
 
     function capitalizeFirstLetter(str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
       }
 
+    var currentUserId = '54d2b68a-4eb6-45f9-9c17-98711ffd3324'
+      
+    const addFood = async() => {
+        const {error} = await supabase
+        .from('calorie_log')
+        .insert([
+            {client_id: currentUserId, calories: nutrition_info[0].calories, protien: nutrition_info[0].protein_g,
+            carbs: nutrition_info[0].carbohydrates_total_g, fats: nutrition_info[0].fat_total_g, food_name: nutrition_info[0].name}
+        ])
+        console.log("adding error", error)
+        console.log("data after post",nutrition)
+
+    }
+
     return (
-        <View style={styles.nutrition_box}>
+        nutrition_info && <View style={styles.nutrition_box}>
 
              <View style={styles.nutrition_info}>
                 <Text style={styles.nutrition_text}>Item Name: {capitalizeFirstLetter(nutrition_info[0].name)}</Text>
@@ -22,18 +39,7 @@ export default function NutritionInfo ({nutrition_info, addMacros, addTotalItem,
             <Button
                 title="Add Item"
                 color={'#58a61c'}
-                onPress={() => {
-                    addMacros(
-                      nutrition_info[0].calories,
-                      nutrition_info[0].protein_g,
-                      nutrition_info[0].carbohydrates_total_g,
-                      nutrition_info[0].fat_total_g
-                    );
-                    addTotalItem(
-                        (nutrition_info[0].serving_size_g + "g " + capitalizeFirstLetter(nutrition_info[0].name))
-                    );
-
-                }}
+                onPress={addFood}
             />
         </View>
     )
