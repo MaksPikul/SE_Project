@@ -14,6 +14,7 @@ import CustomButton from '../CustomButtons';
 import ProgrammeDays from './ProgrammeDays';
 import { supabase } from '../../lib/supabase';
 import { useLogin } from '../../context/loginProvider';
+import { useNavigation } from "@react-navigation/native";
 // import React, {useEffect, useState} from "react";
 
 
@@ -48,6 +49,8 @@ export const ProgDisplayer = () => {
   // const [days, setDays] = useState([]);
   const [week, setWeek] = useState([]);
 
+  const navigation = useNavigation()
+
   useEffect(() => {
     getExercise();
     getProgrammes();
@@ -71,6 +74,8 @@ export const ProgDisplayer = () => {
     const { data } = await supabase.rpc('get_programmes')
     setProgrammes(data);
     console.log(data);
+
+
     // console.log(data);
   }
 
@@ -138,9 +143,8 @@ export const ProgDisplayer = () => {
                   <ProgrammeDays weekID={prog.week_id}></ProgrammeDays>
 
                   <View style={{ marginTop: 90 }}>
-
                     <CustomButton
-                      onPress={null}
+                      onPress={()=>navigation.navigate("TrackScreen")}
                       text="Start Tracking!"
                       width={260}
                       height={45}
@@ -149,9 +153,6 @@ export const ProgDisplayer = () => {
 
 
                   <View style={styles.indicatorContainer}>
-
-
-
                     {programmes.map((prog, progIndex) => {
                       const width = scrollX.interpolate({
                         inputRange: [

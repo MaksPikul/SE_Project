@@ -1,12 +1,10 @@
 import { View, Text, Button, TextInput ,SafeAreaView, Keyboard, StyleSheet, Modal, Alert, ScrollView} from "react-native";
 import {useState, useEffect } from "react";
 import React from "react";
-import { LinkedList, Node } from "../../jsFiles/LinkedList";
 import CustomButton from "../../components/CustomButtons";
 import { NameDurationInput } from "../../components/fitnessComps/NameDurationInput";
 import { EditProg } from "../../components/fitnessComps/EditProg";
 import { programme , week, day } from "../../jsFiles/ProgObjs";
-import LinearGradient from "react-native-linear-gradient";
 
 
 export default function ProgCreate() {
