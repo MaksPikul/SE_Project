@@ -16,6 +16,7 @@ import { day } from '../../jsFiles/ProgObjs';
 import { EditModal } from './EditModal';
 import { CopyModal } from './CopyModal';
 import LinearGradient from 'react-native-linear-gradient';
+import { supabase } from '../../lib/supabase';
 
 
 
@@ -27,12 +28,19 @@ export function EditProg({prog, setProg}) {
   const [editVisible, setEditVisible] = useState(false)
   const [copyVisible, setCopyVisible] = useState(false)
   const [indexs, setIndexs] = useState([0,0])
+  const [postedProgramme, setPostedProgramme] = useState([]);
+  const [postedWeeks, setPostedWeeks] = useState([]);
+
+  // useEffect(() =>{
+  //   addProgramme();
+  // })
 
   const scrollX = useRef(new Animated.Value(0)).current;
   const {width: windowWidth} = useWindowDimensions();
 
   //slide index for week
   let curWeek;
+  var currentUserId = '2810f3cd-4e04-44b7-9a19-2405fcec8684'
 
   const removeDayFromWeek = (weekIndex, dayIndex) => {
     const updatedWeeks = [...prog.weeks];
@@ -45,6 +53,7 @@ export function EditProg({prog, setProg}) {
     let num = updatedWeeks[weekIndex].days.length
     updatedWeeks[weekIndex].days[num] = new day(num, "day "+(num+1));
     setProg({ ...prog, weeks: updatedWeeks });
+    // console.log(prog);
   }
 
   const addExerciseToDay = (weekIndex, dayIndex, exercise) => {
@@ -69,6 +78,36 @@ export function EditProg({prog, setProg}) {
   const handleCopyModal = () =>{
     setCopyVisible(!copyVisible)
   }
+
+  const addProgramme = async () => {
+    const {data, error} = await supabase
+    .from('fitness_programmes')
+    .insert([
+      {name: prog.name, made_by: currentUserId, weeks: prog.weeks.length}
+    ])
+    .select()
+    setPostedProgramme(data);
+    // console.log("Posting error", data);
+    // console.log(postedProgramme);
+    // console.log(data);
+    console.log("Here is this", prog.weeks[0]['name']);
+    var week_num = prog.weeks.length;
+    console.log('ran', week_num);
+    setTimeout(() => { console.log('1 second passed'); }, 1000);
+    for (let i = 0; i < week_num; i++) {
+      console.log(postedProgramme);
+      const {data1, error1} = await supabase
+      .from('fitness_week')
+      .insert([
+        {programme_id: postedProgramme[0].id, week_number: prog.weeks[i].id + 1}
+      ])
+      .select()
+      setPostedWeeks(data1);
+      console.log("data1", data1);
+    }
+  }
+
+  console.log(prog);
 
   return(
     <SafeAreaView style={{...styles.container, marginVertical: 50}}>
@@ -184,8 +223,9 @@ export function EditProg({prog, setProg}) {
               height={50}
               color={"navy"}/>
             <View style={{marginHorizontal:10}}/>
+            {/* console.log(...prog); */}
             <CustomButton
-              onPress={null}
+              onPress={addProgramme}
               text={"✔ finalize"}
               width={100}
               height={50}
