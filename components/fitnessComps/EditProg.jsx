@@ -118,13 +118,36 @@ export function EditProg({ prog, setProg }) {
       const { data, error } = await supabase
       .from('fitness_day')
       .insert([
-        { week_id: week_id, num_of_exercises: num_of_exercises, day_name: day_name}
+        { week_id: week_id, num_of_exercises: num_of_exercises, day_name: day_name }
       ])
       .select()
       
       console.log("Day data", data);
+      // console.log("week in days", week);
+      addExercises( {day_id: data[0].id, day: week.days[j]} );
     }
 
+
+  }
+
+  async function addExercises({day_id, day}) {
+    var exercise_num = day.exercises.length;
+
+    for (let k = 0; k < exercise_num; k++) {
+
+      var exercise_name = day.exercises[k].name;
+      var exercise_sets = day.exercises[k].sets;
+      var exercise_reps = day.exercises[k].reps;
+
+      const { data, error } = await supabase
+      .from('exercises')
+      .insert([
+        { name: exercise_name, reps: exercise_reps, sets: exercise_sets, day_id: day_id}
+      ])
+      .select()
+
+      console.log("Exercise data", data);
+    }
 
   }
 
@@ -279,9 +302,10 @@ export function EditProg({ prog, setProg }) {
         <View style={{ marginHorizontal: 10 }} />
         {/* console.log(...prog); */}
         <CustomButton
-          onPress={() =>
-            addProgramme()
-            // navigation.navigate("FitnessScreen")
+          onPress={() => {
+            addProgramme();
+            navigation.navigate("Home");
+            }
           }
           text={"✔ finalize"}
           width={100}
