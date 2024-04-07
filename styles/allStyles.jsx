@@ -24,7 +24,7 @@ export const homeStyle = StyleSheet.create({
 
 export const fitStyles = StyleSheet.create({
     scrollContainer: {
-        backgroundColor: "#f5f5f5",
+        backgroundColor: "#e8e8e8",
     },
     viewContainer: {
         flexDirection: "column",
