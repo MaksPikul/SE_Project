@@ -20,6 +20,15 @@ import WaterScreen from "./screens/WaterScreen";
 
 
 
+const fitOptions = {
+    headerTintColor: "white",
+    headerStyle:{ backgroundColor: "navy"},
+    headerTitleAlign: "center",
+    headerRight: ()=> <Button 
+    title="Settings" 
+    onPress={() => Alert.alert("love yourself")}/>}
+
+
 
 const mainscreens = {
     Home: {
@@ -32,13 +41,7 @@ const mainscreens = {
     },
     Fitness: {
         screen: FitnessScreen,
-        options: {
-            headerTintColor: "white",
-            headerStyle:{ backgroundColor: "navy"},
-            headerTitleAlign: "center",
-            headerRight: ()=> <Button 
-            title="Settings" 
-            onPress={() => Alert.alert("kill yourself")}/>}
+        options: fitOptions
     },
     Blog: {
         screen: BlogScreen,
@@ -61,33 +64,15 @@ const mainscreens = {
 const subscreens = {
     ProgCreate: {
         screen: ProgCreate,
-        options: {
-            headerTintColor: "white",
-            headerStyle:{ backgroundColor: "navy"},
-            headerTitleAlign: "center",
-            headerRight: ()=> <Button 
-            title="Settings" 
-            onPress={() => Alert.alert("kill yourself")}/>}
+        options: fitOptions
     },
     ActivityHist: {
         screen: ActivityHist,
-        options: {
-            headerTintColor: "white",
-            headerStyle:{ backgroundColor: "navy"},
-            headerTitleAlign: "center",
-            headerRight: ()=> <Button 
-            title="Settings" 
-            onPress={() => Alert.alert("kill yourself")}/>}
+        options: fitOptions
     },
     TrackScreen: {
         screen: TrackScreen,
-        options: {
-            headerTintColor: "white",
-            headerStyle:{ backgroundColor: "navy"},
-            headerTitleAlign: "center",
-            headerRight: ()=> <Button 
-            title="Settings" 
-            onPress={() => Alert.alert("kill yourself")}/>}
+        options: fitOptions
     },
     Ambassador: {
         screen: AmbassadorSection,
