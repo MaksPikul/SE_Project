@@ -10,7 +10,7 @@ export const homeStyle = StyleSheet.create({
     },
     button: {
         width: 400,
-        height: 150,
+        height: 80,
         backgroundColor: "black",
         
         alignItems: "center"
