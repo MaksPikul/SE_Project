@@ -8,18 +8,7 @@ export const homeStyle = StyleSheet.create({
         alignItems: "center",
         padding: 75,
     },
-    button: {
-        width: 400,
-        height: 80,
-        backgroundColor: "black",
-        
-        alignItems: "center"
-    },
-    buttonText: {
-        color: "white",
-        fontSize: 16
-
-    }
+    
 })
 
 export const fitStyles = StyleSheet.create({

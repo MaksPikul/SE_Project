@@ -8,7 +8,7 @@ import {
   Button,
   Animated,
   useWindowDimensions,
-  FlatList
+  Alert
 } from 'react-native';
 import CustomButton from '../CustomButtons';
 import { useNavigation } from "@react-navigation/native";
@@ -80,6 +80,28 @@ export function EditProg({ prog, setProg }) {
   const handleCopyModal = () => {
     setCopyVisible(!copyVisible)
   }
+
+  const finalProtocol = () => {
+    for (let i=0; i<prog.weeks.length; i++){
+      if (prog.weeks[i].days.length === 0){
+        Alert.alert('Programme incomplete','Please fill out each week before finalizing.');
+        return;
+      }
+
+      for (let j=0; j< prog.weeks[i].days.length; j++){
+        if (prog.weeks[i].days[j].exercises.length === 0){
+          Alert.alert('Programme incomplete','Please fill out or remove days before finalizing.');
+          return;
+        }
+      }
+    }
+    Alert.alert('Finalizing','Are you happy with your programme?', 
+    [{text:'Yes', onPress:()=>{
+      addProgramme();
+      navigation.goBack();
+    }},
+    {text:'No', onPress:()=>{return}}])
+    }
 
   // async function getLatestProgramme() {
   //   const {data, error} = await supabase.rpc('get_latest_fitness_programme', {userid: '2810f3cd-4e04-44b7-9a19-2405fcec8684'})
@@ -213,8 +235,8 @@ export function EditProg({ prog, setProg }) {
                   <View style={{ ...styles.textContainer }}>
                     <LinearGradient
                       colors={['blue', 'navy']}>
-                      <Text style={{ ...styles.text, color: "white" }}> Programme name: {prog.name}</Text>
-                      <Text style={{ ...styles.text, color: "white" }}> Duration: {prog.duration} weeks</Text>
+                      <Text style={{ ...styles.text, color: "white", fontSize:20,}}>  {prog.name}</Text>
+                      <Text style={{ ...styles.text, color: "white", fontSize:20 }}>  Duration:{prog.duration} weeks</Text>
 
                       <Text style={{ ...styles.text, color: "white", alignSelf: "center", margin: 10 }}> Week {(weekIndex + 1)}</Text>
                     </LinearGradient>
@@ -235,7 +257,7 @@ export function EditProg({ prog, setProg }) {
                           {day.exercises.map((exer, exerIndex) => {
                             return (
                               <View style={epStyles.dayInfo}>
-                                <Text>{"Name: " + exer.name}</Text>
+                                <Text style={{textAlign:'right'}}>{exer.name}</Text>
                                 <Text>{"Sets:" + exer.sets}</Text>
                                 <Text>{"Reps:" + exer.reps}</Text>
                               </View>
@@ -302,11 +324,7 @@ export function EditProg({ prog, setProg }) {
         <View style={{ marginHorizontal: 10 }} />
         {/* console.log(...prog); */}
         <CustomButton
-          onPress={() => {
-            addProgramme();
-            navigation.navigate("Home");
-            }
-          }
+          onPress={() => finalProtocol()}
           text={"✔ finalize"}
           width={100}
           height={50}

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import {View, Text, StyleSheet, Button, ScrollView} from "react-native";
+import {View, Text, StyleSheet, Button, ScrollView, Alert} from "react-native";
 import Search from '../components/NutritionComps/Search'
 import NutritionInfo from "../components/NutritionComps/NutritionInfo";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
@@ -12,6 +12,7 @@ export default function CalorieTracker() {
     var currentUserId = '54d2b68a-4eb6-45f9-9c17-98711ffd3324'
 
     const [input, setInput] = useState('');
+
     const [nutritionData, setNutritionData] = useState(null);
     
     const [caloriesMacros, setCaloriesMacros] = useState([]);
@@ -21,7 +22,6 @@ export default function CalorieTracker() {
     const hideNutrition = () => {
       setShowNutrition(false)
     }
-
 
     const fetchData = async () => {
         try {
@@ -36,8 +36,14 @@ export default function CalorieTracker() {
             }
           );
           const data = await response.json();
-          setNutritionData(data);
-          console.log('nutrition data', nutritionData)
+          if (data && data.length > 0) {
+            setNutritionData(data);
+            setShowNutrition(true);
+          } else {
+              Alert.alert('Invalid Item', 'Please try again with a valid item.');
+              setNutritionData(null);
+              setShowNutrition(false);
+          }
         } catch (error) {
           console.error('Error fetching data:', error);
         }
@@ -112,7 +118,7 @@ export default function CalorieTracker() {
               buttonColor={'#58a61c'}
             />
             
-            {nutritionData && showNutrition && (
+            {nutritionData !== null && showNutrition && (
               <NutritionInfo 
                 nutrition_info={nutritionData}
                 getCaloriesMacros={getCaloriesMacros}

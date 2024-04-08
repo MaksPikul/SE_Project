@@ -15,28 +15,10 @@ import ProgrammeDays from './ProgrammeDays';
 import { supabase } from '../../lib/supabase';
 import { useLogin } from '../../context/loginProvider';
 import { useNavigation } from "@react-navigation/native";
-// import React, {useEffect, useState} from "react";
+import LinearGradient from 'react-native-linear-gradient';
 
 
-/* thinking about program layout
 
-let program = {
-  name: "12 week leg session",
-  Desc: "training legs",
-  weeks:week[
-    day[
-      exercises[{
-        monday: "legs", 
-        wednesday: "more legs",
-        friday: "calves ONLY",
-        saturday: "legs"
-    }]
-    ]
-  ]
-}
-*/
-
-// example data
 let progName = "Maxwell's lifts"
 let week = 2
 let day = "monday"
@@ -123,26 +105,23 @@ export const ProgDisplayer = () => {
 
           {programmes.map((prog, progIndex) => {
             console.log(progIndex)
+            console.log(programmes)
             return (
               <View style={{ width: windowWidth, height: 390 }} key={progIndex}>
 
                 <View style={styles.progContainer}>
 
                   <View style={{ ...styles.textContainer }}>
-                    <Text style={styles.text}>
-                      {/* 'Image - ' + imageIndex */}
+                  <LinearGradient
+                      colors={['blue', 'navy']}>
+                    <Text style={{...styles.text, color: "white", fontSize:20,marginVertical:5}}>
                       {prog['name']}
                     </Text>
-                    <Text style={styles.text}>
-
-                      {/* {"week " + week + " - " + day}  */}
+                    <Text style={{...styles.text, color: "white", fontSize:20, marginBottom:10}}>
                       {"Week " + prog['current_week']}
-                      {/* + " - "} */}
                       {/* + moment(prog['day_date']).format('dddd')}  */}
                     </Text>
-                    <Text style={styles.text}>
-                      {"Exercise"}
-                    </Text>
+                  </LinearGradient>
                   </View>
 
                   <ProgrammeDays weekID={prog.week_id}></ProgrammeDays>
@@ -165,7 +144,7 @@ export const ProgDisplayer = () => {
                           windowWidth * progIndex,
                           windowWidth * (progIndex + 1),
                         ],
-                        outputRange: [8, 16, 8],
+                        outputRange: [9, 18, 9],
                         extrapolate: 'clamp',
                       });
 
@@ -224,9 +203,8 @@ const styles = StyleSheet.create({
   textContainer: {
     height: 100,
     width: 400,
-    backgroundColor: "white",
-    borderBottomWidth: 2,
-    borderBlockColor: "black"
+    backgroundColor: "navy",
+    
   },
   text: {
     color: 'black',
@@ -239,7 +217,7 @@ const styles = StyleSheet.create({
     height: 8,
     width: 8,
     borderRadius: 4,
-    backgroundColor: 'purple',
+    backgroundColor: 'navy',
     marginHorizontal: 4,
     margin: 4
 

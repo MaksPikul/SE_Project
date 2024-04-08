@@ -5,7 +5,7 @@ import { homeStyle, logoutButton } from "../styles/allStyles";
 import { logout } from "../components/Logout";
 import { useLogin } from "../context/loginProvider";
 import React from "react";
-import CustomButton from "../components/CustomButtons";
+import LinearGradient from "react-native-linear-gradient";
 
 /* 
 For this page
@@ -22,6 +22,10 @@ For all sections,
     Default header has to go
     footer might be good
     allowing for scrolling would be good
+
+
+    grey : #6b6b6b
+    darker grey: #424242 66
 */
 
 export default function HomeScreen({}) {
@@ -37,48 +41,69 @@ export default function HomeScreen({}) {
       };
     return(
         <View style={homeStyle.container}>
-        <Text>Hello {name}</Text>
+        <Text
+        style={{
+        backgroundColor: "navy",
+        color:"white",
+        paddingVertical:30,
+        paddingHorizontal: 50,
+        borderRadius:40,
+        fontSize: 26,
+        width: 300,
+        textAlign:"center"
+        }}>Hello {name}</Text>
 
             
        
-        <View style={homeStyle.container}>
+        <View style={hStyles.container}>
+          
+          
 
           <HomeButton
             onPress={() => navigation.navigate("Fitness")}
             title="Fitness"
-            buttonStyle={homeStyle.button}
-            textStyle={homeStyle.buttonText}
+            
             />
 
             <HomeButton
             onPress={() => navigation.navigate("Nutrition")}
             title="Nutrition"
-            buttonStyle={homeStyle.button}
-            textStyle={homeStyle.buttonText}
+            
             />
 
             <HomeButton
             onPress={() => navigation.navigate("Blog")}
-            title="Blog"
-            buttonStyle={homeStyle.button}
-            textStyle={homeStyle.buttonText}
+            title="Blog"           
+            
             />
 
             <HomeButton
             onPress={() => navigation.navigate("Leaderboard")}
-            title="Leaderboard"
-            buttonStyle={homeStyle.button}
-            textStyle={homeStyle.buttonText}
+            title="Leaderboard"           
+            
           />
         </View>
-            <HomeButton
+      </View>
+
+    )
+}
+/*
+<HomeButton
             onPress={handleLogout}
             title="Logout"
             buttonStyle={homeStyle.button}
             textStyle={homeStyle.buttonText}
             />
-        
-      </View>
+*/
 
-    )
-}
+const hStyles = StyleSheet.create({
+  container:{
+    flex: 1,
+    flexDirection: "row",
+    flexWrap:"wrap",
+    justifyContent:"space-evenly",
+    alignContent:"center",
+    marginBottom:20,
+    width:398
+  }
+})

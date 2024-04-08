@@ -42,7 +42,6 @@ const RecipePostForm = ({ onSubmit }) => {
   };
 
   const viewRecipe = () => {
-
   }
 
   return (
