@@ -35,17 +35,17 @@ export function EditModal ({visible, handleModal, prog, setProg, indexs, addEx, 
         updatedWeeks[indexs[0]].days[indexs[1]].exercises[i].reps = exercs[i].reps
         }
         updatedWeeks[indexs[0]].days[indexs[1]].name = date
-        let currentIndex = daysOweek.findIndex((day) => day.title === date);
-        let nextIndex = (currentIndex + 1) % daysOweek.length;
-        setDate(daysOweek[nextIndex].title);
+        let currentIndex = daysOweek.findIndex((day) => day.title === date)
+        let nextIndex = (currentIndex + 1) % daysOweek.length
+        setDate(daysOweek[nextIndex].title)
 
-        setProg({ ...prog, weeks: updatedWeeks });
+        setProg({ ...prog, weeks: updatedWeeks })
     }
 
     const handleTextChange = (newText, index, property) => {
-        const newInputValues = [...exercs]; // Copy the current state array
-        newInputValues[index][property] = newText; // Update the specified property of the input at the specified index
-        setExecrs(newInputValues); // Set the new state array
+        const newInputValues = [...exercs]; 
+        newInputValues[index][property] = newText; 
+        setExecrs(newInputValues); 
       };
 
       const addState = () => {
