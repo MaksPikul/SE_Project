@@ -1,12 +1,10 @@
 import { NavigationContainer } from "@react-navigation/native/"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import CalorieTracker from './CalorieTracker';
-import Recipe from './RecipeScreen';
 import React from "react";
 import Water from './WaterScreen';
 import RecipePostScreen from "./RecipePostScreen";
-import { StyleSheet } from "react-native";
-import RecipeScreen from "./RecipeScreen";
+
 
 const Tab = createBottomTabNavigator()
 
