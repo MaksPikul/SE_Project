@@ -94,11 +94,11 @@ export function EditProg({ prog, setProg }) {
     var week_num = prog.weeks.length;
 
     for (let i = 0; i < week_num; i++) {
-
+      console.log("week increment", prog.weeks[0].id + i);
       const { data, error } = await supabase
         .from('fitness_week')
         .insert([
-          { programme_id: programme_id, week_number: prog.weeks[0].id + 1 }
+          { programme_id: programme_id, week_number: prog.weeks[0].id + 1 + i }
         ])
         .select()
 

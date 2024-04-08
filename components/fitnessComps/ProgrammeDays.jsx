@@ -14,29 +14,45 @@ import moment from 'moment';
 import CustomButton from '../CustomButtons';
 import { supabase } from '../../lib/supabase';
 
-const ProgrammeDays = ({ weekID }) => {
-  const [days, setDays] = useState([]);
+export const ProgrammeDays = ({ weekID }) => {
+  const [days, setDays] = useState(0);
+  const [exercises, setExercises] = useState([]);
+
 
   useEffect(() => {
     getDays();
+    getExercises();
   }, []);
 
-  console.log("Here is weekID", weekID)
+  // var day_id = null;
+  // console.log("Here is weekID", weekID)
   async function getDays() {
-    const { data , error } = await supabase
-      .from('fitness_day')
-      .select('id, week_id, day_date, num_of_exercises, day_name')
-      .eq('week_id', weekID)
-    setDays(data);
-    console.log(data);
+    console.log('RAAAN HEREE');
+    const { data, error } = await supabase.rpc('get_days', { weekid: weekID })
+    // setDays(data);
+    setDays(data[0].id);
+    console.log("DayId in programmedays", data[0].id, days);
+    // console.log("Testing new query", data, days);
+      getExercises({day_id: data[0].id});
+    // console.log("Exercises", exercises);
+  }
+
+  async function getExercises( {day_id} ) {
+    console.log('ran', day_id);
+    const { data, error } = await supabase
+      .from('exercises')
+      .select('name, reps, sets')
+      .eq('day_id', day_id)
+    setExercises(data);
+    console.log(data, exercises);
   }
 
   return (
     <View style={{ marginVertical: 10, marginHorizontal: 15, alignSelf: "flex-start" }}>
-      {days.map((day, dayIndex) => {
+      {exercises.map((exercise, dayIndex) => {
         return (
         <View>
-          <Text style={{ ...styles.text, alignSelf: "baseline", borderBottomColor: "black", borderBottomWidth: 2 }}> {day['day_name']} </Text>
+          <Text style={{ ...styles.text, alignSelf: "baseline", borderBottomColor: "black", borderBottomWidth: 2 }}> {exercise['name']} </Text>
           {/* moment(day['day_date']).format('dddd') + " - " + */}
           {/* <Text style={{ ...styles.text, alignSelf: "baseline", borderBottomColor: "black", borderBottomWidth: 2 }}> {"1" + " - " + "TEST "} </Text> */}
         </View>

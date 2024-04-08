@@ -54,6 +54,7 @@ export const ProgDisplayer = () => {
   useEffect(() => {
     getExercise();
     getProgrammes();
+    // getCurrentDay();
   }, []);
 
   // const { uid } = useLogin();
@@ -70,10 +71,14 @@ export const ProgDisplayer = () => {
   //   console.log(days);
   // }
 
+  // async function getCurrentDay() {
+
+  // }
+
   async function getProgrammes() {
     const { data } = await supabase.rpc('get_programmes')
     setProgrammes(data);
-    console.log(data);
+    console.log("length of programmes", data.length);
 
 
     // console.log(data);
