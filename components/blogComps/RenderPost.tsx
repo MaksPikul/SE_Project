@@ -5,7 +5,7 @@ import SaveButton from "./SaveButton";
 import DeleteButton from "./DeleteButton";
 import { memo } from "react";
 
-const RenderPost = ({ blog_post } : { blog_post : any}) => {
+export const RenderPost = ({ blog_post } : { blog_post : any}) => {
     return (
         <View style={styles.postContainer}>
             <Text style={styles.postType}>{blog_post.post_owner_name}</Text>
@@ -65,4 +65,3 @@ const styles = StyleSheet.create({
     }
 })
 
-export default memo(RenderPost);
