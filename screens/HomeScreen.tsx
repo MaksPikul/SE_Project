@@ -1,7 +1,7 @@
-import {View, Text, StyleSheet , Button} from "react-native";
+import {View, Text} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import HomeButton from '../components/homeButton';
-import { homeStyle, logoutButton } from "../styles/allStyles";
+import { homeStyle } from "../styles/allStyles";
 import { logout } from "../components/Logout";
 import { useLogin } from "../context/loginProvider";
 import React from "react";
