@@ -111,7 +111,7 @@ const hStyles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     flexWrap:"wrap",
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignContent:"center",
     marginBottom:10,
     width:398
