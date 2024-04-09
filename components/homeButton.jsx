@@ -19,7 +19,7 @@ import { Pressable, Text, View, StyleSheet } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 
-const HomeButton = ({ onPress, title}) => {
+const HomeButton = ({ onPress, title, style}) => {
 
   
   
@@ -27,7 +27,7 @@ const HomeButton = ({ onPress, title}) => {
     <View style={{...bStyles.buttonBack, ...bStyles.button}}>
       <Pressable
       onPress={onPress} 
-      style={({pressed})=> [{transform: pressed ? [{translateY: -6}] : null},bStyles.buttonFront]}>  
+      style={({pressed})=> [{transform: pressed ? [{translateY: -6}] : null},bStyles.buttonFront, style]}>  
         
         <Text style={{color: "white", fontSize: 19}}>{title}</Text>
 

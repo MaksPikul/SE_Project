@@ -52,7 +52,13 @@ export const ProgrammeDays = ({ weekID }) => {
       {exercises.map((exercise, dayIndex) => {
         return (
         <View>
-          <Text style={{ ...styles.text, alignSelf: "baseline", borderBottomColor: "black", borderBottomWidth: 2 }}> {exercise['name']} </Text>
+          <Text 
+          style={{ 
+            ...styles.text, 
+            alignSelf: "baseline", 
+            borderBottomColor: "black", 
+            borderBottomWidth: 2 }}> 
+            {exercise['name']} </Text>
           {/* moment(day['day_date']).format('dddd') + " - " + */}
           {/* <Text style={{ ...styles.text, alignSelf: "baseline", borderBottomColor: "black", borderBottomWidth: 2 }}> {"1" + " - " + "TEST "} </Text> */}
         </View>

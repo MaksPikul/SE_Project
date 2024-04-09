@@ -161,7 +161,7 @@ export function EditModal ({visible, handleModal, prog, setProg, indexs, addEx, 
                     
                     <TextInput
                     maxLength={15}
-                    value={exercs[exercIndex].name}
+                    //value={exercs[exercIndex].name}
                     placeholder={exerc.name}
                     onChangeText={(text)=>handleTextChange(text, exercIndex, "name")} 
                     style={{borderWidth: 1, borderColor: "black", width:95, marginHorizontal: 5}}/>
@@ -170,14 +170,14 @@ export function EditModal ({visible, handleModal, prog, setProg, indexs, addEx, 
                     <TextInput 
                     keyboardType="numeric"
                     maxLength={2}
-                    value={exercs[exercIndex].sets.toString()}
+                    //value={exercs[exercIndex].sets.toString()}
                     onChangeText={(text)=>handleTextChange(text, exercIndex, "sets")} 
                     style={{borderWidth: 1, borderColor: "black", marginHorizontal: 10}}/>
                     <Text>{"Reps: "}</Text>
                     <TextInput 
                     keyboardType="numeric"
                     maxLength={2}
-                    value={exercs[exercIndex].reps.toString()}
+                    //value={exercs[exercIndex].reps.toString()}
                     onChangeText={(text)=>handleTextChange(text, exercIndex, "reps")} 
                     style={{borderWidth: 1, borderColor: "black", marginHorizontal: 10}}/>
                     

@@ -62,6 +62,7 @@ export const ProgDisplayer = () => {
   async function getProgrammes() {
     const { data } = await supabase.rpc('get_programmes', {userid: user})
     setProgrammes(data);
+    console.log(data)
     // console.log("length of programmes", data.length);
 
 
@@ -119,10 +120,11 @@ export const ProgDisplayer = () => {
                     <Text style={{...styles.text, color: "white", fontSize:20,marginVertical:5}}>
                       {prog['name']}
                     </Text>
-                    <Text style={{...styles.text, color: "white", fontSize:20, marginBottom:10}}>
+                    <Text style={{...styles.text, color: "white", fontSize:20, marginBottom:5}}>
                       {"Week " + prog['current_week']}
                       {/* + moment(prog['day_date']).format('dddd')}  */}
                     </Text>
+                    <Text style={{...styles.text, color: "white", fontSize:16, marginBottom:5}}>Exercises for today:</Text>
                   </LinearGradient>
 
                   

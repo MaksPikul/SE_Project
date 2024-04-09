@@ -37,12 +37,15 @@ export function CopyModal ({visible, handleModal, prog, setProg, addDay, addEx }
       }
 
     const handleCopying = () => {
+
       let daysToCopy = JSON.parse(JSON.stringify(prog.weeks[copyFrom].days));
 
       prog.weeks.map((week, weekIndex)=>{
         if (weekIndex != copyFrom && copyTo[weekIndex]){
 
+
           daysToCopy.map((day, dayIndex)=>{
+            prog.weeks[weekIndex].days = []
             addDay(weekIndex)
 
               daysToCopy[dayIndex].exercises.map((exerc, exercIndex)=>{
