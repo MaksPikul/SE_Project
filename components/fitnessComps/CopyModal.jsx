@@ -43,9 +43,9 @@ export function CopyModal ({visible, handleModal, prog, setProg, addDay, addEx }
       prog.weeks.map((week, weekIndex)=>{
         if (weekIndex != copyFrom && copyTo[weekIndex]){
 
-
+          prog.weeks[weekIndex].days = []
           daysToCopy.map((day, dayIndex)=>{
-            prog.weeks[weekIndex].days = []
+            
             addDay(weekIndex)
 
               daysToCopy[dayIndex].exercises.map((exerc, exercIndex)=>{
