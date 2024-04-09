@@ -1,12 +1,7 @@
 import { supabase } from '../lib/supabase';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useLogin } from '../context/loginProvider';
-
-
 
 export const logout = async () => {
-
-
   try {
     
     await supabase.auth.signOut();

@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, Button } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import { supabase } from '../../lib/supabase';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useLogin } from '../../context/loginProvider';
+import { useLogin } from '../../context/loginProvider'
+import { useNavigation } from '@react-navigation/native';
+import LinearGradient from 'react-native-linear-gradient';
 
 
 
-
-
-
-
-export const LoginTab = ({}) => {
+export const LoginScreen = () => {
 
   const { setIsLoggedIn } = useLogin();
   const { setToken } = useLogin();
@@ -82,89 +80,98 @@ export const LoginTab = ({}) => {
   }
 
   return (
-    <View>
+    <View style={styles.container}>
+      <Text style={styles.header}>Welcome Back!</Text>
       <TextInput
+        style={styles.input}
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
       />
       <TextInput
+        style={styles.input}
         placeholder="Password"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
       />
       {error ? <Text>{error}</Text> : null}
-      <Button title="Login" onPress={handleLogin} />
+      <LinearGradient
+        colors={['#007bff', '#28a745']}
+        style={styles.gradientButton}
+        >
+
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+          <Text style={styles.buttonText}>Login</Text>
+        </TouchableOpacity>
+        </LinearGradient>
     </View>
   );
 };
 
-export const SignupTab = () => {
-  const { token, setIsLoggedIn, phone, setPhone, name, setName} = useLogin();
-  const { setToken } = useLogin();
-  const { uid, setUID } = useLogin();
+export const SignupScreen = () => {
+  const { phone, setPhone, name, setName } = useLogin();
+  const { setToken, setUID, setIsLoggedIn } = useLogin();
+
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-
-  async function handleSignup(){
+  async function handleSignup() {
     try {
       const { data, error } = await supabase.auth.signUp({
         email: email,
         password: password,
       });
-      
-      if (error) console.error(error)
-      else console.log(data)
 
       if (error) {
+        console.error(error);
         setError(error.message);
       } else {
         console.log('User signed up:', data);
-        // Store user token in AsyncStorage
 
-        const freshToken = data.session.access_token
-        setToken(freshToken)
+        // Store user token in AsyncStorage
+        const freshToken = data.session.access_token;
+        setToken(freshToken);
         await AsyncStorage.setItem('sessionData', JSON.stringify(freshToken));
-        
-        const freshUID = data.user.id
-        setUID(freshUID)
+
+        const freshUID = data.user.id;
+        setUID(freshUID);
         await AsyncStorage.setItem('uid', JSON.stringify(freshUID));
 
         setIsLoggedIn(true);
         setUserDetails();
- // Navigate to Home screen after successful signup
       }
     } catch (error) {
       console.error('Signup error:', error);
       setError('An error occurred during signup.');
     }
-  };
-
-  async function setUserDetails(){
-
-    try {
-      const { data, error } = await supabase
-    .rpc('insert_user', {
-      name,
-      phone, 
-      uid
-    })
-      if (error) console.error(error)
-      else console.log(data)
-    } 
-    catch (error) {console.error('Signup error:', error);
-    setError('An error occurred during signup.');}
   }
 
-  
+  async function setUserDetails() {
+    try {
+      const { data, error } = await supabase.rpc('insert_user', {
+        name,
+        phone,
+        uid,
+      });
+      if (error) {
+        console.error(error);
+      } else {
+        console.log(data);
+      }
+    } catch (error) {
+      console.error('Signup error:', error);
+      setError('An error occurred during signup.');
+    }
+  }
 
   return (
-    <View>
+    <View style={styles.container}>
+      <Text style={styles.header}>Welcome</Text>
       <TextInput
+        style={styles.input}
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
@@ -172,27 +179,81 @@ export const SignupTab = () => {
         keyboardType="email-address"
       />
       <TextInput
+        style={styles.input}
         placeholder="Phone"
         value={phone}
         onChangeText={setPhone}
-        keyboardType='phone-pad'
+        keyboardType="phone-pad"
       />
       <TextInput
+        style={styles.input}
         placeholder="Password"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
       />
       <TextInput
+        style={styles.input}
         placeholder="Name"
         value={name}
         onChangeText={setName}
-
       />
-      {error ? <Text>{error}</Text> : null}
-      <Button title="Signup" onPress={handleSignup} />
+      {error ? <Text style={styles.error}>{error}</Text> : null}
+
+      
+      <LinearGradient
+        colors={['#007bff', '#28a745']}
+        style={styles.gradientButton}
+        >
+
+      <TouchableOpacity style={styles.button} onPress={handleSignup}>
+          <Text style={styles.buttonText}>Signup</Text>
+        </TouchableOpacity>
+        </LinearGradient>
+
+
+      
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  },
+  input: {
+    height: 40,
+    width: '100%',
+    backgroundColor: '#eee',
+    marginBottom: 10,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+  },
+  error: {
+    color: 'red',
+    marginBottom: 10,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  gradientButton: {
+    borderRadius: 10,
+    marginBottom: 10,
+    width: '70%', // Make the buttons take full width
+    height: 50, // Set a fixed height for the buttons
+    justifyContent: 'center', // Center the button content vertically
+    alignItems: 'center', // Center the button content horizontally
+  },
+  header: {
+    fontSize: 35,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+});
 
 

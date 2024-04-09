@@ -1,17 +1,17 @@
 
-import { StyleSheet, TextInput, View } from "react-native";
+import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 import { useLogin } from "../../context/loginProvider";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { supabase } from "../../lib/supabase";
 import { useState } from "react";
 
-const { phone, setPhone, name, setName} = useLogin();
+
 
 
 
 const SignupScreen = () => {
 
-const { token, setIsLoggedIn, phone, setPhone, name, setName} = useLogin();
+const { setIsLoggedIn, phone, setPhone, name, setName} = useLogin();
   const { setToken } = useLogin();
   const { uid, setUID } = useLogin();
 
@@ -111,4 +111,3 @@ const SignupStyle = StyleSheet.create({
 })
 
 
-export default SignupScreen;
