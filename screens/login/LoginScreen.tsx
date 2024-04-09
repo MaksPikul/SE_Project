@@ -12,10 +12,11 @@ import { useLogin } from '../../context/loginProvider';
 
 export const LoginTab = ({}) => {
 
-  const { token, setIsLoggedIn } = useLogin();
+  const { setIsLoggedIn } = useLogin();
   const { setToken } = useLogin();
-  const { uid, setUID } = useLogin();
+  const { setUID } = useLogin();
   const {setName} = useLogin();
+  const {setIsLoading} = useLogin();
 
   
   const [email, setEmail] = useState('');
@@ -34,16 +35,23 @@ export const LoginTab = ({}) => {
 
       } else {
         console.log('User logged in:', data);
-        setToken(data.session.access_token)
-        setUID(data.user.id)
-        await AsyncStorage.setItem('sessionData', JSON.stringify(token));
+
+        const freshToken = data.session.access_token
+        setToken(freshToken)
+        await AsyncStorage.setItem('sessionData', JSON.stringify(freshToken));
+
+        const freshUID = data.user.id;
+        setUID(freshUID)
+        await AsyncStorage.setItem('uid', JSON.stringify(freshUID));
         
         
-        console.log("access token: ", data.session.access_token)
+        
+        console.log("access token: ", freshToken)
         console.log("user id: ", data.user.id)
         console.log("user metadata: ", data.user.user_metadata)
+        getUserDetails(freshUID);
         setIsLoggedIn(true)
-        getUserDetails();
+        
 
       }
     } catch (error) {
@@ -52,15 +60,25 @@ export const LoginTab = ({}) => {
     }
   };
 
-  async function getUserDetails(){
+  async function getUserDetails(freshUID: string){
 
-    const { data, error } = await supabase
-  .rpc('get_user_info', {uid})
-    if (error) console.error(error)
-  else {console.log(data)
+    console.log('Getting details');
+    setIsLoading(true);
 
-    setName(data[0].user_name)}
+    const uid = freshUID
 
+    const { data, error } = await supabase.rpc('get_user_info', {uid})
+    if (error) {console.error(error)}
+    else {console.log(data)
+
+    const freshName = data[0].user_name;
+    await AsyncStorage.setItem('name', freshName);
+    setName(freshName)
+    
+    setIsLoading(false);
+    
+  }
+  
   }
 
   return (
@@ -82,7 +100,7 @@ export const LoginTab = ({}) => {
   );
 };
 
-export const SignupTab = ({}) => {
+export const SignupTab = () => {
   const { token, setIsLoggedIn, phone, setPhone, name, setName} = useLogin();
   const { setToken } = useLogin();
   const { uid, setUID } = useLogin();
@@ -107,9 +125,15 @@ export const SignupTab = ({}) => {
       } else {
         console.log('User signed up:', data);
         // Store user token in AsyncStorage
-        setToken(data.session.access_token)
-        setUID(data.user.id)
-        await AsyncStorage.setItem('sessionData', JSON.stringify(token));
+
+        const freshToken = data.session.access_token
+        setToken(freshToken)
+        await AsyncStorage.setItem('sessionData', JSON.stringify(freshToken));
+        
+        const freshUID = data.user.id
+        setUID(freshUID)
+        await AsyncStorage.setItem('uid', JSON.stringify(freshUID));
+
         setIsLoggedIn(true);
         setUserDetails();
  // Navigate to Home screen after successful signup

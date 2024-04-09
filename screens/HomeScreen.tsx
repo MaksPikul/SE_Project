@@ -1,4 +1,4 @@
-import {View, Text} from "react-native";
+import {View, Text, StyleSheet} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import HomeButton from '../components/homeButton';
 import { homeStyle } from "../styles/allStyles";
@@ -37,26 +37,30 @@ export default function HomeScreen({}) {
     const handleLogout = async () => {
         console.log("Logout pressed")
         setIsLoggedIn(false)
+
         await logout(); // Call the logout function
       };
     return(
-        <View style={homeStyle.container}>
-        <Text
-        style={{
-        backgroundColor: "navy",
-        color:"white",
-        paddingVertical:30,
-        paddingHorizontal: 50,
-        borderRadius:40,
-        fontSize: 26,
-        width: 300,
-        textAlign:"center"
-        }}>Hello {name}</Text>
+        
 
-            
-       
+
+        <View style={homeStyle.container}>
+        
         <View style={hStyles.container}>
-          
+        <View>
+            <Text
+            style={{
+            backgroundColor: "navy",
+            color:"white",
+            paddingVertical:30,
+            paddingHorizontal: 50,
+            borderRadius:40,
+            fontSize: 26,
+            width: 300,
+            textAlign:"center"
+
+            }}>Hello {name}</Text>
+        </View>
           
 
           <HomeButton
@@ -82,28 +86,34 @@ export default function HomeScreen({}) {
             title="Leaderboard"           
             
           />
+            <HomeButton
+            onPress={handleLogout}
+            title="Logout"
+
+
+            />
         </View>
+
+        
       </View>
+
 
     )
 }
-/*
-<HomeButton
-            onPress={handleLogout}
-            title="Logout"
-            buttonStyle={homeStyle.button}
-            textStyle={homeStyle.buttonText}
-            />
-*/
+
+          
+
+
+
 
 const hStyles = StyleSheet.create({
   container:{
     flex: 1,
     flexDirection: "row",
     flexWrap:"wrap",
-    justifyContent:"space-evenly",
+    justifyContent: "space-between",
     alignContent:"center",
-    marginBottom:20,
+    marginBottom:10,
     width:398
   }
 })
