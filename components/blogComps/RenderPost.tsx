@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from "react-native";
 import ShowMoreShowLess from "./ShowMoreShowLess";
 import SaveButton from "./SaveButton";
 import DeleteButton from "./DeleteButton";
+import { memo } from "react";
 
 export const RenderPost = ({ blog_post } : { blog_post : any}) => {
     return (

@@ -1,36 +1,45 @@
 import React from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
-import { supabase } from '../../lib/supabase';
-import { NavigationContainer, NavigationProp, useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { LoginTab, SignupTab } from './screens/login/LoginScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import WelcomeScreen from './screens/login/WelcomeScreen';
+import { SignupScreen } from './screens/login/LoginScreen';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { LoginScreen } from './screens/login/LoginScreen';
 
-const Tab = createMaterialTopTabNavigator();
-
-const tabs = {
+const loginScreens = {
+    Welcome: {
+        screen: WelcomeScreen,
+        options: {headerShown: false},
+    },
     Login: {
-        tab: LoginTab
+        screen: LoginScreen,
+        options: {headerShown:true},
     },
     Signup: {
-        tab: SignupTab
-    },
-
+        screen: SignupScreen,
+        options: {headerShown:true},
+    }
 }
+
+
+
+
+const loginStack = createNativeStackNavigator()
 
 const LoginLayout = () => {
+    
     return(
-    <NavigationContainer independent={true}>
 
-        <Tab.Navigator>
-        {Object.entries(tabs).map(([name, { tab }]) => (
-            <Tab.Screen key={name} name={name} component={tab} />
-            ))}
-        </Tab.Navigator>
+        <NavigationContainer>
+        <loginStack.Navigator>
+            <loginStack.Group>
+            {Object.entries(loginScreens).map(([name, { screen, options } ]) => (
+                <loginStack.Screen key={name} name={name} component={screen} options={options}/>
+            ))}</loginStack.Group>
+        </loginStack.Navigator>
+        </NavigationContainer>
 
-    </NavigationContainer>)
+    )
 }
-
 
 
 

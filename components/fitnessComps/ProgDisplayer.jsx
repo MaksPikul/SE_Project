@@ -124,18 +124,34 @@ export const ProgDisplayer = () => {
                       {/* + moment(prog['day_date']).format('dddd')}  */}
                     </Text>
                   </LinearGradient>
+
+                  
                   </View>
-
+                  
                   <ProgrammeDays weekID={prog.week_id}></ProgrammeDays>
+                  
 
-                  <View style={{ marginTop: 90 }}>
+                  
+
+
+
+
+                </View>
+                <View style={{ marginTop: 0, flexDirection:"row", alignContent:"flex-end", alignSelf:"center"}}>
                     <CustomButton
                       onPress={()=>navigation.navigate("TrackScreen", {
                         programme: programmes[progIndex],
                         week: prog.week_id,
                       })}
                       text="Start Tracking!"
-                      width={260}
+                      width={150}
+                      height={45}
+                      color={"navy"} />
+                      <View style={{marginHorizontal:10}}/>
+                      <CustomButton
+                  onPress={null}
+                  text="delete programme"
+                      width={150}
                       height={45}
                       color={"navy"} />
                   </View>
@@ -162,11 +178,6 @@ export const ProgDisplayer = () => {
                       );
                     })}
                   </View>
-
-
-
-
-                </View>
               </View>
             )
           })}
@@ -210,6 +221,8 @@ const styles = StyleSheet.create({
     width: 400,
     backgroundColor: "navy",
     
+
+    
   },
   text: {
     color: 'black',
@@ -231,5 +244,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    
   },
 })

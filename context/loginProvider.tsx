@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { ReactNode, createContext, useContext, useState } from "react";
 
 interface LoginContextType {
     isLoggedIn: boolean;
@@ -11,25 +11,29 @@ interface LoginContextType {
     setName: React.Dispatch<React.SetStateAction<string>>;
     phone: string;
     setPhone: React.Dispatch<React.SetStateAction<string>>;
+    isLoading: boolean;
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+
     //metaData: {};
     //setMetaData: React.Dispatch<React.SetStateAction<{}>>
 }
 
 
-const LoginContext  = createContext< LoginContextType | undefined>(undefined);
+export const LoginContext  = createContext< LoginContextType | undefined>(undefined);
 
-const LoginProvider: React.FC = ({children}) => {
+const LoginProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [token, setToken] = useState('')
-    const [uid, setUID] = useState('defaultID')
-    const [name, setName] = useState('defaultID')
-    const [phone, setPhone] = useState('defaultID')
+    const [uid, setUID] = useState('')
+    const [name, setName] = useState('')
+    const [phone, setPhone] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
 
     //const [metaData, setMetaData] = useState({})
 
 
     return (
-    <LoginContext.Provider value={{isLoggedIn, setIsLoggedIn, token, setToken, uid, setUID, phone, setPhone, name, setName}}>
+    <LoginContext.Provider value={{isLoggedIn, setIsLoggedIn, token, setToken, uid, setUID, phone, setPhone, name, setName, isLoading, setIsLoading}}>
         {children}
     </LoginContext.Provider>
     );

@@ -10,7 +10,7 @@ import {
   Animated,
   useWindowDimensions,
 } from 'react-native';
-import moment from 'moment';
+//import moment from 'moment';
 import CustomButton from '../CustomButtons';
 import { supabase } from '../../lib/supabase';
 
