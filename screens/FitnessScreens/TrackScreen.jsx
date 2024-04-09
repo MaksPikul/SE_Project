@@ -8,6 +8,7 @@ export default function TrackScreen({ route, navigation }) {
     const [dayID, setDayID] = useState(0);
     const [exercises, setExercises] = useState([]);
     const states = []
+    // const navigation = useNavigation()
     // this.state = {day_name: "boo"}
 
     useEffect(() => {
@@ -15,7 +16,7 @@ export default function TrackScreen({ route, navigation }) {
         getExercises();
     }, []);
 
-    console.log("this days", day, dayID);
+    // console.log("this days", day, dayID);
 
     const handleWeightChange = (newWeight, exIndex, setIndex) => {
         states[exIndex][setIndex].weight = newWeight
@@ -26,10 +27,9 @@ export default function TrackScreen({ route, navigation }) {
     //For collecting data, find the next NOT completed day
     //And then get data for 
 
-    var day_name = "boo";
 
     async function getDays() {
-        console.log('RAAAN HEREE', route.params.programme.week_id);
+        // console.log('RAAAN HEREE', route.params.programme.week_id);
         var week_id = route.params.programme.week_id;
         const { data, error } = await supabase.rpc('get_days', { weekid: week_id })
         // setDays(data);
@@ -42,28 +42,28 @@ export default function TrackScreen({ route, navigation }) {
     }
 
     async function getExercises({ day_id }) {
-        console.log('ran in exercise', day_id);
+        // console.log('ran in exercise', day_id);
         const { data, error } = await supabase
             .from('exercises')
             .select('id, name, reps, sets')
             .eq('day_id', day_id)
             // exercise_id,
-        console.log("ran in tracking get exercises", data, exercises);
+        // console.log("ran in tracking get exercises", data, exercises);
         setExercises(data);
-        console.log(data);
+        // console.log(data);
     }
 
     async function setSets() {
 
-        console.log(dayID);
+        // console.log(dayID);
         for (i = 0; i < states.length; i++) {
             const { error } = await supabase
             .from('exercises')
             .update( {completed: true} )
             .eq('id', states[i][0].exercise_id)
-            console.log("states[i][0]", states[i][0]);
+            // console.log("states[i][0]", states[i][0]);
             for (j = 0; j < states[i].length; j++) {
-                console.log("iterating through states", states[i][j].exercise_id);
+                // console.log("iterating through states", states[i][j].exercise_id);
                 const { data, error } = await supabase
                 .from('sets')
                 .insert([
@@ -71,26 +71,59 @@ export default function TrackScreen({ route, navigation }) {
                 ])
                 .select()
 
-                console.log(data, error);
+                // console.log(data, error);
             }
         }
         const { error } = await supabase
         .from('fitness_day')
         .update( {completed: true} )
         .eq('id', dayID)
-        console.log(error);
+        // console.log(error);
 
         // TODO: UPDATE WEEK AND PROGRAM AS WELL
+
+        const { data } = await supabase.rpc('check_days', { programmeid: route.params.programme.programme_id, weekid: route.params.programme.week_id })
+        // console.log("returns chek_days", data, data.length);
+        if (data.length == 0) {
+            const { error } = await supabase
+            .from('fitness_week')
+            .update( {completed: true} )
+            .eq('id', route.params.programme.week_id)
+            // console.log("error in changing week", error);
+
+            const { data } = await supabase
+            .from('fitness_programmes')
+            .select('current_week')
+            .eq('id', route.params.programme.programme_id)
+            
+            // console.log("current week", data, route.params.programme.current_week);
+            // console.log(data[0].current_week);
+
+            updateProgramme();
+        }
 
         // const { error } = await supabase
         // .from('sets')
         // .update({ weight: , sets_done: })
     }
 
-    let prog = {
-        name: route.params.programme.name,
+    async function updateProgramme() {
+        
+        var new_week = route.params.programme.current_week + 1;
+        // console.log(new_week);
+        const { error } = await supabase
+        .from('fitness_programmes')
+        .update({current_week: new_week})
+        .eq('id', route.params.programme.programme_id)
 
     }
+
+    let prog = {
+        name: route.params.programme.name,
+        prog_id: route.params.programme.programme_id,
+    }
+
+    // console.log("prog with id", prog.prog_id);
 
     // console.log("should show actual day", day_name);
 
@@ -126,9 +159,11 @@ export default function TrackScreen({ route, navigation }) {
                     <View style={{ width: 100 }} />
 
                     <CustomButton
-                        onPress={() => 
+                        onPress={() => {
                             // console.log(states)
-                            setSets()
+                            setSets();
+                            navigation.navigate("Home");
+                            }
                             }
                         text={"finish"}
                         width={70}

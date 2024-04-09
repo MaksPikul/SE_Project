@@ -24,9 +24,9 @@ export const LoginContext  = createContext< LoginContextType | undefined>(undefi
 const LoginProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [token, setToken] = useState('')
-    const [uid, setUID] = useState('defaultID')
-    const [name, setName] = useState('defaultID')
-    const [phone, setPhone] = useState('defaultID')
+    const [uid, setUID] = useState('')
+    const [name, setName] = useState('')
+    const [phone, setPhone] = useState('')
     const [isLoading, setIsLoading] = useState(false)
 
     //const [metaData, setMetaData] = useState({})

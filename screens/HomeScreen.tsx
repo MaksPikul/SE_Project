@@ -17,16 +17,8 @@ For this page
 //like a hot cross bun type beat, ya heard?
 //Ask for help if neccessary
 
-/*
-For all sections,
-    Default header has to go
-    footer might be good
-    allowing for scrolling would be good
 
 
-    grey : #6b6b6b
-    darker grey: #424242 66
-*/
 
 export default function HomeScreen({}) {
 

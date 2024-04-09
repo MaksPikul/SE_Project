@@ -19,9 +19,9 @@ import LinearGradient from 'react-native-linear-gradient';
 
 
 
-let progName = "Maxwell's lifts"
-let week = 2
-let day = "monday"
+// let progName = "Maxwell's lifts"
+// let week = 2
+// let day = "monday"
 // let exercises = ["legs", "legs", "more legs", "legs"]
 
 export const ProgDisplayer = () => {
@@ -33,6 +33,8 @@ export const ProgDisplayer = () => {
 
   const navigation = useNavigation()
 
+  var user = '2810f3cd-4e04-44b7-9a19-2405fcec8684';
+
   useEffect(() => {
     // getExercise();
     getProgrammes();
@@ -41,11 +43,11 @@ export const ProgDisplayer = () => {
 
   // const { uid } = useLogin();
 
-  async function getExercise() {
-    const { data } = await supabase.rpc('get_exercises')
-    setExercises(data);
-    // console.log(data);
-  }
+  // async function getExercise() {
+  //   const { data } = await supabase.rpc('get_exercises')
+  //   setExercises(data);
+  //   // console.log(data);
+  // }
 
   // async function getDays() {
   //   const { data } = await supabase.rpc('get_days', {weekID: 1})
@@ -58,7 +60,7 @@ export const ProgDisplayer = () => {
   // }
 
   async function getProgrammes() {
-    const { data } = await supabase.rpc('get_programmes')
+    const { data } = await supabase.rpc('get_programmes', {userid: user})
     setProgrammes(data);
     // console.log("length of programmes", data.length);
 

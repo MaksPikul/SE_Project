@@ -116,7 +116,7 @@ export function EditProg({ prog, setProg }) {
     var week_num = prog.weeks.length;
 
     for (let i = 0; i < week_num; i++) {
-      console.log("week increment", prog.weeks[0].id + i);
+      // console.log("week increment", prog.weeks[0].id + i);
       const { data, error } = await supabase
         .from('fitness_week')
         .insert([
@@ -124,7 +124,7 @@ export function EditProg({ prog, setProg }) {
         ])
         .select()
 
-      console.log("week data", data);
+      // console.log("week data", data);
       addDays({week_id: data[0].id, week: weeks[i]});
     }
 
@@ -144,7 +144,7 @@ export function EditProg({ prog, setProg }) {
       ])
       .select()
       
-      console.log("Day data", data);
+      // console.log("Day data", data);
       // console.log("week in days", week);
       addExercises( {day_id: data[0].id, day: week.days[j]} );
     }
@@ -168,7 +168,7 @@ export function EditProg({ prog, setProg }) {
       ])
       .select()
 
-      console.log("Exercise data", data);
+      // console.log("Exercise data", data);
     }
 
   }
