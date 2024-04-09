@@ -3,6 +3,7 @@ import { ScrollView, View, Text, TextInput, Button, StyleSheet, TouchableOpacity
 import { usePosts } from '../blogComps/PostsContext';
 import { supabase } from '../../lib/supabase';
 import { useNavigation } from "@react-navigation/native";
+import SavedRecipes from '../../screens/SavedRecipes';
 
 const RecipePostForm = ({ onSubmit }) => {
   const [title, setTitle] = useState('');
@@ -41,9 +42,6 @@ const RecipePostForm = ({ onSubmit }) => {
 
   };
 
-  const viewRecipe = () => {
-  }
-
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.label}>Recipe Title</Text>
@@ -78,7 +76,7 @@ const RecipePostForm = ({ onSubmit }) => {
       {/* </TouchableOpacity> */}
       <Button
         title="View My Recipes"
-        // onPress = {() => navigation.navigate("")}
+        onPress = {() => navigation.navigate("SavedRecipes")}
         color={'#58a61c'}
       />
     </ScrollView>
