@@ -34,7 +34,7 @@ export const ProgDisplayer = () => {
   const navigation = useNavigation()
 
   useEffect(() => {
-    getExercise();
+    // getExercise();
     getProgrammes();
     // getCurrentDay();
   }, []);
@@ -60,7 +60,7 @@ export const ProgDisplayer = () => {
   async function getProgrammes() {
     const { data } = await supabase.rpc('get_programmes')
     setProgrammes(data);
-    console.log("length of programmes", data.length);
+    // console.log("length of programmes", data.length);
 
 
     // console.log(data);
@@ -128,7 +128,10 @@ export const ProgDisplayer = () => {
 
                   <View style={{ marginTop: 90 }}>
                     <CustomButton
-                      onPress={()=>navigation.navigate("TrackScreen")}
+                      onPress={()=>navigation.navigate("TrackScreen", {
+                        programme: programmes[progIndex],
+                        week: prog.week_id,
+                      })}
                       text="Start Tracking!"
                       width={260}
                       height={45}
