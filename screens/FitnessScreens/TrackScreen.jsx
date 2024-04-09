@@ -8,6 +8,7 @@ export default function TrackScreen({ route, navigation }) {
     const [dayID, setDayID] = useState(0);
     const [exercises, setExercises] = useState([]);
     const states = []
+    // const navigation = useNavigation()
     // this.state = {day_name: "boo"}
 
     useEffect(() => {
@@ -158,9 +159,11 @@ export default function TrackScreen({ route, navigation }) {
                     <View style={{ width: 100 }} />
 
                     <CustomButton
-                        onPress={() => 
+                        onPress={() => {
                             // console.log(states)
-                            setSets()
+                            setSets();
+                            navigation.navigate("Home");
+                            }
                             }
                         text={"finish"}
                         width={70}

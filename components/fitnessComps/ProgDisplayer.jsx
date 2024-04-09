@@ -33,6 +33,8 @@ export const ProgDisplayer = () => {
 
   const navigation = useNavigation()
 
+  var user = '2810f3cd-4e04-44b7-9a19-2405fcec8684';
+
   useEffect(() => {
     // getExercise();
     getProgrammes();
@@ -58,7 +60,7 @@ export const ProgDisplayer = () => {
   // }
 
   async function getProgrammes() {
-    const { data } = await supabase.rpc('get_programmes')
+    const { data } = await supabase.rpc('get_programmes', {userid: user})
     setProgrammes(data);
     // console.log("length of programmes", data.length);
 
