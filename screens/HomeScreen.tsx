@@ -58,31 +58,32 @@ export default function HomeScreen({}) {
           <HomeButton
             onPress={() => navigation.navigate("Fitness")}
             title="Fitness"
-            
+            style={null}
             />
 
             <HomeButton
             onPress={() => navigation.navigate("Nutrition")}
             title="Nutrition"
+            style={{backgroundcolor:"purple"}}
             
             />
 
             <HomeButton
             onPress={() => navigation.navigate("Blog")}
-            title="Blog"           
+            title="Blog"
+            style={{backgroundcolor:"purple"}}           
             
             />
 
             <HomeButton
             onPress={() => navigation.navigate("Leaderboard")}
             title="Leaderboard"           
-            
+            style={null}
           />
             <HomeButton
             onPress={handleLogout}
             title="Logout"
-
-
+            style={null}
             />
         </View>
 
@@ -103,7 +104,7 @@ const hStyles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     flexWrap:"wrap",
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignContent:"center",
     marginBottom:10,
     width:398

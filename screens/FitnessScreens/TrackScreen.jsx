@@ -162,7 +162,7 @@ export default function TrackScreen({ route, navigation }) {
                         onPress={() => {
                             // console.log(states)
                             setSets();
-                            navigation.navigate("Home");
+                            navigation.goBack();
                             }
                             }
                         text={"finish"}

@@ -71,12 +71,14 @@ const RecipePostForm = ({ onSubmit }) => {
       />
       {/* <TouchableOpacity > */}
         {/* style={styles.button} */}
-        <Button style={styles.buttonText} onPress={handleSubmit} title="Post Recipe" color={'#58a61c'} />
+        <Button style={styles.buttonText} onPress={()=>{
+          handleSubmit()
+          navigation.navigate("Saved Recipes")}} title="Post Recipe" color={'#58a61c'} />
 
       {/* </TouchableOpacity> */}
       <Button
         title="View My Recipes"
-        onPress = {() => navigation.navigate("SavedRecipes")}
+        onPress = {() => navigation.navigate("Saved Recipes")}
         color={'#58a61c'}
       />
     </ScrollView>
