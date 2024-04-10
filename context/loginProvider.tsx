@@ -4,13 +4,13 @@ interface LoginContextType {
     isLoggedIn: boolean;
     setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
     token: string;
-    setToken: React.Dispatch<React.SetStateAction<string>>;
+    setToken: React.Dispatch<React.SetStateAction<string | undefined>>;
     uid: string; 
-    setUID: React.Dispatch<React.SetStateAction<string>>;
+    setUID: React.Dispatch<React.SetStateAction<string | undefined>>;
     name: string;
-    setName: React.Dispatch<React.SetStateAction<string>>;
+    setName: React.Dispatch<React.SetStateAction<string | undefined>>;
     phone: string;
-    setPhone: React.Dispatch<React.SetStateAction<string>>;
+    setPhone: React.Dispatch<React.SetStateAction<string | undefined>>;
     isLoading: boolean;
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 
@@ -23,10 +23,10 @@ export const LoginContext  = createContext< LoginContextType | undefined>(undefi
 
 const LoginProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
-    const [token, setToken] = useState('')
-    const [uid, setUID] = useState('')
-    const [name, setName] = useState('')
-    const [phone, setPhone] = useState('')
+    const [token, setToken] = useState<string | undefined>();
+    const [uid, setUID] = useState<string | undefined>();
+    const [name, setName] = useState<string | undefined>();
+    const [phone, setPhone] = useState<string | undefined>();
     const [isLoading, setIsLoading] = useState(false)
 
     //const [metaData, setMetaData] = useState({})

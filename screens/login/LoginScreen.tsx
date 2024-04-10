@@ -134,7 +134,7 @@ export const SignupScreen = () => {
         console.log('User signed up:', data);
 
         // Store user token in AsyncStorage
-        const freshToken = data.user?.aud;
+        const freshToken = data.user?.aud
         setToken(freshToken);
         await AsyncStorage.setItem('sessionData', JSON.stringify(freshToken));
 
@@ -154,10 +154,11 @@ export const SignupScreen = () => {
 
   async function setUserDetails() {
     try {
-      const { data, error } = await supabase.rpc('insert_user', {
+      const { data, error } = await supabase.rpc('insert_user2', {
         name,
         phone,
         uid,
+        email
       });
       if (error) {
         console.error(error);
