@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet} from 'react-native'
+import {View, Text, StyleSheet, Alert} from 'react-native'
 import { AnimatedCircularProgress } from "react-native-circular-progress";
 import Search from '../components/NutritionComps/Search';
 import { useEffect, useState } from 'react';
@@ -10,6 +10,7 @@ export default function WaterScreen() {
 
     const [water, setWater] = useState('');
     const [totalWater, setTotalWater] = useState(0)
+
     var currentUserId = '54d2b68a-4eb6-45f9-9c17-98711ffd3324'
 
     useEffect(() => {
