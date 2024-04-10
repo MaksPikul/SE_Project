@@ -38,7 +38,7 @@ export default function HomeScreen({}) {
 
         <View style={homeStyle.container}>
         
-        <View style={hStyles.container}>
+        
         <View>
             <Text
             style={{
@@ -54,7 +54,7 @@ export default function HomeScreen({}) {
             }}>Hello {name}</Text>
         </View>
           
-
+        <View style={hStyles.container}>
           <HomeButton
             onPress={() => navigation.navigate("Fitness")}
             title="Fitness"
@@ -101,6 +101,7 @@ export default function HomeScreen({}) {
 
 const hStyles = StyleSheet.create({
   container:{
+    position: "relative",
     flex: 1,
     flexDirection: "row",
     flexWrap:"wrap",

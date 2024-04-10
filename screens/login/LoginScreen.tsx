@@ -111,7 +111,7 @@ export const LoginScreen = () => {
 
 export const SignupScreen = () => {
   const { phone, setPhone, name, setName } = useLogin();
-  const { setToken, setUID, setIsLoggedIn } = useLogin();
+  const { uid, setToken, setUID, setIsLoggedIn } = useLogin();
 
 
   const [email, setEmail] = useState('');
@@ -172,6 +172,12 @@ export const SignupScreen = () => {
       <Text style={styles.header}>Welcome</Text>
       <TextInput
         style={styles.input}
+        placeholder="Name"
+        value={name}
+        onChangeText={setName}
+      />
+      <TextInput
+        style={styles.input}
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
@@ -191,12 +197,6 @@ export const SignupScreen = () => {
         value={password}
         onChangeText={setPassword}
         secureTextEntry
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Name"
-        value={name}
-        onChangeText={setName}
       />
       {error ? <Text style={styles.error}>{error}</Text> : null}
 

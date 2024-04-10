@@ -2,11 +2,9 @@ import { StyleSheet } from "react-native"
 
 export const homeStyle = StyleSheet.create({
     container: {
-        flex: 1,
-        flexDirection: "column",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: 75,
+      flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     },
     
 })
