@@ -71,16 +71,15 @@ const RecipePostForm = ({ onSubmit }) => {
       />
       {/* <TouchableOpacity > */}
         {/* style={styles.button} */}
-        <Button style={styles.buttonText} onPress={()=>{
+        <View>
+
+        <Button style={styles.button} onPress={()=>{
           handleSubmit()
           navigation.navigate("Saved Recipes")}} title="Post Recipe" color={'#58a61c'} />
 
       {/* </TouchableOpacity> */}
-      <Button
-        title="View My Recipes"
-        onPress = {() => navigation.navigate("Saved Recipes")}
-        color={'#58a61c'}
-      />
+      
+        </View>
     </ScrollView>
   );
 };
@@ -110,7 +109,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#58a61c',
     borderRadius: 25,
     padding: 10,
-    marginBottom: 20,
+    paddingBottom: 10,
+    marginBottom: 25,
     width: '100%',
     justifyContent: 'center',
   },
@@ -123,3 +123,12 @@ const styles = StyleSheet.create({
 });
 
 export default RecipePostForm;
+
+
+
+/*<Button
+        title="View My Recipes"
+        onPress = {() => navigation.navigate("Saved Recipes")}
+        color={'#58a61c'}
+        style={styles.button}
+        /> */

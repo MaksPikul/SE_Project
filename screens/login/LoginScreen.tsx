@@ -97,7 +97,7 @@ export const LoginScreen = () => {
       />
       {error ? <Text>{error}</Text> : null}
       <LinearGradient
-        colors={['#007bff', '#28a745']}
+        colors={['#007bff', 'blue']}
         style={styles.gradientButton}
         >
 
@@ -114,6 +114,7 @@ export const SignupScreen = () => {
   const { uid, setToken, setUID, setIsLoggedIn } = useLogin();
 
 
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -128,15 +129,16 @@ export const SignupScreen = () => {
       if (error) {
         console.error(error);
         setError(error.message);
+        
       } else {
         console.log('User signed up:', data);
 
         // Store user token in AsyncStorage
-        const freshToken = data.session.access_token;
+        const freshToken = data.user?.aud;
         setToken(freshToken);
         await AsyncStorage.setItem('sessionData', JSON.stringify(freshToken));
 
-        const freshUID = data.user.id;
+        const freshUID = data.user?.id
         setUID(freshUID);
         await AsyncStorage.setItem('uid', JSON.stringify(freshUID));
 
@@ -146,6 +148,7 @@ export const SignupScreen = () => {
     } catch (error) {
       console.error('Signup error:', error);
       setError('An error occurred during signup.');
+      
     }
   }
 
@@ -160,11 +163,17 @@ export const SignupScreen = () => {
         console.error(error);
       } else {
         console.log(data);
+        
       }
     } catch (error) {
       console.error('Signup error:', error);
+      
       setError('An error occurred during signup.');
     }
+    
+
+    
+
   }
 
   return (
@@ -202,7 +211,7 @@ export const SignupScreen = () => {
 
       
       <LinearGradient
-        colors={['#007bff', '#28a745']}
+        colors={['#007bff', 'blue']}
         style={styles.gradientButton}
         >
 
@@ -216,6 +225,23 @@ export const SignupScreen = () => {
     </View>
   );
 };
+
+export const VerifyEmail = () =>{
+  const navigation = useNavigation();
+  return(
+    <View style={styles.container}>
+      <Text style={styles.header}>Please check your email inbox for verfication email</Text>
+      <LinearGradient
+        colors={['#007bff', 'blue']}
+        style={styles.gradientButton}
+        >
+      <TouchableOpacity style={styles.button} onPress={navigation.navigate("Welcome")}>
+          <Text style={styles.buttonText}>Return to Welcome</Text>
+        </TouchableOpacity>
+        </LinearGradient>
+    </View>
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
