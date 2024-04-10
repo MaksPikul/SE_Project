@@ -58,6 +58,10 @@ const styles = StyleSheet.create({
       fontSize: 16,
       fontWeight: 'bold',
     },
+    button: {
+      paddingHorizontal:120,
+      paddingVertical: 10
+    }
   });
 
 export default WelcomeScreen;

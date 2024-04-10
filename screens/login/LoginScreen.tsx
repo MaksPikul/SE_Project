@@ -254,6 +254,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
   },
+  button: {
+    paddingHorizontal:95,
+    paddingVertical: 10
+  }
 });
+
 
 
