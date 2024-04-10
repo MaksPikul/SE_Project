@@ -12,7 +12,7 @@ const RecipePostForm = ({ onSubmit }) => {
   const { addPost } = usePosts();
   const navigation = useNavigation();
 
-  var currentUserID = '2810f3cd-4e04-44b7-9a19-2405fcec8684'
+  var currentUserID = 'd9fd43fd-39ce-4683-9cf5-d27ececcc2b5'
 
   async function addRecipe({title, description, ingredients }) {
     const { data, error } = await supabase
