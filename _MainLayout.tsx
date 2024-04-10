@@ -59,7 +59,7 @@ const MainLayout = () => {
         
       }, []);
 
-    //const {isLoggedIn} = useLogin();
+
 
     // SHOULD BE return  isLoggedIn ? <RootLayout/> : <LoginLayout/>;
     return  (isLoggedIn ?( isLoading ?  <LoadingScreen /> : <RootLayout/>) : ( isLoading ?  <LoadingScreen /> : <LoginLayout/>))

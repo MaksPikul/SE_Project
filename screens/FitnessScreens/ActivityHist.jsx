@@ -15,21 +15,38 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function ActivityHist() {
 
-  /*
-  const [history, setHistory] = useState([]);
+  // const { posts, refreshing, handleRefresh } = usePosts();
+
+  
+  const [exercises, setExercises] = useState([]);
+  const [sets, setSets] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
-      getHistory();
+      getExercises();
     }, []);
 
-    async function getHistory() {
+    async function getExercises() {
       console.log("getposts")
-      const { data } = await supabase.rpc('get_history')
-      setHistory(data);
-      //console.log("History data", data)
+      const { data, error } = await supabase
+      .from("exercises")
+      .select("id")
+      .eq('completed', true)
+      setExercises(data);
+      console.log("History data", data, exercises, error)
+      for (i = 0; i < data.length; i++) {
+        getSets({exerciseID: data[i].id})
+      }
     }
 
+    console.log("outside function", exercises);
+
+    async function getSets({exerciseID}) {
+      const { data } = await supabase.rpc('get_sets_history', {exerciseid: exerciseID} )
+      
+      console.log(data);
+    }
+    /*
     const handleRefresh = () => {
       setHistory(true)
       getHistory()
@@ -42,17 +59,17 @@ export default function ActivityHist() {
   return(
       <SafeAreaView style={styles.pageView}>
         <View>
-        <FlatList
-            data={posts} 
-            renderItem={({item, index}) => (
-              <>
-                <RenderHist historyData = {item}/>
-              </>
-            )}
-            keyExtractor={item => item.id.toFixed()}
-            refreshing={refreshing}
-            onRefresh={handleRefresh}/>
-
+        {/* <FlatList */}
+            {/* data={posts}  */}
+            {/* renderItem={({item, index}) => ( */}
+              {/* <> */}
+                {/* <RenderHist historyData = {item}/> */}
+              {/* </> */}
+            {/* )} */}
+            {/* keyExtractor={item => item.id.toFixed()} */}
+            {/* refreshing={refreshing} */}
+            {/* onRefresh={handleRefresh}/> */}
+          <Text>Hello</Text>
         </View>
       </SafeAreaView>
   )

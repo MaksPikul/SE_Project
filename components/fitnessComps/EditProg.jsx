@@ -42,7 +42,7 @@ export function EditProg({ prog, setProg }) {
 
   //slide index for week
   let curWeek;
-  var currentUserId = '2810f3cd-4e04-44b7-9a19-2405fcec8684'
+  var currentUserId = 'd9fd43fd-39ce-4683-9cf5-d27ececcc2b5'
 
   const removeDayFromWeek = (weekIndex, dayIndex) => {
     const updatedWeeks = [...prog.weeks];
@@ -104,7 +104,7 @@ export function EditProg({ prog, setProg }) {
     }
 
   // async function getLatestProgramme() {
-  //   const {data, error} = await supabase.rpc('get_latest_fitness_programme', {userid: '2810f3cd-4e04-44b7-9a19-2405fcec8684'})
+  //   const {data, error} = await supabase.rpc('get_latest_fitness_programme', {userid: 'd9fd43fd-39ce-4683-9cf5-d27ececcc2b5'})
   //   console.log(error);
   //   setPostedProgramme(data);
   //   // console.log("Last programme made", data);

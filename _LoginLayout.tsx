@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import WelcomeScreen from './screens/login/WelcomeScreen';
-import { SignupScreen } from './screens/login/LoginScreen';
+import { SignupScreen, VerifyEmail } from './screens/login/LoginScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { LoginScreen } from './screens/login/LoginScreen';
 
@@ -17,6 +17,10 @@ const loginScreens = {
     Signup: {
         screen: SignupScreen,
         options: {headerShown:true},
+    },
+    VerifyEmail: {
+        screen: VerifyEmail,
+        options: {headerShown:false}
     }
 }
 

@@ -7,7 +7,7 @@ export const homeStyle = StyleSheet.create({
       justifyContent: "space-around",
       alignItems: "center",
       padding: 80,
-      height: "50%"
+      
   },
     
 })

@@ -33,7 +33,7 @@ export const ProgDisplayer = () => {
 
   const navigation = useNavigation()
 
-  var user = '2810f3cd-4e04-44b7-9a19-2405fcec8684';
+  var user = 'd9fd43fd-39ce-4683-9cf5-d27ececcc2b5';
 
   useEffect(() => {
     // getExercise();
