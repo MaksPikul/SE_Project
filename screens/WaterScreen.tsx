@@ -6,11 +6,11 @@ import { supabase } from '../lib/supabase';
 import { Button } from 'react-native-elements';
 
 
-export default function WaterScreen() {
+export default function WaterScreen({user_ID}) {
 
     const [water, setWater] = useState('');
     const [totalWater, setTotalWater] = useState(0)
-    var currentUserId = '54d2b68a-4eb6-45f9-9c17-98711ffd3324'
+    
 
     useEffect(() => {
         getTotalWater();
@@ -20,7 +20,7 @@ export default function WaterScreen() {
         const {error} = await supabase
         .from('water_log')
         .insert([
-            {user_id: currentUserId, count: water}
+            {user_id: user_ID, count: water}
         ])
         console.log("adding error", error)
         setWater('')
@@ -28,7 +28,7 @@ export default function WaterScreen() {
     }
 
     async function getTotalWater() {
-        const {data, error} = await supabase.rpc('get_water', {userid: currentUserId})
+        const {data, error} = await supabase.rpc('get_water', {userid: user_ID})
         setTotalWater(data)
         console.log('getting water error', error)
         console.log('current water', data)

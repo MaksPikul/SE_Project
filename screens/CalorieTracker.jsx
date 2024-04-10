@@ -6,10 +6,8 @@ import { AnimatedCircularProgress } from "react-native-circular-progress";
 import { supabase } from "../lib/supabase";
 
 
-export default function CalorieTracker() {
+export default function CalorieTracker({user_ID}) {
 
-
-    var currentUserId = '54d2b68a-4eb6-45f9-9c17-98711ffd3324'
 
     const [input, setInput] = useState('');
 
@@ -50,7 +48,7 @@ export default function CalorieTracker() {
       };
 
     async function getCaloriesMacros() {
-        const { data, error } = await supabase.rpc('get_calories_macros', {userid: currentUserId})
+        const { data, error } = await supabase.rpc('get_calories_macros', {userid: user_ID})
         setCaloriesMacros(data);
         console.log('calorie and macro data', data)
         console.log('getCaloriesMacros error',error)

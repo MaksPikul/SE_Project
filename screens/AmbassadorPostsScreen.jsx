@@ -25,7 +25,8 @@ const AmbassadorPostsScreen = ({user_ID}) => {
 
     async function getPosts() {
       console.log("getposts")
-      const { data } = await supabase.rpc('get_blogposts')
+      const { data, error } = await supabase.rpc('get_blogposts')
+      console.log(data)
       setPosts(data);
       
     }

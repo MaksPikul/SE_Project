@@ -5,20 +5,20 @@ import { supabase } from '../../lib/supabase';
 import { useNavigation } from "@react-navigation/native";
 import SavedRecipes from '../../screens/SavedRecipes';
 
-const RecipePostForm = ({ onSubmit }) => {
+const RecipePostForm = ({ user_ID }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [ingredients, setIngredients] = useState('');
   const { addPost } = usePosts();
   const navigation = useNavigation();
 
-  var currentUserID = 'd9fd43fd-39ce-4683-9cf5-d27ececcc2b5'
+  
 
   async function addRecipe({title, description, ingredients }) {
     const { data, error } = await supabase
     .from('recipe')
     .insert([
-      { created_by: currentUserID, name: title, description: description, ingredients: ingredients}
+      { created_by: user_ID, name: title, description: description, ingredients: ingredients}
     ])
     .select()
 

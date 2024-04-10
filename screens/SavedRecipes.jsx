@@ -3,14 +3,14 @@ import { supabase } from '../lib/supabase';
 import { useEffect, useState } from 'react';
 import removeIcon from '../images/remove-icon.png'
 
-export default function SavedRecipes() {
+export default function SavedRecipes({user_ID}) {
 
     const [recipes, setRecipes] = useState([]);
 
-    var currentUserId = 'd9fd43fd-39ce-4683-9cf5-d27ececcc2b5'
+    
 
     async function getRecipes() {
-        const {data, error} = await supabase.rpc('get_recipes', {userid: currentUserId})
+        const {data, error} = await supabase.rpc('get_recipes', {userid: user_ID})
         setRecipes(data)
         console.log('getting recipes error', error)
         console.log('current recipes', data)

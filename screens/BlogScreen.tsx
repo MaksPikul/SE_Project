@@ -26,7 +26,7 @@ export function BlogScreen(){
     }, [])
 
     return(
-        
+        session ? (
         <NavigationContainer independent={true}>
             <Tab.Navigator>
                 
@@ -42,7 +42,7 @@ export function BlogScreen(){
                 
             </Tab.Navigator>
         </NavigationContainer>
-        
+        ) : null
     )
 }
 
