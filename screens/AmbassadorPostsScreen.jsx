@@ -13,19 +13,30 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 const AmbassadorPostsScreen = () => {
-    
-    const [posts, setPosts] = useState([]);
-    const [refreshing, setRefreshing] = useState(false);
+
+    const [currentUserID, setCurrentUserID] = useState('')
+
+    async function getUserID() {
+      const {data, error} = await supabase.auth.getUser()
+      
+      console.log("user id error", error)
+      setCurrentUserID(data.user.id)
+      console.log("user id", currentUserID)
+      getPosts();
+    }
 
     useEffect(() => {
-      getPosts();
+      getUserID();
     }, []);
+
+    const [posts, setPosts] = useState([]);
+    const [refreshing, setRefreshing] = useState(false);
 
     async function getPosts() {
       console.log("getposts")
       const { data } = await supabase.rpc('get_blogposts')
       setPosts(data);
-      console.log("blog data", data)
+      
     }
 
     const handleRefresh = () => {
@@ -41,7 +52,7 @@ const AmbassadorPostsScreen = () => {
             data={posts} 
             renderItem={({item, index}) => (
               <>
-                <RenderPost blog_post = {item }></RenderPost>
+                <RenderPost blog_post = {item} user_ID={currentUserID}></RenderPost>
               </>
             )}
 

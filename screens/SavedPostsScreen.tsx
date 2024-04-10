@@ -7,24 +7,30 @@ import {
 }  from 'react-native';
 import { supabase } from '../lib/supabase';
 import { RenderPost } from '../components/blogComps/RenderPost';
-
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Session } from '@supabase/supabase-js';
 
-const SavedPostsScreen = () => {
+
+const SavedPostsScreen = ({user_ID}) => {
     const [savedPosts, setSavedPosts] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
-
     
+
     useEffect(() => {
-        getSavedPosts();
+        getSavedPosts()
     }, []);
 
+
+
     async function getSavedPosts() {
-        const {data, error} = await supabase.rpc('get_saved_blogposts', {activeuserid: '54d2b68a-4eb6-45f9-9c17-98711ffd3324'})
-        setSavedPosts(data);
-        console.log("saved posts", data)
-        console.log("error", error)
-    }
+      const {data, error} = await supabase.rpc('get_saved_blogposts', {activeuserid : user_ID})
+      setSavedPosts(data);
+      console.log("saved posts", data)
+      console.log("error", error)
+      console.log(user_ID)
+  }
+
+
 
     const handleRefresh = () => {
         setSavedPosts([])
@@ -39,7 +45,7 @@ const SavedPostsScreen = () => {
               data={savedPosts} 
               renderItem={({item, index}) => (
                 <>
-                  <RenderPost blog_post = {item }></RenderPost>
+                  <RenderPost user_ID={user_ID} blog_post = {item }></RenderPost>
                 </>
               )}
   
