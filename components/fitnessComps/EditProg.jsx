@@ -98,7 +98,7 @@ export function EditProg({ prog, setProg }) {
     Alert.alert('Finalizing','Are you happy with your programme?', 
     [{text:'Yes', onPress:()=>{
       addProgramme();
-      navigation.goBack();
+      navigation.navigate("Home");
     }},
     {text:'No', onPress:()=>{return}}])
     }
