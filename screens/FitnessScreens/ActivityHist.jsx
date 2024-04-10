@@ -15,6 +15,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function ActivityHist() {
 
+  const { posts, refreshing, handleRefresh } = usePosts();
+
   /*
   const [history, setHistory] = useState([]);
   const [refreshing, setRefreshing] = useState(false);

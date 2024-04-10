@@ -4,12 +4,9 @@ import HomeButton from '../components/homeButton';
 import { homeStyle } from "../styles/allStyles";
 import { useLogin } from "../context/loginProvider";
 import React from "react";
-import LinearGradient from "react-native-linear-gradient";
 import { logout } from "../components/Logout";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import FooterButton from "./FooterButton";
-import CustomButton from "../components/CustomButtons";
-import { color } from "react-native-elements/dist/helpers";
+
+
 
 /* 
 For this page
@@ -21,23 +18,17 @@ For this page
 //like a hot cross bun type beat, ya heard?
 //Ask for help if neccessary
 
-
-
-
-
-
-
-
 export default function HomeScreen({}) {
 
 
-    const {setIsLoggedIn, name, setName} = useLogin();
+    const {setIsLoggedIn, name, setName, setPhone} = useLogin();
     const navigation = useNavigation()
     
     const handleLogout = async () => {
         console.log("Logout pressed")
         setIsLoggedIn(false)
         setName("");
+        setPhone("")
         await logout(); // Call the logout function
       };
     return(
@@ -59,7 +50,7 @@ export default function HomeScreen({}) {
             width: 300,
             textAlign:"center"
 
-            }}>Hello {name}</Text>
+            }}>Hello {name}!</Text>
         </View>
           
         <View style={hStyles.container}>
@@ -89,32 +80,30 @@ export default function HomeScreen({}) {
             style={null}
           />
 
+        
             </View>
+
             <Button
             onPress={handleLogout}
             title={"Logout"}   
             color={"navy"}        
             />
-           
-          
+
+
+            
+
+
+
+            
+
+
       </View>
+      
+      
 
 
     )
 }
-
-
-
-
-
-          
-        
-
-
-          
-
-
-
 
 const hStyles = StyleSheet.create({
   container:{
@@ -126,5 +115,30 @@ const hStyles = StyleSheet.create({
     alignContent:"center",
     marginBottom:5,
     width:398
-  }
+  },
+  containerLogout: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  },
+  gradientButton: {
+    borderRadius: 10,
+    marginBottom: 10,
+    width: '90%', // Make the buttons take full width
+    height: 50, // Set a fixed height for the buttons
+    justifyContent: 'center', // Center the button content vertically
+    alignItems: 'center', // Center the button content horizontally
+  },
+  button: {
+    paddingHorizontal:120,
+    paddingVertical: 0,
+    textAlign:"center",
+
+  },
+  buttonText: {
+    color: "white", fontSize: 19
+
+
+  },
 })
