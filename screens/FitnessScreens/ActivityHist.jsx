@@ -44,8 +44,14 @@ export default function ActivityHist() {
     async function getSets({exerciseID}) {
       const { data } = await supabase.rpc('get_sets_history', {exerciseid: exerciseID} )
       
-      console.log(data);
+      console.log("inside function", data);
+      for (j = 0; j < data.length; j++) {
+        setSets(s => [data[j], ...s]);
+      }
     }
+
+    console.log("outside function sets", sets);
+
     /*
     const handleRefresh = () => {
       setHistory(true)
@@ -58,19 +64,18 @@ export default function ActivityHist() {
 
   return(
       <SafeAreaView style={styles.pageView}>
-        <View>
-        {/* <FlatList */}
-            {/* data={posts}  */}
-            {/* renderItem={({item, index}) => ( */}
-              {/* <> */}
-                {/* <RenderHist historyData = {item}/> */}
-              {/* </> */}
-            {/* )} */}
-            {/* keyExtractor={item => item.id.toFixed()} */}
-            {/* refreshing={refreshing} */}
-            {/* onRefresh={handleRefresh}/> */}
-          <Text>Hello</Text>
-        </View>
+        {sets.map((set, setIndex) => {
+          return (
+          <View style={{ flexDirection: "row", margin: 5 }}>
+
+          <Text style={{ marginRight: 40, marginStart: 10 }}>{set.name}</Text>
+          <Text style={{ marginRight: 60, }}>{set.reps_done.toString() + " reps"}</Text>
+
+          <Text style={{ marginRight: 40, }}>{set.weight.toString() + " weight"}</Text>
+
+          <Text ></Text>
+      </View>
+        )})}
       </SafeAreaView>
   )
 }

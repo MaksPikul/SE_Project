@@ -141,7 +141,7 @@ export function EditModal ({visible, handleModal, prog, setProg, indexs, addEx, 
 
                     renderItem={(item, index, isSelected) => {
                         return (
-                        <View style={{...pCreate.dropdownItemStyle, ...(isSelected && {backgroundColor: '#D2D9DF'})}}>
+                        <View  style={{...pCreate.dropdownItemStyle, ...(isSelected && {backgroundColor: '#D2D9DF'})}}>
                             <Icon name={item.icon} style={pCreate.dropdownItemIconStyle} />
                             <Text style={pCreate.dropdownItemTxtStyle}>{item.title}</Text>
                             <Icon name={item.icon} style={pCreate.dropdownItemIconStyle} />
@@ -155,14 +155,13 @@ export function EditModal ({visible, handleModal, prog, setProg, indexs, addEx, 
         { visible ? (prog.weeks[indexs[0]].days[indexs[1]].exercises.map((exerc, exercIndex)=>{  
             
             return(
-                <View style={{...editStyle.inputs, flexDirection: "row", justifyContent: "space-evenly"}}>
+                <View  key={exercIndex} style={{...editStyle.inputs, flexDirection: "row", justifyContent: "space-evenly"}}>
                      
-                    <Text>{"Name: "}</Text>
+                    <Text >{"Name: "}</Text>
                     
                     <TextInput
                     maxLength={15}
                     //value={exercs[exercIndex].name}
-                    placeholder={exerc.name}
                     onChangeText={(text)=>handleTextChange(text, exercIndex, "name")} 
                     style={{borderWidth: 1, borderColor: "black", width:95, marginHorizontal: 5}}/>
 

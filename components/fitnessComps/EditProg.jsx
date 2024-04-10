@@ -98,7 +98,7 @@ export function EditProg({ prog, setProg }) {
     Alert.alert('Finalizing','Are you happy with your programme?', 
     [{text:'Yes', onPress:()=>{
       addProgramme();
-      navigation.goBack();
+      navigation.navigate("Home");
     }},
     {text:'No', onPress:()=>{return}}])
     }
@@ -251,7 +251,7 @@ export function EditProg({ prog, setProg }) {
                     {week.days.map((day, dayIndex) => {
                       return (
 
-                        <View style={epStyles.day}>
+                        <View key={weekIndex+ " / " +dayIndex}style={epStyles.day}>
 
                           <Text>{day.name}</Text>
                           {day.exercises.map((exer, exerIndex) => {

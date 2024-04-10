@@ -24,9 +24,7 @@ const fitOptions = {
     headerTintColor: "white",
     headerStyle:{ backgroundColor: "navy"},
     headerTitleAlign: "center",
-    headerRight: ()=> <Button 
-    title="Settings" 
-    onPress={() => Alert.alert("love yourself")}/>}
+    }
 
 
 
