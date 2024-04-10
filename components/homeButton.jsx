@@ -38,13 +38,8 @@ const HomeButton = ({ onPress, title, style}) => {
 
 const bStyles = StyleSheet.create({
   button:{
-    width: 100,
-    height: 100,
-    backgroundColor: '#FF0000', // Button color
-    justifyContent: 'center',
-    alignItems: 'center',
-    transform: [{ rotate: '45deg' }],
-    position: 'absolute',
+  marginVertical:20,
+  marginHorizontal: 20,
   },
   buttonFront:{
   backgroundColor:"blue",
@@ -62,7 +57,7 @@ const bStyles = StyleSheet.create({
   alignItems:"center",
   justifyContent:"center",
   borderRadius:20
-  }
+  },
 })
 
 export default HomeButton;

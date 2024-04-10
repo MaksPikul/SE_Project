@@ -1,11 +1,15 @@
-import {View, Text, StyleSheet} from "react-native";
+import {View, Text, StyleSheet, Button} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import HomeButton from '../components/homeButton';
 import { homeStyle } from "../styles/allStyles";
-import { logout } from "../components/Logout";
 import { useLogin } from "../context/loginProvider";
 import React from "react";
 import LinearGradient from "react-native-linear-gradient";
+import { logout } from "../components/Logout";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import FooterButton from "./FooterButton";
+import CustomButton from "../components/CustomButtons";
+import { color } from "react-native-elements/dist/helpers";
 
 /* 
 For this page
@@ -20,16 +24,20 @@ For this page
 
 
 
+
+
+
+
 export default function HomeScreen({}) {
 
 
-    const {setIsLoggedIn, name} = useLogin();
+    const {setIsLoggedIn, name, setName} = useLogin();
     const navigation = useNavigation()
     
     const handleLogout = async () => {
         console.log("Logout pressed")
         setIsLoggedIn(false)
-
+        setName("");
         await logout(); // Call the logout function
       };
     return(
@@ -80,19 +88,28 @@ export default function HomeScreen({}) {
             title="Leaderboard"           
             style={null}
           />
-            <HomeButton
-            onPress={handleLogout}
-            title="Logout"
-            style={null}
-            />
-        </View>
 
-        
+            </View>
+            <Button
+            onPress={handleLogout}
+            title={"Logout"}   
+            color={"navy"}        
+            />
+           
+          
       </View>
 
 
     )
 }
+
+
+
+
+
+          
+        
+
 
           
 
@@ -107,7 +124,7 @@ const hStyles = StyleSheet.create({
     flexWrap:"wrap",
     justifyContent: "center",
     alignContent:"center",
-    marginBottom:10,
+    marginBottom:5,
     width:398
   }
 })
