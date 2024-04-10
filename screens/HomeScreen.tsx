@@ -1,11 +1,15 @@
-import {View, Text, StyleSheet , Button} from "react-native";
+import {View, Text, StyleSheet, Button} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import HomeButton from '../components/homeButton';
-import { homeStyle, logoutButton } from "../styles/allStyles";
-import { logout } from "../components/Logout";
+import { homeStyle } from "../styles/allStyles";
 import { useLogin } from "../context/loginProvider";
 import React from "react";
 import LinearGradient from "react-native-linear-gradient";
+import { logout } from "../components/Logout";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import FooterButton from "./FooterButton";
+import CustomButton from "../components/CustomButtons";
+import { color } from "react-native-elements/dist/helpers";
 
 /* 
 For this page
@@ -17,93 +21,110 @@ For this page
 //like a hot cross bun type beat, ya heard?
 //Ask for help if neccessary
 
-/*
-For all sections,
-    Default header has to go
-    footer might be good
-    allowing for scrolling would be good
 
 
-    grey : #6b6b6b
-    darker grey: #424242 66
-*/
+
+
+
+
 
 export default function HomeScreen({}) {
 
 
-    const {setIsLoggedIn, name} = useLogin();
+    const {setIsLoggedIn, name, setName} = useLogin();
     const navigation = useNavigation()
     
     const handleLogout = async () => {
         console.log("Logout pressed")
         setIsLoggedIn(false)
+        setName("");
         await logout(); // Call the logout function
       };
     return(
+        
+
+
         <View style={homeStyle.container}>
-        <Text
-        style={{
-        backgroundColor: "navy",
-        color:"white",
-        paddingVertical:30,
-        paddingHorizontal: 50,
-        borderRadius:40,
-        fontSize: 26,
-        width: 300,
-        textAlign:"center"
-        }}>Hello {name}</Text>
+        
+        
+        <View>
+            <Text
+            style={{
+            backgroundColor: "navy",
+            color:"white",
+            paddingVertical:30,
+            paddingHorizontal: 50,
+            borderRadius:40,
+            fontSize: 26,
+            width: 300,
+            textAlign:"center"
 
-            
-       
+            }}>Hello {name}</Text>
+        </View>
+          
         <View style={hStyles.container}>
-          
-          
-
           <HomeButton
             onPress={() => navigation.navigate("Fitness")}
             title="Fitness"
-            
+            style={null}
             />
 
             <HomeButton
             onPress={() => navigation.navigate("Nutrition")}
             title="Nutrition"
+            style={{backgroundcolor:"purple"}}
             
             />
 
             <HomeButton
             onPress={() => navigation.navigate("Blog")}
-            title="Blog"           
+            title="Blog"
+            style={{backgroundcolor:"purple"}}           
             
             />
 
             <HomeButton
             onPress={() => navigation.navigate("Leaderboard")}
             title="Leaderboard"           
-            
+            style={null}
           />
-        </View>
+
+            </View>
+            <Button
+            onPress={handleLogout}
+            title={"Logout"}   
+            color={"navy"}        
+            />
+           
+          
       </View>
+
 
     )
 }
-/*
-<HomeButton
-            onPress={handleLogout}
-            title="Logout"
-            buttonStyle={homeStyle.button}
-            textStyle={homeStyle.buttonText}
-            />
-*/
+
+
+
+
+
+          
+        
+
+
+          
+
+
+
 
 const hStyles = StyleSheet.create({
   container:{
+    position: "relative",
     flex: 1,
     flexDirection: "row",
     flexWrap:"wrap",
-    justifyContent:"space-evenly",
+    justifyContent: "center",
     alignContent:"center",
-    marginBottom:20,
+    marginBottom:5,
     width:398
   }
 })

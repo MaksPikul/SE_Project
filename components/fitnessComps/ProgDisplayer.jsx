@@ -19,9 +19,9 @@ import LinearGradient from 'react-native-linear-gradient';
 
 
 
-let progName = "Maxwell's lifts"
-let week = 2
-let day = "monday"
+// let progName = "Maxwell's lifts"
+// let week = 2
+// let day = "monday"
 // let exercises = ["legs", "legs", "more legs", "legs"]
 
 export const ProgDisplayer = () => {
@@ -33,19 +33,21 @@ export const ProgDisplayer = () => {
 
   const navigation = useNavigation()
 
+  var user = '2810f3cd-4e04-44b7-9a19-2405fcec8684';
+
   useEffect(() => {
-    getExercise();
+    // getExercise();
     getProgrammes();
     // getCurrentDay();
   }, []);
 
   // const { uid } = useLogin();
 
-  async function getExercise() {
-    const { data } = await supabase.rpc('get_exercises')
-    setExercises(data);
-    // console.log(data);
-  }
+  // async function getExercise() {
+  //   const { data } = await supabase.rpc('get_exercises')
+  //   setExercises(data);
+  //   // console.log(data);
+  // }
 
   // async function getDays() {
   //   const { data } = await supabase.rpc('get_days', {weekID: 1})
@@ -58,12 +60,107 @@ export const ProgDisplayer = () => {
   // }
 
   async function getProgrammes() {
-    const { data } = await supabase.rpc('get_programmes')
+    const { data } = await supabase.rpc('get_programmes', {userid: user})
     setProgrammes(data);
-    console.log("length of programmes", data.length);
+    console.log(data)
+    // console.log("length of programmes", data.length);
 
 
     // console.log(data);
+  }
+
+  async function getDaysForDelete({week_id}) {
+    const { data } = await supabase.rpc('get_days', {weekid: week_id})
+    console.log("data in days delete", data);
+    for (j = 0; j < data.length; j++) {
+      console.log(data[j].id);
+      getExercisesForDelete({day_id:data[j].id});
+      const { error } = await supabase
+      .from('fitness_day')
+      .delete()
+      .eq('id', data[j].id)
+
+      console.log(error);
+    }
+
+    // if (data.length != 0) {
+
+    //   for (j1 = 0; j1 < data.length; j1++) {
+
+    //     const { error } = await supabase
+    //     .from('fitness_day')
+    //     .delete()
+    //     .eq('id', data[j1].id)
+    //   }
+
+    // }
+  }
+
+  async function getExercisesForDelete({day_id}) {
+    const { data, error } = await supabase.rpc('get_exercises', {dayid: day_id})
+    console.log("data in exercises delete", data, error);
+    
+    if (data.length != 0 ) {
+      for (k = 0; k < data.length; k++) {
+        getSetsForDelete({exercise_id: data[k].id});
+        console.log("seeing how things run", data);
+        const { error } = await supabase
+        .from('exercises')
+        .delete()
+        .eq('id', data[k].id)
+
+        console.log(error);
+      }
+    }
+
+    // if (data.length != 0 ) {
+
+    //   for (k1 = 0; k1 < data.length; k1++) {
+    //     const { error } = await supabase
+    //     .from('exercises')
+    //     .delete()
+    //     .eq('id', data[k1].id)
+
+    //     console.log(error);
+    //   }
+
+    // }
+
+  }
+
+  async function getSetsForDelete({exercise_id}) {
+    const { data } = await supabase.rpc('get_sets', {exerciseid: exercise_id})
+    console.log("data in sets delete", data, error);
+
+    if (data.length != 0) {
+      for (l = 0; l < data.length; l++) {
+        const { error } = await supabase
+        .from('sets')
+        .delete()
+        .eq('id', data[l].id)
+
+        console.log(error);
+      }
+    }
+  }
+
+  async function deleteProgramme({prog}) {
+    const { data } = await supabase.rpc('get_week', {programmeid: prog.programme_id})
+    console.log("data in delete", data);
+    for (i = 0; i < data.length; i++) {
+      getDaysForDelete({week_id:data[i].week_id})
+      const { error } = await supabase
+      .from('fitness_week')
+      .delete()
+      .eq('id', data[i].week_id)
+      console.log(error)
+    }
+
+    const { error } = await supabase
+    .from('fitness_programmes')
+    .delete()
+    .eq('id', prog.programme_id)
+    console.log(error)
   }
 
   // async function getWeek(week) {
@@ -105,7 +202,7 @@ export const ProgDisplayer = () => {
 
           {programmes.map((prog, progIndex) => {
             console.log(progIndex)
-            console.log(programmes)
+            console.log(prog)
             return (
               <View style={{ width: windowWidth, height: 390 }} key={progIndex}>
 
@@ -117,20 +214,34 @@ export const ProgDisplayer = () => {
                     <Text style={{...styles.text, color: "white", fontSize:20,marginVertical:5}}>
                       {prog['name']}
                     </Text>
-                    <Text style={{...styles.text, color: "white", fontSize:20, marginBottom:10}}>
+                    <Text style={{...styles.text, color: "white", fontSize:20, marginBottom:5}}>
                       {"Week " + prog['current_week']}
                       {/* + moment(prog['day_date']).format('dddd')}  */}
                     </Text>
+                    <Text style={{...styles.text, color: "white", fontSize:16, marginBottom:5}}>Exercises for today:</Text>
                   </LinearGradient>
-                  </View>
 
+                  
+                  </View>
+                  
                   <ProgrammeDays weekID={prog.week_id}></ProgrammeDays>
 
-                  <View style={{ marginTop: 90 }}>
+                </View>
+                <View style={{ marginTop: 0, flexDirection:"row", alignContent:"flex-end", alignSelf:"center"}}>
                     <CustomButton
-                      onPress={()=>navigation.navigate("TrackScreen")}
+                      onPress={()=>navigation.navigate("TrackScreen", {
+                        programme: programmes[progIndex],
+                        week: prog.week_id,
+                      })}
                       text="Start Tracking!"
-                      width={260}
+                      width={150}
+                      height={45}
+                      color={"navy"} />
+                      <View style={{marginHorizontal:10}}/>
+                      <CustomButton
+                  onPress={() => {deleteProgramme({prog: prog})}}
+                  text="Delete Programme"
+                      width={150}
                       height={45}
                       color={"navy"} />
                   </View>
@@ -157,11 +268,6 @@ export const ProgDisplayer = () => {
                       );
                     })}
                   </View>
-
-
-
-
-                </View>
               </View>
             )
           })}
@@ -205,6 +311,8 @@ const styles = StyleSheet.create({
     width: 400,
     backgroundColor: "navy",
     
+
+    
   },
   text: {
     color: 'black',
@@ -226,5 +334,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    
   },
 })

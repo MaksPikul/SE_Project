@@ -10,7 +10,7 @@ import {
   Animated,
   useWindowDimensions,
 } from 'react-native';
-import moment from 'moment';
+//import moment from 'moment';
 import CustomButton from '../CustomButtons';
 import { supabase } from '../../lib/supabase';
 
@@ -52,7 +52,13 @@ export const ProgrammeDays = ({ weekID }) => {
       {exercises.map((exercise, dayIndex) => {
         return (
         <View>
-          <Text style={{ ...styles.text, alignSelf: "baseline", borderBottomColor: "black", borderBottomWidth: 2 }}> {exercise['name']} </Text>
+          <Text 
+          style={{ 
+            ...styles.text, 
+            alignSelf: "baseline", 
+            borderBottomColor: "black", 
+            borderBottomWidth: 2 }}> 
+            {exercise['name']} </Text>
           {/* moment(day['day_date']).format('dddd') + " - " + */}
           {/* <Text style={{ ...styles.text, alignSelf: "baseline", borderBottomColor: "black", borderBottomWidth: 2 }}> {"1" + " - " + "TEST "} </Text> */}
         </View>
