@@ -10,7 +10,7 @@ const WelcomeScreen = () => {
     <View style={styles.container}>
       <Text style={styles.header}>Welcome</Text>
       <LinearGradient
-        colors={['#007bff', '#28a745']}
+        colors={['#007bff', 'blue']}
         style={styles.gradientButton}
       >
         <TouchableOpacity style={styles.button} onPress={() => 
@@ -20,7 +20,7 @@ const WelcomeScreen = () => {
         </TouchableOpacity>
       </LinearGradient>
       <LinearGradient
-        colors={['#007bff', '#28a745']}
+        colors={['#007bff', 'blue']}
         style={styles.gradientButton}
       >
         <TouchableOpacity style={styles.button} onPress={() => 
@@ -58,6 +58,10 @@ const styles = StyleSheet.create({
       fontSize: 16,
       fontWeight: 'bold',
     },
+    button: {
+      paddingHorizontal:120,
+      paddingVertical: 10
+    }
   });
 
 export default WelcomeScreen;

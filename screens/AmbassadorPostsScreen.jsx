@@ -12,20 +12,23 @@ import { usePosts } from '../components/blogComps/PostsContext';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 
-const AmbassadorPostsScreen = () => {
-    
-    const [posts, setPosts] = useState([]);
-    const [refreshing, setRefreshing] = useState(false);
+const AmbassadorPostsScreen = ({user_ID}) => {
+
+
 
     useEffect(() => {
       getPosts();
     }, []);
 
+    const [posts, setPosts] = useState([]);
+    const [refreshing, setRefreshing] = useState(false);
+
     async function getPosts() {
       console.log("getposts")
-      const { data } = await supabase.rpc('get_blogposts')
+      const { data, error } = await supabase.rpc('get_blogposts')
+      console.log(data)
       setPosts(data);
-      console.log("blog data", data)
+      
     }
 
     const handleRefresh = () => {
@@ -41,7 +44,7 @@ const AmbassadorPostsScreen = () => {
             data={posts} 
             renderItem={({item, index}) => (
               <>
-                <RenderPost blog_post = {item }></RenderPost>
+                <RenderPost blog_post = {item} user_ID={user_ID}></RenderPost>
               </>
             )}
 

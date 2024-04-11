@@ -42,7 +42,7 @@ export function EditProg({ prog, setProg }) {
 
   //slide index for week
   let curWeek;
-  var currentUserId = '2810f3cd-4e04-44b7-9a19-2405fcec8684'
+  var currentUserId = 'd9fd43fd-39ce-4683-9cf5-d27ececcc2b5'
 
   const removeDayFromWeek = (weekIndex, dayIndex) => {
     const updatedWeeks = [...prog.weeks];
@@ -98,13 +98,13 @@ export function EditProg({ prog, setProg }) {
     Alert.alert('Finalizing','Are you happy with your programme?', 
     [{text:'Yes', onPress:()=>{
       addProgramme();
-      navigation.goBack();
+      navigation.navigate("Home");
     }},
     {text:'No', onPress:()=>{return}}])
     }
 
   // async function getLatestProgramme() {
-  //   const {data, error} = await supabase.rpc('get_latest_fitness_programme', {userid: '2810f3cd-4e04-44b7-9a19-2405fcec8684'})
+  //   const {data, error} = await supabase.rpc('get_latest_fitness_programme', {userid: 'd9fd43fd-39ce-4683-9cf5-d27ececcc2b5'})
   //   console.log(error);
   //   setPostedProgramme(data);
   //   // console.log("Last programme made", data);
@@ -228,7 +228,7 @@ export function EditProg({ prog, setProg }) {
           {prog.weeks.map((week, weekIndex) => {
             return (
 
-              <View style={{ width: windowWidth, height: 620, }} key={weekIndex}>
+              <View key={weekIndex} style={{ width: windowWidth, height: 620, }} key={weekIndex}>
                 <View style={styles.progContainer}>
 
 
@@ -251,7 +251,7 @@ export function EditProg({ prog, setProg }) {
                     {week.days.map((day, dayIndex) => {
                       return (
 
-                        <View style={epStyles.day}>
+                        <View key={weekIndex+ " / " +dayIndex}style={epStyles.day}>
 
                           <Text>{day.name}</Text>
                           {day.exercises.map((exer, exerIndex) => {

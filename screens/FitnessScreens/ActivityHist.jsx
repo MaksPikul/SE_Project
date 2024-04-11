@@ -3,9 +3,10 @@
 import React, { useEffect, useState } from 'react';
 import { 
   View, 
-  FlatList, 
+  ScrollView,
   Text,
-  StyleSheet 
+  StyleSheet ,
+  
 }  from 'react-native';
 import { supabase } from '../../lib/supabase';
 import { RenderHist } from '../../components/fitnessComps/RenderHist';
@@ -15,21 +16,44 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function ActivityHist() {
 
-  /*
-  const [history, setHistory] = useState([]);
+  // const { posts, refreshing, handleRefresh } = usePosts();
+
+  
+  const [exercises, setExercises] = useState([]);
+  const [sets, setSets] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
-      getHistory();
+      getExercises();
     }, []);
 
-    async function getHistory() {
+    async function getExercises() {
       console.log("getposts")
-      const { data } = await supabase.rpc('get_history')
-      setHistory(data);
-      //console.log("History data", data)
+      const { data, error } = await supabase
+      .from("exercises")
+      .select("id")
+      .eq('completed', true)
+      setExercises(data);
+      console.log("History data", data, exercises, error)
+      for (i = 0; i < data.length; i++) {
+        getSets({exerciseID: data[i].id})
+      }
     }
 
+    console.log("outside function", exercises);
+
+    async function getSets({exerciseID}) {
+      const { data } = await supabase.rpc('get_sets_history', {exerciseid: exerciseID} )
+      
+      console.log("inside function", data);
+      for (j = 0; j < data.length; j++) {
+        setSets(s => [data[j], ...s]);
+      }
+    }
+
+    console.log("outside function sets", sets);
+
+    /*
     const handleRefresh = () => {
       setHistory(true)
       getHistory()
@@ -41,19 +65,19 @@ export default function ActivityHist() {
 
   return(
       <SafeAreaView style={styles.pageView}>
-        <View>
-        <FlatList
-            data={posts} 
-            renderItem={({item, index}) => (
-              <>
-                <RenderHist historyData = {item}/>
-              </>
-            )}
-            keyExtractor={item => item.id.toFixed()}
-            refreshing={refreshing}
-            onRefresh={handleRefresh}/>
+        <ScrollView>
+        {sets.map((set, setIndex) => {
+          return (
+          <View style={{ padding:20, color:"white",backgroundColor: "blue",alignContent:'space-between',flexDirection: "row", margin: 5 }}>
 
-        </View>
+            <Text style={{ fontSize:18,color:"white",marginRight: 40, marginStart: 10 }}>{set.name}</Text>
+            <Text style={{ fontSize:18,color:"white",marginRight: 60, }}>{set.reps_done.toString() + " reps"}</Text>
+
+            <Text style={{ fontSize:18,color:"white",marginRight: 40, }}>{set.weight.toString() + " Kg"}
+          </Text>
+      </View>
+        )})}
+        </ScrollView>
       </SafeAreaView>
   )
 }

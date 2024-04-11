@@ -1,21 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ScrollView, View, Text, TextInput, Button, StyleSheet , TouchableOpacity } from 'react-native';
 import { usePosts } from './PostsContext';
 import { supabase } from '../../lib/supabase';
 import { useNavigation } from "@react-navigation/native";
 
-const BlogPostForm = () => {
+const BlogPostForm = ({user_ID}) => {
+
   const [title, setTitle] = useState('');
   const [article, setArticle] = useState('');
   const navigation = useNavigation()
-  
-  var currentUserId = '54d2b68a-4eb6-45f9-9c17-98711ffd3324'
     
   const addPost = async() => {
     const {error} = await supabase
     .from('blog_post')
     .insert([
-      {title: title, article: article, post_owner: currentUserId}
+      {title: title, article: article, post_owner: user_ID}
     ])
     console.log("posting error", error)
     setTitle('');

@@ -19,23 +19,20 @@ import LinearGradient from 'react-native-linear-gradient';
 
 
 
+
 // let progName = "Maxwell's lifts"
 // let week = 2
 // let day = "monday"
 // let exercises = ["legs", "legs", "more legs", "legs"]
 
 export const ProgDisplayer = () => {
-
-  const [exercises, setExercises] = useState([]);
   const [programmes, setProgrammes] = useState([]);
-  // const [days, setDays] = useState([]);
-  const [week, setWeek] = useState([]);
-
   const navigation = useNavigation()
 
-  var user = '2810f3cd-4e04-44b7-9a19-2405fcec8684';
+  var user = 'd9fd43fd-39ce-4683-9cf5-d27ececcc2b5';
 
   useEffect(() => {
+    
     // getExercise();
     getProgrammes();
     // getCurrentDay();
@@ -204,7 +201,7 @@ export const ProgDisplayer = () => {
             console.log(progIndex)
             console.log(prog)
             return (
-              <View style={{ width: windowWidth, height: 390 }} key={progIndex}>
+              <View key={progIndex} style={{ width: windowWidth, height: 390 }} key={progIndex}>
 
                 <View style={styles.progContainer}>
 
@@ -239,7 +236,10 @@ export const ProgDisplayer = () => {
                       color={"navy"} />
                       <View style={{marginHorizontal:10}}/>
                       <CustomButton
-                  onPress={() => {deleteProgramme({prog: prog})}}
+                  onPress={() => {
+                    deleteProgramme({prog: prog})
+                    navigation.goBack();
+                    }}
                   text="Delete Programme"
                       width={150}
                       height={45}

@@ -4,13 +4,16 @@ import { supabase } from "../../lib/supabase";
 
  const DeleteButton = ({post_ID, user_ID}) => {
     const [isOwned, setIsOwned] = useState();
+    //console.log('delete button user id', user_ID)
 
     useEffect(() =>{
         getOwned();
     })
 
     async function getOwned() {
-        const {data} = await supabase.rpc('check_if_owner', {postid: post_ID, userid: '54d2b68a-4eb6-45f9-9c17-98711ffd3324'})
+
+        const {data, error} = await supabase.rpc('check_if_owner', {postid: post_ID, userid: user_ID})
+        //console.log(error)
         setIsOwned(data);
     }
 
@@ -19,7 +22,7 @@ import { supabase } from "../../lib/supabase";
         .from('blog_post')
         .delete()
         .eq('id',post_ID)
-        console.log("error",error)
+        //console.log("error",error)
         getOwned()
     }
 

@@ -10,6 +10,7 @@ export const logout = async () => {
     await supabase.auth.signOut();
     await AsyncStorage.removeItem('sessionData');
     await AsyncStorage.removeItem('name');
+
     
 
     console.log('User logged out successfully.');

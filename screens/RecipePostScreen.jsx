@@ -1,14 +1,14 @@
 import React from 'react';
 import RecipePostForm from '../components/NutritionComps/RecipePostForm';
 
-const RecipePostScreen = ({ navigation }) => {
+const RecipePostScreen = ({ user_ID }) => {
   const handleRecipeSubmit = (RecipeData) => {
     console.log('Submitting fitness program:', RecipeData);
     // navigation.goBack();
   };
 
   return (
-    <RecipePostForm onSubmit={handleRecipeSubmit} />
+    <RecipePostForm user_ID={user_ID} />
   );
 };
 

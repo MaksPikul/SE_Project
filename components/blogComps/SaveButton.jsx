@@ -5,14 +5,14 @@ import { useLogin } from "../../context/loginProvider";
 
 const SaveButton = ({post_ID, user_ID}) => {
     const [isSaved, setIsSaved] = useState(null);
-    const { uid } = useLogin();
-
+    
     useEffect(() =>{
         getSaved();
     })
 
-    async function getSaved() {
-        const {data} = await supabase.rpc('check_if_saved', {postid: post_ID, userid: uid})
+    async function getSaved() { 
+        const {data, error} = await supabase.rpc('check_if_saved', {postid: post_ID, userid: user_ID})
+        console.log(error)
         setIsSaved(data);
 
     }
@@ -21,7 +21,7 @@ const SaveButton = ({post_ID, user_ID}) => {
         const {error} = await supabase
         .from('saved_posts')
         .insert([
-            { post_id: post_ID , user_id: '54d2b68a-4eb6-45f9-9c17-98711ffd3324'}
+            { post_id: post_ID , user_id: user_ID}
         ])
         console.log("saving error",error)
         if(error === null){

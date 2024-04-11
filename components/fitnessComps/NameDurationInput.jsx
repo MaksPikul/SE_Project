@@ -27,7 +27,7 @@ export function NameDurationInput({handleInput , name, duration}) {
             <TextInput style={{...pCreate.input}}
             id="name"
             name="name"
-            placeholder="My cool Programme"
+            placeholder=""
             onChangeText={(text) => handleInput('name', text)}
             maxLength={20}
             value={name}/>
