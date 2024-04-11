@@ -10,12 +10,7 @@ export default function WaterScreen({user_ID}) {
 
     const [water, setWater] = useState('');
     const [totalWater, setTotalWater] = useState(0)
-<<<<<<< HEAD
-
-    var currentUserId = '54d2b68a-4eb6-45f9-9c17-98711ffd3324'
-=======
     
->>>>>>> dc38b32397ed27e2bc4ca904e8d69996fde69605
 
     useEffect(() => {
         getTotalWater();

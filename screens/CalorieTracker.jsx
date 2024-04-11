@@ -121,6 +121,7 @@ export default function CalorieTracker({user_ID}) {
                 nutrition_info={nutritionData}
                 getCaloriesMacros={getCaloriesMacros}
                 hideNutrition = {hideNutrition}
+                user_ID={user_ID}
               />
             )}
 

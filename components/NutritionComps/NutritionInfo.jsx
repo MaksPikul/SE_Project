@@ -1,7 +1,7 @@
 import {View, Button, StyleSheet, Text} from 'react-native';
 import { supabase } from '../../lib/supabase';
 
-export default function NutritionInfo ({nutrition_info, getCaloriesMacros, hideNutrition}) {
+export default function NutritionInfo ({nutrition_info, getCaloriesMacros, hideNutrition, user_ID}) {
 
     
 
@@ -9,13 +9,13 @@ export default function NutritionInfo ({nutrition_info, getCaloriesMacros, hideN
         return str.charAt(0).toUpperCase() + str.slice(1);
       }
 
-    var currentUserId = '54d2b68a-4eb6-45f9-9c17-98711ffd3324'
+    
       
     const addFood = async() => {
         const {error} = await supabase
         .from('calorie_log')
         .insert([
-            {client_id: currentUserId, calories: nutrition_info[0].calories, protein: nutrition_info[0].protein_g,
+            {client_id: user_ID, calories: nutrition_info[0].calories, protein: nutrition_info[0].protein_g,
             carbs: nutrition_info[0].carbohydrates_total_g, fats: nutrition_info[0].fat_total_g, food_name: nutrition_info[0].name, 
             serving: nutrition_info[0].serving_size_g}
         ])
