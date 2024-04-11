@@ -28,15 +28,19 @@ import LinearGradient from 'react-native-linear-gradient';
 export const ProgDisplayer = () => {
   const [programmes, setProgrammes] = useState([]);
   const navigation = useNavigation()
+  const {uid} = useLogin();
 
-  var user = 'd9fd43fd-39ce-4683-9cf5-d27ececcc2b5';
+    useEffect(() => {
+      getProgrammes();
+    }, [])
 
-  useEffect(() => {
+
+  // useEffect(() => {
     
-    // getExercise();
-    getProgrammes();
-    // getCurrentDay();
-  }, []);
+  //   // getExercise();
+    
+  //   // getCurrentDay();
+  // }, []);
 
   // const { uid } = useLogin();
 
@@ -57,7 +61,7 @@ export const ProgDisplayer = () => {
   // }
 
   async function getProgrammes() {
-    const { data } = await supabase.rpc('get_programmes', {userid: user})
+    const { data } = await supabase.rpc('get_programmes', {userid: uid})
     setProgrammes(data);
     console.log(data)
     // console.log("length of programmes", data.length);
