@@ -3,9 +3,10 @@
 import React, { useEffect, useState } from 'react';
 import { 
   View, 
-  FlatList, 
+  ScrollView,
   Text,
-  StyleSheet 
+  StyleSheet ,
+  
 }  from 'react-native';
 import { supabase } from '../../lib/supabase';
 import { RenderHist } from '../../components/fitnessComps/RenderHist';
@@ -64,18 +65,19 @@ export default function ActivityHist() {
 
   return(
       <SafeAreaView style={styles.pageView}>
+        <ScrollView>
         {sets.map((set, setIndex) => {
           return (
-          <View style={{ flexDirection: "row", margin: 5 }}>
+          <View style={{ padding:20, color:"white",backgroundColor: "blue",alignContent:'space-between',flexDirection: "row", margin: 5 }}>
 
-          <Text style={{ marginRight: 40, marginStart: 10 }}>{set.name}</Text>
-          <Text style={{ marginRight: 60, }}>{set.reps_done.toString() + " reps"}</Text>
+            <Text style={{ fontSize:18,color:"white",marginRight: 40, marginStart: 10 }}>{set.name}</Text>
+            <Text style={{ fontSize:18,color:"white",marginRight: 60, }}>{set.reps_done.toString() + " reps"}</Text>
 
-          <Text style={{ marginRight: 40, }}>{set.weight.toString() + " weight"}</Text>
-
-          <Text ></Text>
+            <Text style={{ fontSize:18,color:"white",marginRight: 40, }}>{set.weight.toString() + " Kg"}
+          </Text>
       </View>
         )})}
+        </ScrollView>
       </SafeAreaView>
   )
 }

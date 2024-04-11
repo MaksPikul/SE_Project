@@ -228,7 +228,7 @@ export function EditProg({ prog, setProg }) {
           {prog.weeks.map((week, weekIndex) => {
             return (
 
-              <View style={{ width: windowWidth, height: 620, }} key={weekIndex}>
+              <View key={weekIndex} style={{ width: windowWidth, height: 620, }} key={weekIndex}>
                 <View style={styles.progContainer}>
 
 
