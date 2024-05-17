@@ -1,3 +1,15 @@
+
+# Using the App
+
+## Step 1: Logging-in / Signing-up
+
+When you open the app for the first time, you'll be directed to the Welcome Screen where you are offered the choice of either logging-in or signing-up. 
+Choose Sign-up and enter your details into the corresponding fields and select "Sign-Up". From here you'll be renavigated to the Home Screen and will remain logged in until your session needs renewing, or you choose to logout.
+
+Following a log-out, you can log back in by selecting the Login option from the Welcome Screen and submitting your credentials in the login form. 
+
+## Step 2: Navigating the app
+
 # Getting Started
 
 >**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
@@ -43,16 +55,6 @@ yarn ios
 If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
 This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
 
-# Using the App
-
-## Step 1: Logging-in / Signing-up
-
-When you open the app for the first time, you'll be directed to the Welcome Screen where you are offered the choice of either logging-in or signing-up. 
-Choose Sign-up and enter your details into the corresponding fields and select "Sign-Up". From here you'll be renavigated to the Home Screen and will remain logged in until your session needs renewing, or you choose to logout.
-
-Following a log-out, you can log back in by selecting the Login option from the Welcome Screen and submitting your credentials in the login form. 
-
-## Step 2: Navigating the app
 
 
 
