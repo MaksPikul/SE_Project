@@ -1,14 +1,25 @@
 
-# Using the App
+# Application Use-Cases
 
-## Step 1: Logging-in / Signing-up
+## Logging-in / Signing-up
 
 When you open the app for the first time, you'll be directed to the Welcome Screen where you are offered the choice of either logging-in or signing-up. 
 Choose Sign-up and enter your details into the corresponding fields and select "Sign-Up". From here you'll be renavigated to the Home Screen and will remain logged in until your session needs renewing, or you choose to logout.
 
 Following a log-out, you can log back in by selecting the Login option from the Welcome Screen and submitting your credentials in the login form. 
 
-## Step 2: Navigating the app
+## Creating Programmes - demo
+-Front-end Functionality implemented by Maks P
+-Back-end schemas and data movement by Rohan H
+
+User is able to:
+- See their current fitness programs
+- Create new programs
+- Delete programs
+- Input weight and reps completed during workout
+https://github.com/MaksPikul/SoftEng_Project/assets/128612499/87f31d36-b718-4334-be47-56508bdf1f66
+
+
 
 # Getting Started
 
