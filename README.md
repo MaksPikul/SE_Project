@@ -17,7 +17,8 @@ User is able to:
 - Create new programs
 - Delete programs
 - Input weight and reps completed during workout
-https://github.com/MaksPikul/SoftEng_Project/assets/128612499/87f31d36-b718-4334-be47-56508bdf1f66
+
+<video src="https://github.com/MaksPikul/SoftEng_Project/assets/128612499/87f31d36-b718-4334-be47-56508bdf1f66">
 
 
 
