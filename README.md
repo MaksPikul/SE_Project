@@ -9,7 +9,7 @@ Choose Sign-up and enter your details into the corresponding fields and select "
 Following a log-out, you can log back in by selecting the Login option from the Welcome Screen and submitting your credentials in the login form. 
 
 ## Creating Programmes - demo
--Front-end Functionality implemented by Maks P
+-Front-end Functionality implemented by Maks P<br>
 -Back-end schemas and data movement by Rohan H
 
 User is able to:
